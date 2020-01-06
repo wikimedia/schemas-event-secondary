@@ -1,0 +1,25 @@
+{
+  "name": "schemas-event-secondary",
+  "version": "1.0.0",
+  "description": "Secondary event JSONSchemas for Wikimedia & Mediawiki event data",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://gerrit.wikimedia.org/r/schemas/event/secondary"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/jsonschema",
+    "postinstall": "$(npm bin)/jsonschema-tools install-git-hook"
+  },
+  "keywords": [
+    "jsonschema",
+    "json",
+    "event",
+    "stream"
+  ],
+  "devDependencies": {
+    "@wikimedia/jsonschema-tools": "^0.6.0",
+    "mocha": "^6.2.0"
+  }
+}
