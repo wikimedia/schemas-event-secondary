@@ -2,5 +2,5 @@ schemaBasePath: ./jsonschema/
 schemaBaseUris:
   - ./jsonschema/
   # TODO: Use schema.wikimedia.org once it is available. https://phabricator.wikimedia.org/T233630
-  - https://gerrit.wikimedia.org/r/plugins/gitiles/schemas/event/primary/+/master/jsonschema/
+  - https://schema.wikimedia.org/repositories/primary/jsonschema/
 logLevel: info
