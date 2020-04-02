@@ -1,0 +1,53 @@
+title: fragment/analytics/legacy/eventcapsule
+description: >
+  A wrapper around (legacy) EventLogging event schemas that encodes generic metadata.
+  Legacy metawiki schema: https://meta.wikimedia.org/wiki/Schema:EventCapsule
+$id: /fragment/analytics/legacy/eventcapsule/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+additionalProperties: false
+# Use allOf so that common schemas are fully merged by
+# jsonschema-tools along with their required fields.
+allOf:
+  ### These are from schemas/event/primary repository.
+  - $ref: /fragment/common/1.0.0#
+  - $ref: /fragment/http/1.0.0#
+  # EventCapsule fields.
+  - properties:
+      wiki:
+        type: string
+        description: $wgDBName e.g. enwiki
+      webhost:
+        type: string
+        description: Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST']
+          on server.
+      schema:
+        type: string
+        description: Title of event schema.  Deprecated.
+      revision:
+        type: integer
+        description: Revision ID of event schema.  Deprecated.
+      topic:
+        type: string
+        description: The queue topic name this event belongs in.  Deprecated.
+      recvfrom:
+        type: string
+        description: Hostname of server emitting the log line.  Deprecated.
+      dt:
+        type: string
+        description: UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.
+        format: date-time
+        maxLength: 128
+      seqid:
+        type: integer
+        description: Udp2log sequence ID.  Deprecated.
+      uuid:
+        type: string
+        description: Unique event identifier.  Deprecated, use meta.id.
+        maxLength: 128
+      ip:
+        type: string
+        description: >
+          Client IP address that sent this event, usually best guess parsed
+          out of from X-Client-IP header which is set by varnish from X-Forwarded-For.
+          Deprecated, use http.client_ip.
