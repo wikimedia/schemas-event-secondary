@@ -17,7 +17,7 @@ allOf:
       wiki:
         type: string
         description: $wgDBName e.g. enwiki
-      webhost:
+      webHost:
         type: string
         description: Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST']
           on server.
@@ -30,7 +30,7 @@ allOf:
       topic:
         type: string
         description: The queue topic name this event belongs in.  Deprecated.
-      recvfrom:
+      recvFrom:
         type: string
         description: Hostname of server emitting the log line.  Deprecated.
       dt:
@@ -38,7 +38,7 @@ allOf:
         description: UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.
         format: date-time
         maxLength: 128
-      seqid:
+      seqId:
         type: integer
         description: Udp2log sequence ID.  Deprecated.
       uuid:

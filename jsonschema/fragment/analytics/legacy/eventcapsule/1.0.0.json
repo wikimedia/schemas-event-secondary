@@ -92,7 +92,7 @@
       "type": "string",
       "description": "$wgDBName e.g. enwiki"
     },
-    "webhost": {
+    "webHost": {
       "type": "string",
       "description": "Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST'] on server."
     },
@@ -108,7 +108,7 @@
       "type": "string",
       "description": "The queue topic name this event belongs in.  Deprecated."
     },
-    "recvfrom": {
+    "recvFrom": {
       "type": "string",
       "description": "Hostname of server emitting the log line.  Deprecated."
     },
@@ -118,7 +118,7 @@
       "format": "date-time",
       "maxLength": 128
     },
-    "seqid": {
+    "seqId": {
       "type": "integer",
       "description": "Udp2log sequence ID.  Deprecated."
     },

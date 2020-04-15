@@ -8,6 +8,7 @@ Schemas that are used for analytics and 'instrumentation' purposes
 only should go in the `analytics` directory namespace.
 `analytics/legacy` is for legacy EventLogging schemas that have been
 migrated from [meta.wikimedia.org's Schema namespace](https://meta.wikimedia.org/w/index.php?title=Special%3AAllPages&from=&to=&namespace=470).
+`analytics/legacy` schemas are excluded from schema robustness tests.
 
 See also:
 - (Event Platform/Schemas)[https://wikitech.wikimedia.org/wiki/Event_Platform/Schemas]

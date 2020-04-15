@@ -9,19 +9,19 @@
       "event": {
         "action": "visitPage",
         "source": "fulltext",
-        "searchsessionid": "637f1345d71834b06463k8j4of7t",
-        "pageviewid": "9b8c9ab1b52c21e966edk8j4xj6f",
+        "searchSessionId": "637f1345d71834b06463k8j4of7t",
+        "pageViewId": "9b8c9ab1b52c21e966edk8j4xj6f",
         "scroll": false,
-        "mwsessionid": "ee4f8d334a450a0fe63e",
-        "uniqueid": "cb271b4b1ec0c5c83e84k8j4xj6o",
-        "samplemultiplier": 1,
-        "articleid": 4,
+        "mwSessionId": "ee4f8d334a450a0fe63e",
+        "uniqueId": "cb271b4b1ec0c5c83e84k8j4xj6o",
+        "sampleMultiplier": 1,
+        "articleId": 4,
         "position": 0,
-        "searchtoken": "4cqr8vzf5t0g1boh1k9cckz2c",
+        "searchToken": "4cqr8vzf5t0g1boh1k9cckz2c",
         "query": "test test test"
       },
       "schema": "SearchSatisfaction",
-      "webhost": "dev.wiki.local.wmftest.net",
+      "webHost": "dev.wiki.local.wmftest.net",
       "wiki": "wiki",
       "$schema": "/analytics/legacy/searchsatisfaction/1.0.0",
       "meta": {
@@ -41,7 +41,6 @@
   ],
   "required": [
     "$schema",
-    "event",
     "meta"
   ],
   "additionalProperties": false,
@@ -128,7 +127,7 @@
       "type": "string",
       "description": "$wgDBName e.g. enwiki"
     },
-    "webhost": {
+    "webHost": {
       "type": "string",
       "description": "Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST'] on server."
     },
@@ -144,7 +143,7 @@
       "type": "string",
       "description": "The queue topic name this event belongs in.  Deprecated."
     },
-    "recvfrom": {
+    "recvFrom": {
       "type": "string",
       "description": "Hostname of server emitting the log line.  Deprecated."
     },
@@ -154,7 +153,7 @@
       "format": "date-time",
       "maxLength": 128
     },
-    "seqid": {
+    "seqId": {
       "type": "integer",
       "description": "Udp2log sequence ID.  Deprecated."
     },
@@ -171,14 +170,13 @@
       "type": "object",
       "required": [
         "action",
-        "searchsessionid",
-        "pageviewid",
+        "searchSessionId",
+        "pageViewId",
         "scroll",
-        "mwsessionid",
+        "mwSessionId",
         "source",
-        "uniqueid"
+        "uniqueId"
       ],
-      "additionalProperties": false,
       "properties": {
         "action": {
           "type": "string",
@@ -193,13 +191,13 @@
             "hover-on",
             "hover-off"
           ],
-          "description": "Identifies the context in which the event was created. Every time a new search is performed a searchEngineResultPage event is created. When the user clicks a link in the results a visitPage event is created. When the user has dwelled for N seconds (see 'checkin' below) a checkin event occurs. If the user clicks an interwiki result provided by TextCat language detection, there is a click event. If the user clicks on a sister search result from the sidebar, that's an ssclick. If the user interacts with a result to explore similar (pages, categories, translations), there are hover-on, hover-off, and esclick events."
+          "description": "Identifies the context in which the event was created. Every time a new search is performed a searchEngineResultPage event is created. When the user clicks a link in the results a visitPage event is created. When the user has dwelled for N seconds (see 'checkin' below) a checkin event occurs. If the user clicks an interwiki result provided by TextCat language detection, there is a iwclick event. If the user clicks on a sister search result from the sidebar, that's an ssclick. If the user interacts with a result to explore similar (pages, categories, translations), there are hover-on, hover-off, and esclick events."
         },
-        "searchsessionid": {
+        "searchSessionId": {
           "type": "string",
           "description": "A unique identifier generated per search session. A search session identifies a single user performing searches within a limited timespan. If no search is performed within ten minutes of a previous search a new session id is generated."
         },
-        "pageviewid": {
+        "pageViewId": {
           "type": "string",
           "description": "A unique identifier generated per visited page. This allows a visitPage and checkin events to be directly correlated."
         },
@@ -215,11 +213,11 @@
           "type": "string",
           "description": "The actual terms the user searched for. This is only logged with searchResultPage actions"
         },
-        "hitsreturned": {
+        "hitsReturned": {
           "type": "integer",
           "description": "The number of results returned and shown in the SERP. This is only logged with searchResultPage actions"
         },
-        "articleid": {
+        "articleId": {
           "type": "integer",
           "description": "The mediawiki article id of the current page, if the current page is an article."
         },
@@ -227,11 +225,11 @@
           "type": "integer",
           "description": "The position of the search result in the search result set, including any offsets."
         },
-        "subtest": {
+        "subTest": {
           "type": "string",
           "description": "The name of any sub-test that this user is participating in."
         },
-        "mwsessionid": {
+        "mwSessionId": {
           "type": "string",
           "description": "MediaWiki session id for correlating together actions in other schemas, such as QuickSurveys."
         },
@@ -243,39 +241,39 @@
           ],
           "description": "The type of search that triggered the event. Either autocomplete or fulltext."
         },
-        "inputlocation": {
+        "inputLocation": {
           "type": "string",
           "description": "Sent with searchResultPage events. For autocomplete, identifies the location(header, or Special:Search main input) of the autocomplete that was used. For full text indicates the location of the 'did you mean' that was used (either autorewrite, suggestion, original, or rewritten)"
         },
-        "didyoumeanvisible": {
+        "didYouMeanVisible": {
           "type": "string",
           "description": "Sent with full text searchResultPage events. Indicates which did you mean options, if any, are presented to the user on this page."
         },
-        "autocompletetype": {
+        "autocompleteType": {
           "type": "string",
           "description": "The type of search that was performed for autocomplete. Sent with searchResultPage events with a source of autocomplete."
         },
-        "mstodisplayresults": {
+        "msToDisplayResults": {
           "type": "integer",
           "description": "The number of milliseconds it took between requesting results and showing them to the user in a searchResultPage event. This is always reported for autocomplete events and is only reported on browsers supporting the navigation timing api for full text."
         },
-        "searchtoken": {
+        "searchToken": {
           "type": "string",
           "description": "Token, primarily for debugging, which associates a search to a log in the CirrusSearchRequestSets hive table"
         },
-        "extraparams": {
+        "extraParams": {
           "type": "string",
-          "description": "Allows for additional parameters:\n'completion-suggest-on' if user has opted-in to the Completion Suggester beta feature,\nNULL otherwise"
+          "description": "Allows for additional parameters: - 'completion-suggest-on' if user has opted-in to the Completion\n  Suggester beta feature\n- NULL otherwise"
         },
-        "uniqueid": {
+        "uniqueId": {
           "type": "string",
           "description": "A unique id per-event to allow deduplicating events that are sent multiple times. This happens in particular with IE where we emulate sendBeacon and often enough send click events twice."
         },
-        "isforced": {
+        "isForced": {
           "type": "boolean",
           "description": "A way to flag events that came from a user who entered themselves into search satisfaction logging. For example, when we want to debug or test new code."
         },
-        "samplemultiplier": {
+        "sampleMultiplier": {
           "type": "number",
           "description": "Account for sampling by reporting a multiplier representing the number of events this should count as."
         }
