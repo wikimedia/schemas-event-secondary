@@ -2,7 +2,7 @@ title: fragment/analytics/legacy/eventcapsule
 description: >
   A wrapper around (legacy) EventLogging event schemas that encodes generic metadata.
   Legacy metawiki schema: https://meta.wikimedia.org/wiki/Schema:EventCapsule
-$id: /fragment/analytics/legacy/eventcapsule/1.0.0
+$id: /fragment/analytics/legacy/eventcapsule/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -10,8 +10,7 @@ additionalProperties: false
 # jsonschema-tools along with their required fields.
 allOf:
   ### These are from schemas/event/primary repository.
-  - $ref: /fragment/common/1.0.0#
-  - $ref: /fragment/http/1.0.0#
+  - $ref: /fragment/analytics/common/1.0.0#
   # EventCapsule fields.
   - properties:
       wiki:
