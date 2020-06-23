@@ -8,7 +8,9 @@ type: object
 allOf:
   - $ref: /fragment/analytics/legacy/eventcapsule/1.1.0#
   # event data fields.
-  - properties:
+  - required:
+      - event
+    properties:
       event:
         type: object
         required:

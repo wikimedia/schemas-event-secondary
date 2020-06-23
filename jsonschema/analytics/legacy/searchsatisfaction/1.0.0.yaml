@@ -39,6 +39,7 @@ examples:
 required:
   - $schema
   - meta
+  - event
 additionalProperties: false
 properties:
   $schema:

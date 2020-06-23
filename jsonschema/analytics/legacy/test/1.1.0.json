@@ -28,6 +28,7 @@
   ],
   "required": [
     "$schema",
+    "event",
     "meta"
   ],
   "additionalProperties": false,

@@ -41,7 +41,8 @@
   ],
   "required": [
     "$schema",
-    "meta"
+    "meta",
+    "event"
   ],
   "additionalProperties": false,
   "properties": {

@@ -9,6 +9,7 @@ type: object
 additionalProperties: false
 required:
   - $schema
+  - event
   - meta
 properties:
   revision:
