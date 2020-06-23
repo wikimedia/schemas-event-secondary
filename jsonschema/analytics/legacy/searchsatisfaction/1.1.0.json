@@ -23,7 +23,7 @@
       "schema": "SearchSatisfaction",
       "webHost": "dev.wiki.local.wmftest.net",
       "wiki": "wiki",
-      "$schema": "/analytics/legacy/searchsatisfaction/1.0.0",
+      "$schema": "/analytics/legacy/searchsatisfaction/1.1.0",
       "meta": {
         "dt": "2020-04-02T19:11:20.942Z",
         "stream": "eventlogging_SearchSatisfaction",
