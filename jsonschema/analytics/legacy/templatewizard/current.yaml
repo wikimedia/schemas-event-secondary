@@ -1,0 +1,53 @@
+title: analytics/legacy/templatewizard
+description: Tracking usage of the TemplateWizard extension.
+$id: /analytics/legacy/templatewizard/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: '/fragment/analytics/legacy/eventcapsule/1.1.0#'
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - action
+          - namespace_id
+          - page_title
+          - revision_id
+          - template_names
+        properties:
+          action:
+            description: The action that the user took that triggered the log event.
+            type: string
+            enum:
+              - launch
+              - remove-template
+              - use-recent
+              - insert-template
+              - cancel-dialog
+              - save-page
+          namespace_id:
+            description: The ID of the page's namespace.
+            type: integer
+          page_title:
+            description: >-
+              The title (without namespace) of the page on which the action
+              occurred (may not exist).
+            type: string
+          revision_id:
+            description: >-
+              The page's current revision ID, for pages that already exist when
+              TemplateWizard is used.
+            type: integer
+          template_names:
+            description: >-
+              For 'remove-template', 'use-recent', 'insert-template', and
+              'save-page' actions, the titles of the templates that were acted
+              upon.
+            type: array
+            items:
+              description: Template titles.
+              type: string
+examples:
+  - {"event":{"action":"launch","namespace_id":0,"page_title":"test_page_title","revision_id":1234,"template_names":[]},"$schema": {"$ref": "#/$id"},"meta":{"dt":"2020-04-02T19:11:20.942Z","id":"b0caf18d-6c7f-4403-947d-2712bbe28610","request_id":"bd54dd80-7515-11ea-98e5-fd72443e8b45","stream":"eventlogging_TemplateWizard"},"dt":"2020-04-02T19:11:20.942Z","client_dt":"2020-04-02T19:11:20.942Z","http":{"client_ip":"10.0.2.2","request_headers":{"user-agent":"Mozilla/5.0"}}}
