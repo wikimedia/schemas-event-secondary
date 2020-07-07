@@ -48,7 +48,7 @@ function eventLoggingSchemaNameToTitle(schemaName) {
 }
 
 function eventLoggingSchemaNameToFileUri(schemaName, filename) {
-    return return '/' + eventLoggingSchemaNameToTitle(schemaName) + `/${filename}`;
+    return '/' + eventLoggingSchemaNameToTitle(schemaName) + `/${filename}`;
 }
 
 
