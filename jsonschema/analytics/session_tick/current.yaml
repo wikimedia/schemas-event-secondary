@@ -24,5 +24,5 @@ required:
   - tick_interval_ms
 
 examples:
-  - {"$schema": "/analytics/session_tick/1.0.0", "meta": {"stream": "session_tick", "domain": "es.m.wikipedia.org", "dt": "2020-06-11T19:20:00.649Z"}, "tick": 2, "tick_interval_ms": 10000, "client_dt": "2020-06-11T19:20:00.649Z"}
-  - {"$schema": "/analytics/session_tick/1.0.0", "meta": {"stream": "session_tick", "domain": "es.m.wikipedia.org", "dt": "2020-06-11T19:20:10.649Z"}, "tick": 3, "tick_interval_ms": 10000, "client_dt": "2020-06-11T19:20:10.649Z"}
+  - {"$schema": "/analytics/session_tick/1.0.0", "meta": {"stream": "session_tick_example", "domain": "es.m.wikipedia.org", "dt": "2020-06-11T19:20:00.649Z"}, "tick": 2, "tick_interval_ms": 10000, "client_dt": "2020-06-11T19:20:00.649Z"}
+  - {"$schema": "/analytics/session_tick/1.0.0", "meta": {"stream": "session_tick_example", "domain": "es.m.wikipedia.org", "dt": "2020-06-11T19:20:10.649Z"}, "tick": 3, "tick_interval_ms": 10000, "client_dt": "2020-06-11T19:20:10.649Z"}

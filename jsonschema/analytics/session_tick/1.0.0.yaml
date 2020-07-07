@@ -6,35 +6,18 @@ description: >
 $id: /analytics/session_tick/1.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
+additionalProperties: false
 required:
   - $schema
   - meta
   - tick
   - tick_interval_ms
-examples:
-  - $schema: /analytics/session_tick/1.0.0
-    meta:
-      stream: session_tick
-      domain: es.m.wikipedia.org
-      dt: '2020-06-11T19:20:00.649Z'
-    tick: 2
-    tick_interval_ms: 10000
-    client_dt: '2020-06-11T19:20:00.649Z'
-  - $schema: /analytics/session_tick/1.0.0
-    meta:
-      stream: session_tick
-      domain: es.m.wikipedia.org
-      dt: '2020-06-11T19:20:10.649Z'
-    tick: 3
-    tick_interval_ms: 10000
-    client_dt: '2020-06-11T19:20:10.649Z'
-additionalProperties: false
 properties:
   $schema:
-    type: string
     description: >
       A URI identifying the JSONSchema for this event. This should match an
       schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
   meta:
     type: object
     required:
@@ -47,47 +30,47 @@ properties:
         maxLength: 8192
         description: Unique URI identifying the event or entity
       request_id:
-        type: string
         description: Unique ID of the request that caused the event
-      id:
         type: string
+      id:
         description: Unique ID of this event
+        type: string
       dt:
         type: string
         format: date-time
         maxLength: 128
         description: 'UTC event datetime, in ISO-8601 format'
       domain:
-        type: string
         description: Domain the event or entity pertains to
+        type: string
         minLength: 1
       stream:
-        type: string
         description: Name of the stream/queue/dataset that this event belongs in
+        type: string
         minLength: 1
   http:
     type: object
     properties:
       method:
-        type: string
         description: 'The HTTP request method (GET, POST, etc.)'
-      status_code:
-        type: integer
-        description: The HTTP status code returned for this request (when known)
-      client_ip:
         type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+      client_ip:
         description: The http client's IP address
+        type: string
       has_cookies:
-        type: boolean
         description: True if the http request has any cookies set
+        type: boolean
       request_headers:
-        type: object
         description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
         additionalProperties:
           type: string
       response_headers:
-        type: object
         description: Response headers sent back to the client (when known).
+        type: object
         additionalProperties:
           type: string
   client_dt:
@@ -112,3 +95,20 @@ properties:
     type: integer
     minimum: 0
     description: number of milliseconds between ticks
+examples:
+  - $schema: /analytics/session_tick/1.0.0
+    meta:
+      stream: session_tick_example
+      domain: es.m.wikipedia.org
+      dt: '2020-06-11T19:20:00.649Z'
+    tick: 2
+    tick_interval_ms: 10000
+    client_dt: '2020-06-11T19:20:00.649Z'
+  - $schema: /analytics/session_tick/1.0.0
+    meta:
+      stream: session_tick_example
+      domain: es.m.wikipedia.org
+      dt: '2020-06-11T19:20:10.649Z'
+    tick: 3
+    tick_interval_ms: 10000
+    client_dt: '2020-06-11T19:20:10.649Z'

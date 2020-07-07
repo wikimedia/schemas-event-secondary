@@ -66,3 +66,17 @@ allOf:
       - backend_host
       - namespace
       - query
+
+examples:
+  - $schema: { $ref: "#/$id" }
+    meta:
+      stream: sparql_query_example
+      dt: '2020-07-01T00:00:00Z'
+    http:
+      method: GET
+      has_cookies: false
+      status_code: 200
+    backend_host: wdqs-example1001
+    namespace: wdq
+    query: example_query
+    format: json

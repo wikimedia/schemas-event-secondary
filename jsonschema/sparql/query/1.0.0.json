@@ -5,6 +5,24 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "additionalProperties": false,
+  "examples": [
+    {
+      "$schema": "/sparql/query/1.0.0",
+      "meta": {
+        "stream": "sparql_query_example",
+        "dt": "2020-07-01T00:00:00Z"
+      },
+      "http": {
+        "method": "GET",
+        "has_cookies": false,
+        "status_code": 200
+      },
+      "backend_host": "wdqs-example1001",
+      "namespace": "wdq",
+      "query": "example_query",
+      "format": "json"
+    }
+  ],
   "required": [
     "$schema",
     "backend_host",

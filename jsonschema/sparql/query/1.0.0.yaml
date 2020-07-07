@@ -15,10 +15,10 @@ required:
   - query
 properties:
   $schema:
-    type: string
     description: >
       A URI identifying the JSONSchema for this event. This should match an
       schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
   meta:
     type: object
     required:
@@ -31,71 +31,84 @@ properties:
         maxLength: 8192
         description: Unique URI identifying the event or entity
       request_id:
-        type: string
         description: Unique ID of the request that caused the event
-      id:
         type: string
+      id:
         description: Unique ID of this event
+        type: string
       dt:
         type: string
         format: date-time
         maxLength: 128
         description: 'UTC event datetime, in ISO-8601 format'
       domain:
-        type: string
         description: Domain the event or entity pertains to
+        type: string
         minLength: 1
       stream:
-        type: string
         description: Name of the stream/queue/dataset that this event belongs in
+        type: string
         minLength: 1
   http:
-    type: object
     description: Information about the HTTP request that generated an event.
+    type: object
     properties:
       method:
-        type: string
         description: 'The HTTP request method (GET, POST, etc.)'
-      client_ip:
         type: string
+      client_ip:
         description: The HTTP client's IP address
+        type: string
       request_headers:
-        type: object
         description: Request headers sent by the client.
+        type: object
         additionalProperties:
           type: string
       response_headers:
-        type: object
         description: Response headers sent back to the client (when known).
+        type: object
         additionalProperties:
           type: string
       has_cookies:
-        type: boolean
         description: True if the HTTP request has any cookies set
+        type: boolean
       status_code:
-        type: integer
         description: The HTTP status code returned for this request (when known)
+        type: integer
   backend_host:
-    type: string
     description: Hostname of sparql endpoint (blazegraph) server handling this sparql query
-  namespace:
     type: string
+  namespace:
     description: |
       Name of the database being requested
+    type: string
   query:
-    type: string
     description: sparql query received
-  query_time:
-    type: integer
-    description: query time
-  format:
     type: string
+  query_time:
+    description: query time
+    type: integer
+  format:
     description: the format requested (overrides the Accept header if set)
+    type: string
   params:
-    type: object
     description: >
       Request parameters. Usually from the HTTP query string or in the request
       body if the POST method is used. Note that the query and format params are
       not duplicated in this property.
+    type: object
     additionalProperties:
       type: string
+examples:
+  - $schema: /sparql/query/1.0.0
+    meta:
+      stream: sparql_query_example
+      dt: '2020-07-01T00:00:00Z'
+    http:
+      method: GET
+      has_cookies: false
+      status_code: 200
+    backend_host: wdqs-example1001
+    namespace: wdq
+    query: example_query
+    format: json
