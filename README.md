@@ -11,8 +11,8 @@ migrated from [meta.wikimedia.org's Schema namespace](https://meta.wikimedia.org
 `analytics/legacy` schemas are excluded from schema robustness tests.
 
 See also:
-- (Event Platform/Schemas)[https://wikitech.wikimedia.org/wiki/Event_Platform/Schemas]
-- (Event Platform/Schemas/Guidelines)[https://wikitech.wikimedia.org/wiki/Event_Platform/Schemas/Guidelines]
+- [Event Platform/Schemas](https://wikitech.wikimedia.org/wiki/Event_Platform/Schemas)
+- [Event Platform/Schemas/Guidelines](https://wikitech.wikimedia.org/wiki/Event_Platform/Schemas/Guidelines)
 
 
 NOTE: The only reason for having separate event schema repositories is to
