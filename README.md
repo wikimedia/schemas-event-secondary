@@ -1,8 +1,8 @@
 'Secondary' event JSONSchemas for Wikimedia & Mediawiki event data.
 
-This schema repository should contain event schemas that do not directly affect
-use facing features.  These schemas are meant to represent 'tier 2' events.
-This resository compliments the [schemas/event/primary](https://gerrit.wikimedia.org/r/plugins/gitiles/schemas/event/primary/+/master) repository.
+This schema repository should contain event schemas that do *not* directly affect
+user-facing features.  These schemas are meant to represent 'tier 2' events.
+This repository complements the [schemas/event/primary](https://gerrit.wikimedia.org/r/plugins/gitiles/schemas/event/primary/+/master) repository.
 
 Schemas that are used for analytics and 'instrumentation' purposes
 only should go in the `analytics` directory namespace.
