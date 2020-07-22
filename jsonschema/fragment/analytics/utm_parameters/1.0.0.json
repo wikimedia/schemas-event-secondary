@@ -1,0 +1,32 @@
+{
+  "title": "fragment/analytics/utm_parameters",
+  "description": "Standard fields for campaign attribution in product analytics, using industry-standard Urchin Tracking Module (UTM) parameters\n",
+  "$id": "/fragment/analytics/utm_parameters/1.0.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "utm_source": {
+      "type": "string",
+      "description": "Identifies which site or app sent the traffic, and is a *required parameter*; for example: \"Wikipedia\", \"Twitter\", \"Facebook\"\nMediaWiki-based instrumentation can assign the value of this field by retrieving it with `mw.util.getParamValue( 'utm_source' )`\n"
+    },
+    "utm_medium": {
+      "type": "string",
+      "description": "Identifies what type of link was used such as \"socialmedia\" or \"email\"\nMediaWiki-based instrumentation can assign the value of this field by retrieving it with `mw.util.getParamValue( 'utm_medium' )`\n"
+    },
+    "utm_campaign": {
+      "type": "string",
+      "description": "Identifies a specific product promotion or strategic campaign; for example: \"app_marketing_20200704\" or \"india_awareness_2017\"\nMediaWiki-based instrumentation can assign the value of this field by retrieving it with `mw.util.getParamValue( 'utm_campaign' )`\n"
+    },
+    "utm_term": {
+      "type": "string",
+      "description": "Identifies search terms (e.g. \"mobile+app\")\nMediaWiki-based instrumentation can assign the value of this field by retrieving it with `mw.util.getParamValue( 'utm_term' )`\n"
+    },
+    "utm_content": {
+      "type": "string",
+      "description": "Identifies what specifically was clicked to bring the user to the site, such as a banner ad, a text link, or a sidebar button. It is often used for A/B testing and content-targeted ads.\nMediaWiki-based instrumentation can assign the value of this field by retrieving it with `mw.util.getParamValue( 'utm_content' )`\n"
+    }
+  },
+  "required": [
+    "utm_source"
+  ]
+}
