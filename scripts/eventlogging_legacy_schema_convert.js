@@ -108,7 +108,7 @@ async function convertEventLoggingSchema(schemaName) {
 
 
     const example = Object.assign({}, exampleTemplate);
-    example.$schema = newSchema.$id;
+    example.$schema = { $ref: '#/$id' };
     example.meta.stream = `eventlogging_${schemaName}`;
 
     newSchema.examples.push(example);
