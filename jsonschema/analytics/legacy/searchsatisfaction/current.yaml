@@ -3,7 +3,7 @@ description: >
   Tracks the dwell time and bounce rate of a user on pages linked from
   a search engine result page.
   Legacy metawiki schema: https://meta.wikimedia.org/wiki/Schema:SearchSatisfaction
-$id: /analytics/legacy/searchsatisfaction/1.1.0
+$id: /analytics/legacy/searchsatisfaction/1.2.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -160,6 +160,17 @@ allOf:
             description: >-
               Account for sampling by reporting a multiplier representing the number
               of events this should count as.
+          skin:
+            type: string
+            description: >-
+              The name of the skin that the user is using, e.g. "vector".
+
+              The value of this property is typically fetched from config via
+              `mw.config.get( "skin" )`.
+          skinVersion:
+            type: string
+            description: >-
+              The version of the skin that the user is using.
 
 examples:
-  - {"event":{"action":"visitPage","source":"fulltext","searchSessionId":"637f1345d71834b06463k8j4of7t","pageViewId":"9b8c9ab1b52c21e966edk8j4xj6f","scroll":false,"mwSessionId":"ee4f8d334a450a0fe63e","uniqueId":"cb271b4b1ec0c5c83e84k8j4xj6o","sampleMultiplier":1,"articleId":4,"position":0,"searchToken":"4cqr8vzf5t0g1boh1k9cckz2c","query":"test test test"},"schema":"SearchSatisfaction","webHost":"dev.wiki.local.wmftest.net","wiki":"wiki","$schema":"/analytics/legacy/searchsatisfaction/1.1.0","meta":{"dt":"2020-04-02T19:11:20.942Z","stream":"eventlogging_SearchSatisfaction","id":"b0caf18d-6c7f-4403-947d-2712bbe28610","request_id":"bd54dd80-7515-11ea-98e5-fd72443e8b45"},"dt":"2020-04-02T19:11:20.942Z","http":{"client_ip":"10.0.2.2","request_headers":{"user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"}}}
+  - {"event":{"action":"visitPage","source":"fulltext","searchSessionId":"637f1345d71834b06463k8j4of7t","pageViewId":"9b8c9ab1b52c21e966edk8j4xj6f","scroll":false,"mwSessionId":"ee4f8d334a450a0fe63e","uniqueId":"cb271b4b1ec0c5c83e84k8j4xj6o","sampleMultiplier":1,"articleId":4,"position":0,"searchToken":"4cqr8vzf5t0g1boh1k9cckz2c","query":"test test test"},"schema":"SearchSatisfaction","webHost":"dev.wiki.local.wmftest.net","wiki":"wiki","$schema":{"$ref":"#/$id"},"meta":{"dt":"2020-04-02T19:11:20.942Z","stream":"eventlogging_SearchSatisfaction","id":"b0caf18d-6c7f-4403-947d-2712bbe28610","request_id":"bd54dd80-7515-11ea-98e5-fd72443e8b45"},"dt":"2020-04-02T19:11:20.942Z","http":{"client_ip":"10.0.2.2","request_headers":{"user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"}}}
