@@ -4,3 +4,6 @@ schemaBaseUris:
   # Look in primary schema repository for $ref fragments.
   - https://schema.wikimedia.org/repositories/primary/jsonschema/
 logLevel: info
+# Temporarily disable numeric bounds enforcement until we are ready to rematerialize
+# all schemas with enforced numeric bounds. T258659
+enforcedNumericBounds: false
