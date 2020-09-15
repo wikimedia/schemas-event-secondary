@@ -13,6 +13,7 @@
         "revision_id": 1234,
         "template_names": []
       },
+      "schema": "TemplateWizard",
       "$schema": "/analytics/legacy/templatewizard/1.0.0",
       "meta": {
         "dt": "2020-04-02T19:11:20.942Z",

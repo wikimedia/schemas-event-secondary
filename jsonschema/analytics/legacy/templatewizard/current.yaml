@@ -50,4 +50,4 @@ allOf:
               description: Template titles.
               type: string
 examples:
-  - {"event":{"action":"launch","namespace_id":0,"page_title":"test_page_title","revision_id":1234,"template_names":[]},"$schema": {"$ref": "#/$id"},"meta":{"dt":"2020-04-02T19:11:20.942Z","stream":"eventlogging_TemplateWizard"},"dt":"2020-04-02T19:11:20.942Z","client_dt":"2020-04-02T19:11:20.942Z"}
+  - {"event":{"action":"launch","namespace_id":0,"page_title":"test_page_title","revision_id":1234,"template_names":[]}, "schema": "TemplateWizard", "$schema": {"$ref": "#/$id"},"meta":{"dt":"2020-04-02T19:11:20.942Z","stream":"eventlogging_TemplateWizard"},"dt":"2020-04-02T19:11:20.942Z","client_dt":"2020-04-02T19:11:20.942Z"}
