@@ -1,14 +1,13 @@
 {
   "title": "analytics/session_tick",
-  "description": "Ticks sent at a pre-specified interval during an active client session. Used to compute a privacy-conscious session length metric. See: https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/SessionLength\n",
+  "description": "Each active user session sends its current length at a pre-determined time interval called a 'tick'. When a user session becomes inactive, it stops sending length updates. If it remains inactive long enough, it will be reset. If it re-activates before being reset, the backlog of length updates will be sent, and it will resume sending length updates as before.\nUsed to compute a privacy-conscious session length metric, see https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/SessionLength\n",
   "$id": "/analytics/session_tick/1.0.0",
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "required": [
     "$schema",
     "meta",
-    "tick",
-    "tick_interval_ms"
+    "tick"
   ],
   "examples": [
     {
@@ -19,19 +18,13 @@
         "dt": "2020-06-11T19:20:00.649Z"
       },
       "tick": 2,
-      "tick_interval_ms": 10000,
-      "client_dt": "2020-06-11T19:20:00.649Z"
-    },
-    {
-      "$schema": "/analytics/session_tick/1.0.0",
-      "meta": {
-        "stream": "session_tick_example",
-        "domain": "es.m.wikipedia.org",
-        "dt": "2020-06-11T19:20:10.649Z"
+      "config_tick_ms": 10000,
+      "config_idle_ms": 30000,
+      "config_reset_ms": 60000,
+      "test": {
+        "supports_passive": 1
       },
-      "tick": 3,
-      "tick_interval_ms": 10000,
-      "client_dt": "2020-06-11T19:20:10.649Z"
+      "client_dt": "2020-06-11T19:20:00.649Z"
     }
   ],
   "additionalProperties": false,
@@ -122,13 +115,27 @@
     },
     "tick": {
       "type": "integer",
-      "minimum": 0,
-      "description": "the number of tick_interval_ms milliseconds that have passed since the client session has started\n"
+      "description": "Current length of the client session, expressed as number of ticks. Loss of precision from denominating length in tick units (vs. ms) simplifies aggregation and enhances privacy.\n",
+      "minimum": 0
     },
-    "tick_interval_ms": {
+    "config_tick_ms": {
       "type": "integer",
-      "minimum": 0,
-      "description": "number of milliseconds between ticks"
+      "description": "Unit of time, in milliseconds, each tick represents. Gets value from MediaWiki config variable; included for data lineage.\n"
+    },
+    "config_idle_ms": {
+      "type": "integer",
+      "description": "Milliseconds of inactivity until a page is marked idle. Gets value from MediaWiki config variable; included for data lineage.\n"
+    },
+    "config_reset_ms": {
+      "type": "integer",
+      "description": "Milliseconds until session is reset if all pages are idle. Gets value from MediaWiki config variable; included for data lineage.\n"
+    },
+    "test": {
+      "type": "object",
+      "description": "A string:integer 'map' type for carrying temporary test values e.g. for validation, compatibility, etc. This field should be treated as volatile and its data should not be retained.\n",
+      "additionalProperties": {
+        "type": "integer"
+      }
     }
   }
 }
