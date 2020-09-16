@@ -10,7 +10,7 @@
         "OtherMessage": "Test Message"
       },
       "schema": "Test",
-      "$schema\":\"/analytics/legacy/test/1.1.0\"": null,
+      "$schema": "/analytics/legacy/test/1.1.0",
       "meta": {
         "dt": "2020-04-02T19:11:20.942Z",
         "stream": "eventlogging_Test",
