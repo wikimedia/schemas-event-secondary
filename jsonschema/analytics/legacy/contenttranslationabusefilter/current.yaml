@@ -1,0 +1,75 @@
+title: analytics/legacy/contenttranslationabusefilter
+description: >-
+  Schema for ContentTranslation extension events. Keeps track of AbuseFilter
+  warnings and errors. See T189475
+$id: /analytics/legacy/contenttranslationabusefilter/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0#
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - token
+          - context
+          - sourceLanguage
+          - targetLanguage
+          - sourceTitle
+          - targetTitle
+          - cxVersion
+          - filterType
+          - filterId
+        properties:
+          token:
+            description: Username for logged in users or session token for anonymous users
+            type: string
+          context:
+            description: 'Event context: saving or CX publishing'
+            type: string
+            enum:
+              - saving
+              - publishing
+          sourceLanguage:
+            description: Source language
+            type: string
+          targetLanguage:
+            description: Target language
+            type: string
+          sourceTitle:
+            description: Source title
+            type: string
+          targetTitle:
+            description: Target title
+            type: string
+          cxVersion:
+            description: CX version number
+            type: integer
+          filterType:
+            description: Filter type
+            type: string
+          filterId:
+            description: Filter id
+            type: integer
+examples:
+  - event:
+      token: example
+      context: example
+      sourceLanguage: en
+      targetLanguage: pt
+      sourceTitle: example
+      targetTitle: example
+      cxVersion: 2
+      filterType: example
+      filterId: 24
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      request_id: bd54dd80-7515-11ea-98e5-fd72443e8b45
+      stream: eventlogging_ContentTranslationAbuseFilter
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'

@@ -77,7 +77,7 @@ const legacySchemaTemplate = {
   "examples": []
 }
 
-const exampleTemplate = {"event":{"key1": "ENTER VALID EXAMPLES HERE!"},"meta":{"dt":"2020-04-02T19:11:20.942Z","id":"b0caf18d-6c7f-4403-947d-2712bbe28610","request_id":"bd54dd80-7515-11ea-98e5-fd72443e8b45"},"dt":"2020-04-02T19:11:20.942Z","client_dt":"2020-04-02T19:11:20.942Z","http":{"client_ip":"10.0.2.2","request_headers":{"user-agent":"Mozilla/5.0"}}}
+const exampleTemplate = {"event":{"key1": "ENTER VALID EXAMPLES HERE!"},"meta":{"dt":"2020-04-02T19:11:20.942Z","id":"b0caf18d-6c7f-4403-947d-2712bbe28610","request_id":"bd54dd80-7515-11ea-98e5-fd72443e8b45"},"dt":"2020-04-02T19:11:20.942Z","client_dt":"2020-04-02T19:11:20.942Z"}
 
 const capsuleSchemaUri = '/fragment/analytics/legacy/eventcapsule/1.1.0';
 
