@@ -20,6 +20,7 @@
   ],
   "devDependencies": {
     "@wikimedia/jsonschema-tools": "latest",
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.0",
+    "node-fetch": "^2.6.1"
   }
 }
