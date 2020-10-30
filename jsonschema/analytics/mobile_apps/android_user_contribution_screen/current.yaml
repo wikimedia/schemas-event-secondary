@@ -1,0 +1,84 @@
+title: analytics/mobile_apps/android_user_contribution_screen
+description: >
+  Track user actions when using the Enhanced User Contribution Screen.
+
+  This schema was migrated from legacy MobileWikiAppUserContribution.
+$id: /analytics/mobile_apps/android_user_contribution_screen/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/common/1.1.0#
+  - $ref: /fragment/analytics/app_identifiers/1.0.0#
+  - properties:
+      action:
+        type: string
+        enum:
+          - open_hist
+          - filt_caption
+          - filt_desc
+          - filt_tag
+          - filt_all
+          - caption_view
+          - desc_view
+          - tag_view
+          - misc_view
+          - caption_view2
+          - desc_view2
+          - tag_view2
+          - misc_view2
+          - disabled
+          - paused
+          - ip_block
+        description: >
+          Enhanced User Contribution Screen actions.
+
+          open_hist:
+            User opened the Enhanced User Contribution Screen.
+          filt_caption:
+            User filtered contributions shown to image caption additions.
+          filt_desc:
+            User filtered contributions shown to description additions.
+          filt_tag:
+            User filtered contributions shown to image tag additions.
+          filt_all:
+            User removed filtering to show all contributions.
+          caption_view:
+            The user viewed an image caption addition summary.
+          desc_view:
+            The user viewed a description addition summary.
+          tag_view:
+            The user viewed an image tag addition summary.
+          misc_view:
+            The user viewed a miscellaneous contribution summary.
+          caption_view2:
+            The user viewed an image caption addition detail.
+          desc_view2:
+            The user viewed a description addition detail.
+          tag_view2:
+            The user viewed an image tag addition detail.
+          misc_view2:
+            The user viewed a miscellaneous contribution detail.
+          disabled:
+            The Suggested Edits feature was disabled.
+          paused:
+            The Suggested Edits feature was paused.
+          ip_block:
+            The user's IP address was blocked.
+
+required:
+  - client_dt
+  - app_install_id
+  - app_session_id
+  - action
+
+examples:
+  - meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      stream: 'android.user_contribution_screen'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    action: filt_caption
+    $schema:
+      $ref: '#/$id'
+
