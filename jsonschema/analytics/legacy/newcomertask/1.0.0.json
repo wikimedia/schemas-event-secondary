@@ -1,0 +1,219 @@
+{
+  "title": "analytics/legacy/newcomertask",
+  "description": "Logs information about a GrowthExperiments newcomer task (suggested edit).",
+  "$id": "/analytics/legacy/newcomertask/1.0.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "examples": [
+    {
+      "event": {
+        "has_image": true,
+        "newcomer_task_token": "338abe4c324c68675fb2",
+        "page_title": "example page title",
+        "task_type": "example task type"
+      },
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "id": "b0caf18d-6c7f-4403-947d-2712bbe28610",
+        "request_id": "bd54dd80-7515-11ea-98e5-fd72443e8b45",
+        "stream": "eventlogging_NewcomerTask"
+      },
+      "dt": "2020-04-02T19:11:20.942Z",
+      "client_dt": "2020-04-02T19:11:20.942Z",
+      "$schema": "/analytics/legacy/newcomertask/1.0.0"
+    }
+  ],
+  "required": [
+    "$schema",
+    "event",
+    "meta"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192,
+          "description": "Unique URI identifying the event or entity"
+        },
+        "request_id": {
+          "type": "string",
+          "description": "Unique ID of the request that caused the event"
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique ID of this event"
+        },
+        "dt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128,
+          "description": "UTC event datetime, in ISO-8601 format"
+        },
+        "domain": {
+          "type": "string",
+          "description": "Domain the event or entity pertains to",
+          "minLength": 1
+        },
+        "stream": {
+          "type": "string",
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "minLength": 1
+        }
+      }
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "The HTTP request method (GET, POST, etc.)"
+        },
+        "status_code": {
+          "type": "integer",
+          "description": "The HTTP status code returned for this request (when known)"
+        },
+        "client_ip": {
+          "type": "string",
+          "description": "The http client's IP address"
+        },
+        "has_cookies": {
+          "type": "boolean",
+          "description": "True if the http request has any cookies set"
+        },
+        "request_headers": {
+          "type": "object",
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "type": "object",
+          "description": "Response headers sent back to the client (when known).",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "client_dt": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128,
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n"
+    },
+    "wiki": {
+      "type": "string",
+      "description": "$wgDBName e.g. enwiki"
+    },
+    "webHost": {
+      "type": "string",
+      "description": "Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST'] on server."
+    },
+    "schema": {
+      "type": "string",
+      "description": "Title of event schema.  Deprecated."
+    },
+    "revision": {
+      "type": "integer",
+      "description": "Revision ID of event schema.  Deprecated."
+    },
+    "topic": {
+      "type": "string",
+      "description": "The queue topic name this event belongs in.  Deprecated."
+    },
+    "recvFrom": {
+      "type": "string",
+      "description": "Hostname of server emitting the log line.  Deprecated."
+    },
+    "dt": {
+      "type": "string",
+      "description": "UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "seqId": {
+      "type": "integer",
+      "description": "Udp2log sequence ID.  Deprecated."
+    },
+    "uuid": {
+      "type": "string",
+      "description": "Unique event identifier.  Deprecated, use meta.id.",
+      "maxLength": 128
+    },
+    "ip": {
+      "type": "string",
+      "description": "Client IP address that sent this event, usually best guess parsed out of from X-Client-IP header which is set by varnish from X-Forwarded-For. Deprecated, use http.client_ip.\n"
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "newcomer_task_token",
+        "task_type",
+        "page_title",
+        "has_image"
+      ],
+      "properties": {
+        "newcomer_task_token": {
+          "description": "A token for connecting an instance of this schema to another event, such as a suggested edits module task impression.",
+          "type": "string"
+        },
+        "task_type": {
+          "description": "The task type ID of the task.",
+          "type": "string"
+        },
+        "topic": {
+          "description": "The most relevant topic of the task; that is, the highest-scoring of those topics of task which are present in the user's topic filter settings. If the user has not selected any topics in their filter settings, this field is omitted.",
+          "type": "string"
+        },
+        "match_score": {
+          "description": "Topic matching score for the most relevant topic. Only present when the topic field is.",
+          "type": "number"
+        },
+        "maintenance_templates": {
+          "type": "array",
+          "description": "List of maintenance templates (in text form, without namespace prefix) on the article which designated it as a task. Omitted when the task is not template-based.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "revision_id": {
+          "description": "Revision ID of the current version of the article used for the task.",
+          "type": "integer"
+        },
+        "page_id": {
+          "description": "Page ID of the article used for the task.",
+          "type": "integer"
+        },
+        "page_title": {
+          "description": "Title of the article used for the task (in text form, with page prefix).",
+          "type": "string"
+        },
+        "has_image": {
+          "description": "Whether the task card has an image.",
+          "type": "boolean"
+        },
+        "pageviews": {
+          "description": "Number of pageviews the article used for the task got in the last 60 days.",
+          "type": "integer"
+        },
+        "ordinal_position": {
+          "description": "0-based position of the task in a result list. Omitted when only a single task is shown.",
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

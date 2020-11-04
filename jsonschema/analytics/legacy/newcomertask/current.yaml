@@ -1,0 +1,87 @@
+title: analytics/legacy/newcomertask
+description: Logs information about a GrowthExperiments newcomer task (suggested edit).
+$id: /analytics/legacy/newcomertask/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.1.0#
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - newcomer_task_token
+          - task_type
+          - page_title
+          - has_image
+        properties:
+          newcomer_task_token:
+            description: >-
+              A token for connecting an instance of this schema to another
+              event, such as a suggested edits module task impression.
+            type: string
+          task_type:
+            description: The task type ID of the task.
+            type: string
+          topic:
+            description: >-
+              The most relevant topic of the task; that is, the highest-scoring
+              of those topics of task which are present in the user's topic
+              filter settings. If the user has not selected any topics in their
+              filter settings, this field is omitted.
+            type: string
+          match_score:
+            description: >-
+              Topic matching score for the most relevant topic. Only present
+              when the topic field is.
+            type: number
+          maintenance_templates:
+            type: array
+            items:
+              type: string
+            description: >-
+              List of maintenance templates (in text form, without namespace
+              prefix) on the article which designated it as a task. Omitted when
+              the task is not template-based.
+          revision_id:
+            description: >-
+              Revision ID of the current version of the article used for the
+              task.
+            type: integer
+          page_id:
+            description: Page ID of the article used for the task.
+            type: integer
+          page_title:
+            description: >-
+              Title of the article used for the task (in text form, with page
+              prefix).
+            type: string
+          has_image:
+            description: Whether the task card has an image.
+            type: boolean
+          pageviews:
+            description: >-
+              Number of pageviews the article used for the task got in the last
+              60 days.
+            type: integer
+          ordinal_position:
+            description: >-
+              0-based position of the task in a result list. Omitted when only a
+              single task is shown.
+            type: integer
+examples:
+  - event:
+      has_image: true
+      newcomer_task_token: 338abe4c324c68675fb2
+      page_title: example page title
+      task_type: example task type
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      request_id: bd54dd80-7515-11ea-98e5-fd72443e8b45
+      stream: eventlogging_NewcomerTask
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
