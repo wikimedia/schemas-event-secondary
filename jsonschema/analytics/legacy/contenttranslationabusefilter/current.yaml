@@ -18,7 +18,6 @@ allOf:
           - sourceLanguage
           - targetLanguage
           - sourceTitle
-          - targetTitle
           - cxVersion
           - filterType
           - filterId

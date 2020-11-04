@@ -170,7 +170,6 @@
         "sourceLanguage",
         "targetLanguage",
         "sourceTitle",
-        "targetTitle",
         "cxVersion",
         "filterType",
         "filterId"
