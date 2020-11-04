@@ -19,8 +19,10 @@ function convertDraft4RequiredProperties( schema ) {
         for (const [propertyName, property] of Object.entries(schema.properties)) {
             if (property.type == 'object') {
                 schema.properties[propertyName] = convertDraft4RequiredProperties(property);
-            } else if ('required' in property && property['required'] === true) {
-                required.push(propertyName);
+            } else if ('required' in property) {
+                if (property['required'] === true) {
+                    required.push(propertyName);
+                }
                 delete schema.properties[propertyName]['required'];
             }
         }
