@@ -68,20 +68,30 @@ async function getEventLoggingSchema(schemaName) {
     }
 }
 
+const capsuleSchemaUri = '/fragment/analytics/legacy/eventcapsule/1.2.0';
 const legacySchemaTemplate = {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "allOf": [
     {
-      "$ref": "/fragment/analytics/legacy/eventcapsule/1.1.0#"
+      "$ref": capsuleSchemaUri
     },
   ],
   "examples": []
 }
 
-const exampleTemplate = {"event":{"key1": "ENTER VALID EXAMPLES HERE!"},"meta":{"dt":"2020-04-02T19:11:20.942Z","id":"b0caf18d-6c7f-4403-947d-2712bbe28610","request_id":"bd54dd80-7515-11ea-98e5-fd72443e8b45"},"dt":"2020-04-02T19:11:20.942Z","client_dt":"2020-04-02T19:11:20.942Z"}
+const exampleTemplate = {
+    "event": {
+        "key1": "ENTER VALID EXAMPLES HERE!"
+    },
+    "meta": {
+        "dt":"2020-04-02T19:11:20.942Z",
+        "id":"b0caf18d-6c7f-4403-947d-2712bbe28610",
+    },
+    "dt":"2020-04-02T19:11:20.942Z",
+    "client_dt": "2020-04-02T19:11:20.942Z"
+}
 
-const capsuleSchemaUri = '/fragment/analytics/legacy/eventcapsule/1.1.0';
 
 /**
  * Converts a metawiki legacy EventLogging schema to an Event Platform formatted schema.
@@ -112,6 +122,9 @@ async function convertEventLoggingSchema(schemaName) {
     const example = Object.assign({}, exampleTemplate);
     example.$schema = { $ref: '#/$id' };
     example.meta.stream = `eventlogging_${schemaName}`;
+    // Not required in eventcapsule, but is still used to lookup
+    // schema of events on metawiki during the migration.
+    example.schema = schemaName;
 
     newSchema.examples.push(example);
     return newSchema;

@@ -20,11 +20,11 @@
       "meta": {
         "dt": "2020-04-02T19:11:20.942Z",
         "id": "b0caf18d-6c7f-4403-947d-2712bbe28610",
-        "request_id": "bd54dd80-7515-11ea-98e5-fd72443e8b45",
         "stream": "eventlogging_ContentTranslationAbuseFilter"
       },
       "dt": "2020-04-02T19:11:20.942Z",
       "client_dt": "2020-04-02T19:11:20.942Z",
+      "schema": "ContentTranslationAbuseFilter",
       "$schema": "/analytics/legacy/contenttranslationabusefilter/1.0.0"
     }
   ],

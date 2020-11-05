@@ -15,11 +15,11 @@
       "meta": {
         "dt": "2020-04-02T19:11:20.942Z",
         "id": "b0caf18d-6c7f-4403-947d-2712bbe28610",
-        "request_id": "bd54dd80-7515-11ea-98e5-fd72443e8b45",
         "stream": "eventlogging_NewcomerTask"
       },
       "dt": "2020-04-02T19:11:20.942Z",
       "client_dt": "2020-04-02T19:11:20.942Z",
+      "schema": "NewcomerTask",
       "$schema": "/analytics/legacy/newcomertask/1.0.0"
     }
   ],
@@ -31,8 +31,8 @@
   "additionalProperties": false,
   "properties": {
     "$schema": {
-      "type": "string",
-      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n"
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
     },
     "meta": {
       "type": "object",
@@ -48,12 +48,12 @@
           "description": "Unique URI identifying the event or entity"
         },
         "request_id": {
-          "type": "string",
-          "description": "Unique ID of the request that caused the event"
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
         },
         "id": {
-          "type": "string",
-          "description": "Unique ID of this event"
+          "description": "Unique ID of this event",
+          "type": "string"
         },
         "dt": {
           "type": "string",
@@ -62,13 +62,13 @@
           "description": "UTC event datetime, in ISO-8601 format"
         },
         "domain": {
-          "type": "string",
           "description": "Domain the event or entity pertains to",
+          "type": "string",
           "minLength": 1
         },
         "stream": {
-          "type": "string",
           "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
           "minLength": 1
         }
       }
@@ -76,32 +76,32 @@
     "http": {
       "type": "object",
       "properties": {
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
         "method": {
-          "type": "string",
-          "description": "The HTTP request method (GET, POST, etc.)"
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
         },
         "status_code": {
-          "type": "integer",
-          "description": "The HTTP status code returned for this request (when known)"
-        },
-        "client_ip": {
-          "type": "string",
-          "description": "The http client's IP address"
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer"
         },
         "has_cookies": {
-          "type": "boolean",
-          "description": "True if the http request has any cookies set"
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
         },
         "request_headers": {
-          "type": "object",
           "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
           "additionalProperties": {
             "type": "string"
           }
         },
         "response_headers": {
-          "type": "object",
           "description": "Response headers sent back to the client (when known).",
+          "type": "object",
           "additionalProperties": {
             "type": "string"
           }
@@ -115,47 +115,47 @@
       "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n"
     },
     "wiki": {
-      "type": "string",
-      "description": "$wgDBName e.g. enwiki"
+      "description": "$wgDBName e.g. enwiki",
+      "type": "string"
     },
     "webHost": {
-      "type": "string",
-      "description": "Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST'] on server."
+      "description": "Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST'] on server.",
+      "type": "string"
     },
     "schema": {
-      "type": "string",
-      "description": "Title of event schema.  Deprecated."
+      "description": "Title of event schema.  Deprecated.",
+      "type": "string"
     },
     "revision": {
-      "type": "integer",
-      "description": "Revision ID of event schema.  Deprecated."
+      "description": "Revision ID of event schema.  Deprecated.",
+      "type": "integer"
     },
     "topic": {
-      "type": "string",
-      "description": "The queue topic name this event belongs in.  Deprecated."
+      "description": "The queue topic name this event belongs in.  Deprecated.",
+      "type": "string"
     },
     "recvFrom": {
-      "type": "string",
-      "description": "Hostname of server emitting the log line.  Deprecated."
+      "description": "Hostname of server emitting the log line.  Deprecated.",
+      "type": "string"
     },
     "dt": {
-      "type": "string",
       "description": "UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.",
+      "type": "string",
       "format": "date-time",
       "maxLength": 128
     },
     "seqId": {
-      "type": "integer",
-      "description": "Udp2log sequence ID.  Deprecated."
+      "description": "Udp2log sequence ID.  Deprecated.",
+      "type": "integer"
     },
     "uuid": {
-      "type": "string",
       "description": "Unique event identifier.  Deprecated, use meta.id.",
+      "type": "string",
       "maxLength": 128
     },
     "ip": {
-      "type": "string",
-      "description": "Client IP address that sent this event, usually best guess parsed out of from X-Client-IP header which is set by varnish from X-Forwarded-For. Deprecated, use http.client_ip.\n"
+      "description": "Client IP address that sent this event, usually best guess parsed out of from X-Client-IP header which is set by varnish from X-Forwarded-For. Deprecated, use http.client_ip.\n",
+      "type": "string"
     },
     "event": {
       "type": "object",
