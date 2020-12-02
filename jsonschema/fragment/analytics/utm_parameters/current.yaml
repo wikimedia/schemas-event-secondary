@@ -45,5 +45,3 @@ properties:
 
       MediaWiki-based instrumentation can assign the value of this field by
       retrieving it with `mw.util.getParamValue( 'utm_content' )`
-required:
-  - utm_source
