@@ -1,11 +1,11 @@
 title: analytics/test
 description: >
   For simple tests of analytics instrumentation
-$id: /analytics/test/1.1.0
+$id: /analytics/test/2.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
-  - $ref: /fragment/analytics/common/1.1.0#
+  - $ref: /fragment/analytics/common/2.0.0#
   - $ref: /fragment/analytics/app_identifiers/1.0.0#
   - $ref: /fragment/analytics/web_identifiers/1.0.0#
   - properties:
@@ -20,26 +20,28 @@ allOf:
           type: string
 
 required:
-  - client_dt
+  - dt
 
 examples:
-  - $schema: { $ref: "#/$id" }
+  - $schema:
+      $ref: "#/$id"
     meta:
       stream: test.analytics.ios
       dt: '2020-06-11T19:20:00.649Z'
-    client_dt: '2020-06-11T19:20:00.649Z'
+    dt: '2020-06-11T19:20:00.649Z'
     app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
     app_session_id: dd21852b02db926a1b81
     test_string: Explore View refreshed
     test_map:
       file: Features/Feed/ExploreViewController.swift
       method: refreshControlActivated
-  - $schema: { $ref: "#/$id" }
+  - $schema:
+      $ref: "#/$id"
     meta:
       stream: test.analytics.mediawiki
       dt: '2020-06-11T19:20:00.649Z'
       domain: en.wikipedia.org
-    client_dt: '2020-06-11T19:20:00.649Z'
+    dt: '2020-06-11T19:20:00.649Z'
     web_session_id: 0aac0b2976c12a600a58
     web_pageview_id: ba618e81066d4ea60b42
     test_string: mw.config.get()
