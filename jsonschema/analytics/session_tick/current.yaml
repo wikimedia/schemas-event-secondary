@@ -5,14 +5,14 @@ description: >
   sending length updates. If it remains inactive long enough, it will be reset.
   If it re-activates before being reset, the backlog of length updates will be
   sent, and it will resume sending length updates as before.
-  
+
   Used to compute a privacy-conscious session length metric, see
   https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/SessionLength
-$id: /analytics/session_tick/1.0.0
+$id: /analytics/session_tick/2.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
-  - $ref: /fragment/analytics/common/1.1.0#
+  - $ref: /fragment/analytics/common/2.0.0#
   - properties:
       tick:
         type: integer
@@ -39,7 +39,7 @@ allOf:
       test:
         type: object
         additionalProperties:
-          type: integer 
+          type: integer
         description: >
           A string:integer 'map' type for carrying temporary test values e.g.
           for validation, compatibility, etc. This field should be treated as
@@ -48,4 +48,16 @@ required:
   - tick
 
 examples:
-  - {"$schema": "/analytics/session_tick/1.0.0", "meta": {"stream": "session_tick_example", "domain": "es.m.wikipedia.org", "dt": "2020-06-11T19:20:00.649Z"}, "tick": 2, "config_tick_ms": 10000, "config_idle_ms": 30000, "config_reset_ms": 60000, "test": { "supports_passive": 1 }, "client_dt": "2020-06-11T19:20:00.649Z"}
+  - $schema:
+      $ref: '#/$id'
+    meta:
+      stream: session_tick_example
+      domain: es.m.wikipedia.org
+      dt: '2020-06-11T19:20:00.649Z'
+    tick: 2
+    config_tick_ms: 10000
+    config_idle_ms: 30000
+    config_reset_ms: 60000
+    test:
+      supports_passive: 1
+    dt: '2020-06-11T19:20:00.649Z'
