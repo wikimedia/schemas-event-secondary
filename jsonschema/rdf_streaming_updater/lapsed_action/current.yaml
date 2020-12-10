@@ -1,0 +1,40 @@
+title: rdf_streaming_updater/lapsed_action
+description: >
+  A late event that entered the flink pipeline and cannot be processed.
+$id: /rdf_streaming_updater/lapsed_action/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+additionalProperties: false
+
+allOf:
+  - $ref: /fragment/rdf_streaming_updater/side_output_common/1.0.0#
+  - properties:
+      action_type:
+        type: string
+        description: type of action performed to the entity by wikibase (revision-create, page-delete/undelete)
+      parent_revision_id:
+        type: integer
+        minimum: 0
+        description: parent revision for which this event was triggered for (only set for revision-create)
+
+    required:
+      - action_type
+
+examples:
+  - $schema: { $ref: "#/$id" }
+    dt: "2020-12-10T14:12:16.372Z"
+    meta: {"dt": "2020-12-10T14:12:16.372Z", "id": "9d27895c-da78-4e4f-b968-66622e2b02cd", "stream": "lapsed_action"}
+    item: "Q1"
+    original_ingestion_dt: "2020-12-10T14:11:16.372Z"
+    action_type: revision-create
+    revision_id : 123
+    parent_revision_id: 122
+    original_event_info:
+      $schema: "/mediawiki/revision-create/1.0.0"
+      dt : "2020-12-10T14:11:16.372Z"
+      meta:
+        id : "dfda66c8-e317-4927-857f-d6291e90a1f0"
+        dt : "2020-12-10T14:11:16.372Z"
+        stream : "mediawiki.revision-create"
+        request_id : "bb63dbb8-0e9f-4674-bcd6-53678aeee073"
+        domain : "www.wikidata.org"

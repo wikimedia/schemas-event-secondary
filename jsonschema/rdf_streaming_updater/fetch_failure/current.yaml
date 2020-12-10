@@ -1,0 +1,66 @@
+title: rdf_streaming_updater/fetch_failure
+description: >
+  Indicates a failure when fetching the data from wikibase
+$id: /rdf_streaming_updater/fetch_failure/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+additionalProperties: false
+
+allOf:
+  - $ref: /fragment/rdf_streaming_updater/side_output_common/1.0.0#
+  - properties:
+      op_type:
+        type: string
+        enum:
+          - diff
+          - import
+          - delete
+        description: type of the operation
+      from_revision_id:
+        type: integer
+        minimum: 0
+        description: the revision it is diffing from
+      exception_type:
+        type: string
+        description: class name of the exception thrown
+      exception_msg:
+        type: string
+        description: description message of the exception
+      fetch_error_type:
+        type: string
+        enum:
+          - ENTITY_NOT_FOUND
+          - NO_CONTENT
+          - EMPTY_RESPONSE
+          - UNEXPECTED_RESPONSE
+          - UNKNOWN
+        description: |
+          categorized error type
+
+    required:
+      - op_type
+      - exception_type
+      - exception_msg
+      - fetch_error_type
+
+examples:
+  - $schema: { $ref: "#/$id" }
+    dt: "2020-12-10T14:12:16.372Z"
+    meta: {"dt": "2020-12-10T14:12:16.372Z", "id": "9d27895c-da78-4e4f-b968-66622e2b02cd", "stream": "fetch_failure"}
+    item : "Q1"
+    original_ingestion_dt : "2020-12-10T14:11:16.372Z"
+    revision_id : 123
+    original_event_info:
+      $schema: "/mediawiki/revision-create/1.0.0"
+      dt : "2020-12-10T14:11:16.372Z"
+      meta:
+        id : "dfda66c8-e317-4927-857f-d6291e90a1f0"
+        dt : "2020-12-10T14:11:16.372Z"
+        stream : "mediawiki.revision-create"
+        request_id : "bb63dbb8-0e9f-4674-bcd6-53678aeee073"
+        domain : "www.wikidata.org"
+    op_type: "diff"
+    from_revision_id: 122
+    exception_type: "org.wikidata.query.rdf.tool.exception.ContainedException"
+    exception_msg: "Cannot fetch entity at https://www.wikidata.org/wiki/Special:EntityData/Q1.ttl?flavor=dump&revision=122: ENTITY_NOT_FOUND"
+    fetch_error_type: "ENTITY_NOT_FOUND"
