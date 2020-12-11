@@ -1,6 +1,6 @@
 title: fragment/analytics/common
 description: Common fields for all WMF analytics and instrumentation events
-$id: /fragment/analytics/common/1.1.0
+$id: /fragment/analytics/common/2.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -11,7 +11,7 @@ allOf:
   - $ref: /fragment/common/1.0.0#
   - $ref: /fragment/http/1.2.0#
   - properties:
-      client_dt:
+      dt:
         type: string
         format: date-time
         maxLength: 128
