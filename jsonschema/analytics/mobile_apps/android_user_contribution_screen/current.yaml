@@ -3,11 +3,11 @@ description: >
   Track user actions when using the Enhanced User Contribution Screen.
 
   This schema was migrated from legacy MobileWikiAppUserContribution.
-$id: /analytics/mobile_apps/android_user_contribution_screen/1.0.0
+$id: /analytics/mobile_apps/android_user_contribution_screen/2.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/common/1.1.0#
+  - $ref: /fragment/analytics/common/2.0.0#
   - $ref: /fragment/analytics/app_identifiers/1.0.0#
   - properties:
       action:
@@ -66,7 +66,7 @@ allOf:
             The user's IP address was blocked.
 
 required:
-  - client_dt
+  - dt
   - app_install_id
   - app_session_id
   - action
@@ -75,7 +75,7 @@ examples:
   - meta:
       dt: '2020-04-02T19:11:20.942Z'
       stream: 'android.user_contribution_screen'
-    client_dt: '2020-04-02T19:11:20.942Z'
+    dt: '2020-04-02T19:11:20.942Z'
     app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
     app_session_id: dd21852b02db926a1b81
     action: filt_caption
