@@ -4,11 +4,11 @@ description: >
 
   This schema was migrated from legacy MobileWikiAppiOSEditHistoryCompare. More
   details about the original specification can be found in Phab:T241269
-$id: /analytics/mobile_apps/ios_edit_history_compare/1.0.0
+$id: /analytics/mobile_apps/ios_edit_history_compare/2.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
-  - $ref: /fragment/analytics/common/1.0.0#
+  - $ref: /fragment/analytics/common/2.0.0#
   - $ref: /fragment/analytics/app_identifiers/1.0.0#
   - properties:
       action:
@@ -52,7 +52,7 @@ allOf:
         description: Whether user is anonymous or logged-in.
 
 required:
-  - client_dt
+  - dt
   - app_install_id
   - app_session_id
   - action
@@ -65,7 +65,7 @@ examples:
       stream: ios.edit_history_compare
       dt: '2020-06-11T19:20:00.649Z'
       domain: en.wikipedia.org
-    client_dt: '2020-06-11T19:20:00.649Z'
+    dt: '2020-06-11T19:20:00.649Z'
     app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
     app_session_id: dd21852b02db926a1b81
     action: show_history
