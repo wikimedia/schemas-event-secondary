@@ -115,3 +115,16 @@ required:
   - web_pageview_id
   - ui_mw_skin
   - language_code
+
+examples:
+  - $schema:
+      $ref: '#/$id'
+    meta:
+      stream: mediawiki.mediasearch_interaction
+      domain: es.wikipedia.org
+      dt: '2020-12-12T00:20:00.649Z'
+    action: search_new
+    web_pageview_id: example_web_pageview_id
+    ui_mw_skin: vector
+    language_code: es
+    dt: '2020-12-12T00:20:00.649Z'
