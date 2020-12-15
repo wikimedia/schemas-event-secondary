@@ -1,6 +1,6 @@
 title: analytics/legacy/templatewizard
 description: Tracking usage of the TemplateWizard extension.
-$id: /analytics/legacy/templatewizard/1.0.0
+$id: /analytics/legacy/templatewizard/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -27,6 +27,7 @@ allOf:
               - insert-template
               - cancel-dialog
               - save-page
+              - load-template
           namespace_id:
             description: The ID of the page's namespace.
             type: integer
@@ -49,5 +50,32 @@ allOf:
             items:
               description: Template titles.
               type: string
+          performer:
+            description: Represents the user that performed this change.
+            type: object
+            properties:
+              user_edit_count:
+                description: >-
+                  The number of edits this user has made at the time of this
+                  event.  Not present for anonymous users.
+                type: integer
+                minimum: 0
+              user_edit_count_bucket:
+                description: >-
+                  Reduced granularity edit count, safe to keep in the sanitized
+                  stream.  This is optional, and will not be present for
+                  anonymous users.
+                type: string
+                enum:
+                  - under11
+                  - over10
+                  - over100
+                  - over1k
+                  - over10k
+              user_id:
+                description: >-
+                  The user id that performed this change.  This is optional, and
+                  will not be present for anonymous users.
+                type: integer
 examples:
-  - {"event":{"action":"launch","namespace_id":0,"page_title":"test_page_title","revision_id":1234,"template_names":[]}, "schema": "TemplateWizard", "$schema": {"$ref": "#/$id"},"meta":{"dt":"2020-04-02T19:11:20.942Z","stream":"eventlogging_TemplateWizard"},"dt":"2020-04-02T19:11:20.942Z","client_dt":"2020-04-02T19:11:20.942Z"}
+  - {"event":{"action":"launch","namespace_id":0,"page_title":"test_page_title","revision_id":1234,"template_names":[],"performer":{"user_edit_count":987,"user_edit_count_bucket":"over100","user_id":123}}, "schema": "TemplateWizard", "$schema": {"$ref": "#/$id"},"meta":{"dt":"2020-04-02T19:11:20.942Z","stream":"eventlogging_TemplateWizard"},"dt":"2020-04-02T19:11:20.942Z","client_dt":"2020-04-02T19:11:20.942Z"}
