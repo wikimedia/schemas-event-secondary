@@ -1,0 +1,242 @@
+{
+  "title": "analytics/legacy/universallanguageselector",
+  "description": "Schema for ULS extension events. Currently this covers both various actions as well as events that log usage of certain fonts, input methods and languages.",
+  "$id": "/analytics/legacy/universallanguageselector/1.0.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "examples": [
+    {
+      "event": {
+        "action": "settings-open",
+        "contentLanguage": "en",
+        "context": "interlanguage",
+        "interfaceLanguage": "en",
+        "token": "aaaaaaaaaaaaaaaaaaaa",
+        "version": 1
+      },
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "id": "b0caf18d-6c7f-4403-947d-2712bbe28610",
+        "stream": "eventlogging_UniversalLanguageSelector"
+      },
+      "dt": "2020-04-02T19:11:20.942Z",
+      "client_dt": "2020-04-02T19:11:20.942Z",
+      "$schema": "/analytics/legacy/universallanguageselector/1.0.0",
+      "schema": "UniversalLanguageSelector"
+    }
+  ],
+  "required": [
+    "$schema",
+    "event",
+    "meta"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192,
+          "description": "Unique URI identifying the event or entity"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "dt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128,
+          "description": "UTC event datetime, in ISO-8601 format"
+        },
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer"
+        },
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "client_dt": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128,
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n"
+    },
+    "wiki": {
+      "description": "$wgDBName e.g. enwiki",
+      "type": "string"
+    },
+    "webHost": {
+      "description": "Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST'] on server.",
+      "type": "string"
+    },
+    "schema": {
+      "description": "Title of event schema.  Deprecated.",
+      "type": "string"
+    },
+    "revision": {
+      "description": "Revision ID of event schema.  Deprecated.",
+      "type": "integer"
+    },
+    "topic": {
+      "description": "The queue topic name this event belongs in.  Deprecated.",
+      "type": "string"
+    },
+    "recvFrom": {
+      "description": "Hostname of server emitting the log line.  Deprecated.",
+      "type": "string"
+    },
+    "dt": {
+      "description": "UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "seqId": {
+      "description": "Udp2log sequence ID.  Deprecated.",
+      "type": "integer"
+    },
+    "uuid": {
+      "description": "Unique event identifier.  Deprecated, use meta.id.",
+      "type": "string",
+      "maxLength": 128
+    },
+    "ip": {
+      "description": "Client IP address that sent this event, usually best guess parsed out of from X-Client-IP header which is set by varnish from X-Forwarded-For. Deprecated, use http.client_ip.\n",
+      "type": "string"
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "version",
+        "token",
+        "action",
+        "interfaceLanguage",
+        "contentLanguage"
+      ],
+      "properties": {
+        "version": {
+          "description": "Version number. This field can be used to track changes in instrumentation that affect the nature of the data collected.",
+          "type": "integer"
+        },
+        "token": {
+          "description": "Username for logged in users or session token for anonymous users",
+          "type": "string"
+        },
+        "action": {
+          "description": "What the user caused or did:\n* ime-change: User changed the used input method. Switching input method on and off via Ctrl-M is also considered a change from/to 'system' input method. The ime id is stored in the inputMethod field.\n* ime-disable: User completely disabled input method functionality via ULS settings.\n* ime-enable: User completely enabled input method functionality via ULS settings.\n* language-change: User changes a language for something. The something is defined in the context field. Also the languageSelectionMethod field is filled.\n* font-change: User changes a font. Both contentFont and interfaceFont fields are populated. Those can be mapped to languages by inspecting the interfaceLanguage and contentLanguage fields.\n* no-search-result: User searched for a language with no results. The search string is stored in the context field. The page title is stored in the title field. The ulsPurpose is stored in the ulsPurpose field to understand what was the purpose of the language search: interlanguage links, IME, etc.\n* login-click: Anonymous user clicked login link in ULS when configured in a way that anons cannot change language.\n* settings-open: User opened ULS settings. The location where they were opened is stored in the context field.\n* ui-lang-revert: User reverted the interface language change via tooltip.\n* more-languages-access: Used accessed \"...\" to get more languages for something. The something is defined in the context field.\n* webfonts-enable: User enabled the webfonts functionality via ULS settings.\n* webfonts-disable: User completely disabled the webfonts functionality via ULS settings.",
+          "type": "string",
+          "enum": [
+            "ime-change",
+            "ime-enable",
+            "ime-disable",
+            "language-change",
+            "font-change",
+            "no-search-results",
+            "login-click",
+            "settings-open",
+            "ui-lang-revert",
+            "more-languages-access",
+            "webfonts-enable",
+            "webfonts-disable"
+          ]
+        },
+        "context": {
+          "description": "Arbitrary action related data clarifying the context.\n* language-change:\n** interface - user changed interface language\n** content - user changed content language\n** ime - user changed input language\n** other - any other language selection via ULS\n* no-search-results: The search string\n* settings-open:\n** personal - uls trigger in personal tools\n** interlanguage - uls cog trigger in interlanguage section of sidebar\n** menu - the input tools popup menu\n** preferences - from link in Special:Preferences language selection\n* more-languages-access: Same as for language-change",
+          "type": "string"
+        },
+        "ulsPurpose": {
+          "description": "An identifier for the ULS panel. Defined as the ulsPurpose option in ULS initialization. Used with the no-search-results action to understand in what context did the person search for a language.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Page title. Used with no-search-results to analyze on which pages do people search for a page in a different language.",
+          "type": "string"
+        },
+        "interfaceLanguage": {
+          "description": "Language code of current interface language",
+          "type": "string"
+        },
+        "contentLanguage": {
+          "description": "Language code of current content language",
+          "type": "string"
+        },
+        "inputMethod": {
+          "description": "Input method identifier or 'system'",
+          "type": "string"
+        },
+        "contentFont": {
+          "description": "Font name or 'system'",
+          "type": "string"
+        },
+        "interfaceFont": {
+          "description": "Font name or 'system'",
+          "type": "string"
+        },
+        "languageSelectionMethod": {
+          "description": "How was the language selected.\n* Null if none of the below were used.\n* map - user clicked the map\n* search - user used the search filed\n* common - user clicked from the list of common languages",
+          "type": "string",
+          "enum": [
+            "map",
+            "search",
+            "common"
+          ]
+        }
+      }
+    }
+  }
+}
