@@ -204,8 +204,7 @@
         },
         "userBuckets": {
           "description": "Contents of 'userbuckets' cookie.",
-          "type": "string",
-          "format": "json-encoded"
+          "type": "string"
         },
         "displayMobile": {
           "description": "Whether the mobile view is active.",

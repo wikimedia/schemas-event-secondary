@@ -161,7 +161,6 @@ properties:
       userBuckets:
         description: Contents of 'userbuckets' cookie.
         type: string
-        format: json-encoded
       displayMobile:
         description: Whether the mobile view is active.
         type: boolean
