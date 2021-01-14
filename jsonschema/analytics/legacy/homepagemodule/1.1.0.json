@@ -1,0 +1,280 @@
+{
+  "title": "analytics/legacy/homepagemodule",
+  "description": "Logs interactions with the homepage modules on the Special:Homepage provided by the GrowthExperiments extension",
+  "$id": "/analytics/legacy/homepagemodule/1.1.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "examples": [
+    {
+      "event": {
+        "action": "impression",
+        "user_id": 123456,
+        "user_editcount": 123456,
+        "user_variant": "example_user_variant",
+        "module": "generic",
+        "is_mobile": false,
+        "mode": "desktop",
+        "homepage_pageview_token": "338abe4c324c68675fb2"
+      },
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "id": "b0caf18d-6c7f-4403-947d-2712bbe28610",
+        "stream": "eventlogging_HomepageModule"
+      },
+      "dt": "2020-04-02T19:11:20.942Z",
+      "client_dt": "2020-04-02T19:11:20.942Z",
+      "$schema": "/analytics/legacy/homepagemodule/1.1.0",
+      "schema": "HomepageModule"
+    }
+  ],
+  "required": [
+    "$schema",
+    "event",
+    "meta"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192,
+          "description": "Unique URI identifying the event or entity"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "dt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128,
+          "description": "UTC event datetime, in ISO-8601 format"
+        },
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer"
+        },
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "client_dt": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128,
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n"
+    },
+    "wiki": {
+      "description": "$wgDBName e.g. enwiki",
+      "type": "string"
+    },
+    "webHost": {
+      "description": "Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST'] on server.",
+      "type": "string"
+    },
+    "schema": {
+      "description": "Title of event schema.  Deprecated.",
+      "type": "string"
+    },
+    "revision": {
+      "description": "Revision ID of event schema.  Deprecated.",
+      "type": "integer"
+    },
+    "topic": {
+      "description": "The queue topic name this event belongs in.  Deprecated.",
+      "type": "string"
+    },
+    "recvFrom": {
+      "description": "Hostname of server emitting the log line.  Deprecated.",
+      "type": "string"
+    },
+    "dt": {
+      "description": "UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "seqId": {
+      "description": "Udp2log sequence ID.  Deprecated.",
+      "type": "integer"
+    },
+    "uuid": {
+      "description": "Unique event identifier.  Deprecated, use meta.id.",
+      "type": "string",
+      "maxLength": 128
+    },
+    "ip": {
+      "description": "Client IP address that sent this event, usually best guess parsed out of from X-Client-IP header which is set by varnish from X-Forwarded-For. Deprecated, use http.client_ip.\n",
+      "type": "string"
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "action",
+        "user_id",
+        "user_editcount",
+        "user_variant",
+        "module",
+        "is_mobile",
+        "mode",
+        "homepage_pageview_token"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "impression",
+            "link-click",
+            "open-nopageviews-tooltip",
+            "close-nopageviews-tooltip",
+            "close",
+            "welcome-impression",
+            "welcome-close",
+            "se-cta-click",
+            "se-cta-difficulty",
+            "se-cta-back",
+            "se-activate",
+            "se-cancel-activation",
+            "se-fetch-tasks",
+            "se-taskfilter-open",
+            "se-taskfilter-done",
+            "se-taskfilter-cancel",
+            "se-topicfilter-open",
+            "se-topicfilter-select-all",
+            "se-topicfilter-remove-all",
+            "se-topicfilter-done",
+            "se-topicfilter-cancel",
+            "se-task-impression",
+            "se-task-pseudo-impression",
+            "se-task-navigation",
+            "se-task-click",
+            "se-explanation-open",
+            "se-explanation-close",
+            "se-explanation-link-click"
+          ],
+          "description": "Action the user took:\n\n- impression: Module is shown to user\n\n- hover-in: User mouse pointer enters the element.\n\n- hover-out: User mouse pointer leaves the element\n\n- link-click: User clicks a link in the module\n\n- open-nopageviews-tooltip: User opens the tooltip on the shown when pageviews is not available yet.\n\n- close-nopageviews-tooltip: User closes the tooltip on the shown when pageviews is not available yet.\n\n- close: User closes then mobile overlay.\n\n- welcome-impression: The homepage welcome notice is shown.\n\n- welcome-close: The homepage welcome notice is closed by the user.\n\n- se-fetch-tasks: Task suggestions have finished loading.\n\n- se-cta-click: User starts the suggested edits onboarding/activation process (by clicking on the StartEditing module button in variant A, or the welcome notice button or info icon in variant C).\n\n- se-cta-difficulty: User continues to the difficulty page of the suggested edits onboarding/activation dialog.\n\n- se-cta-back: User goes back from the difficulty page to the first (info or topic) page in the suggested edits onboarding/activation dialog.\n\n- se-activate: User proceeds with the suggested edits onboarding/activation dialog. (In some variants this doesn't activate anything, just closes the dialog.)\n\n- se-cancel-activation: User cancels the suggested edits onboarding/activation dialog.\n\n- se-taskfilter-open: User opens the suggested edits task type filter.\n\n- se-taskfilter-cancel: User cancels the suggested edits task type filter.\n\n- se-taskfilter-done: User closes the suggested edits task type filter, accepting changes.\n\n- se-topicfilter-open: User opens the suggested edits topic filter.\n\n- se-topicfilter-select-all: User clicks on the \"select all\" button in the topic filter or the initiation topic dialog.\n\n- se-topicfilter-remove-all: User clicks on the \"remove all\" button in the topic filter or the initiation topic dialog.\n\n- se-topicfilter-cancel: User cancels the suggested edits topic filter.\n\n- se-topicfilter-done: User closes the suggested edits topic filter, accepting changes.\n\n- se-task-impression: Task is shown to user.\n\n- se-task-pseudo-impression: like se-task-impression, but the task card is not a real card (error, no result etc).\n\n- se-task-navigation: User changes tasks via prev/next arrows.\n\n- se-task-click: User clicks on a task (and is taken to the recommended article).\n\n- se-explanation-open: User opens the explanation popup.\n\n- se-explanation-close: User closes the explanation popup.\n\n- se-explanation-link-click: User clicks on the \"Learn more\" link in the explanation popup."
+        },
+        "action_data": {
+          "description": "Additional data for certain actions:\n\nFor action=link-click: symbolic name of the link being clicked. n.b. for impact module links, we will not append a number for each link in the list.\n\nFor mentorship module, we will add the mentor edit count and the unformatted timestamp that the editor was last active.\n\nFor the welcome-close action:\n- type: the method by which the welcome notice was closed ('close-icon' for the normal close icon, 'outside-click' for clikcing outside the dialog/drawer, 'button' for the clicking the button).\n\nFor the se-activate action:\n- topics: the list of topic IDs selected by the user in the topic step of the activation dialog (only present when topic matching is enabled).\n\nFor suggested edits module:\n- taskTypes: the list of task type IDs selected by the user in the difficulty filter\n- topics: the list of topic IDs selected by the user in the topic filter (only present when topic matching is enabled)\n- taskCount: the number of available tasks.\n\nFor the se-cta-click, se-cta-difficulty, se-cta-back, se-activate and se-cancel-activation actions:\n- trigger: the method by which the onboarding/activation dialog was initiated ('welcome' for the welcome notice, 'info-icon' for the variant C icon button, 'impression' when it was visible immediately, 'suggested-edits' for the variant D mobile summary button; omitted for the variant A StartEditing button).\n\nFor the se-task-impression and se-task-click actions:\n- newcomerTaskToken: a value by which to join with the NewcomerTask event.\n\nFor the se-topicfilter-select-all and se-topicfilter-remove-all actions:\n- isCta: true when the button was in the initiation dialog, false when it was in the topic filter\n- topicGroup: which topic group the button belonged to.\n\nFor the se-task-pseudo-impression action:\n- type: one of 'error', 'empty', 'end')\n- errorMessage: error message, only when type=error\n\nFor the se-task-navigation action:\n- dir: 'prev' or 'next'.\n\nFor the se-explanation-* actions:\n- task-type-id",
+          "type": "string"
+        },
+        "user_id": {
+          "description": "The user id.",
+          "type": "integer"
+        },
+        "user_editcount": {
+          "description": "The total number of edits of the user.",
+          "type": "integer"
+        },
+        "user_variant": {
+          "description": "Which A/B testing variant the user is in.",
+          "type": "string"
+        },
+        "module": {
+          "type": "string",
+          "enum": [
+            "generic",
+            "start",
+            "start-account",
+            "start-tutorial",
+            "start-userpage",
+            "start-email",
+            "start-startediting",
+            "impact",
+            "help",
+            "mentorship",
+            "suggested-edits",
+            "startemail",
+            "banner"
+          ],
+          "description": "The module the user is interacting with. 'generic' can be used for events which don't belong to any module."
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "incomplete",
+            "activated",
+            "unactivated",
+            "noemail",
+            "unconfirmed",
+            "confirmed"
+          ],
+          "description": "The state of the module the user is interacting with."
+        },
+        "is_mobile": {
+          "description": "Whether the mobile site is being used.",
+          "type": "boolean"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "desktop",
+            "mobile-summary",
+            "mobile-details",
+            "mobile-overlay"
+          ],
+          "description": "The rendering mode of the module."
+        },
+        "homepage_pageview_token": {
+          "description": "One-time token per page load. This is a random user session ID that will be exported to the client-side when HomepageVisit events are recorded.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
