@@ -1,4 +1,4 @@
-# 'Secondary' event JSONSchemas for Wikimedia & Mediawiki event data
+# 'Secondary' event JSONSchemas for Wikimedia & MediaWiki event data
 
 This schema repository should contain event schemas that do *not* directly affect user-facing features. These schemas are meant to represent 'tier 2' events. This repository complements the [schemas/event/primary](https://gerrit.wikimedia.org/g/schemas/event/primary/) repository.
 
