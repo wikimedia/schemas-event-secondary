@@ -1,0 +1,54 @@
+title: analytics/legacy/quicksurveyinitiation
+description: Logs impression of QuickSurveys
+$id: /analytics/legacy/quicksurveyinitiation/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/http/client_ip/1.0.0#
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - surveyCodeName
+        properties:
+          beaconCapable:
+            description: >-
+              Whether the browser supports sendBeacon. Sent with the `eligible`
+              event.
+            type: boolean
+          surveySessionToken:
+            description: 'Session token that survives pages and in the rarest cases, tabs.'
+            type: string
+          pageviewToken:
+            description: Token unique to current page's JS execution context.
+            type: string
+          surveyCodeName:
+            type: string
+          eventName:
+            type: string
+            enum:
+              - eligible
+              - impression
+            description: >-
+              `eligible` - whether the user is eligible to see the survey,
+              `impression` - whether the user has seen half of the survey
+              widget.
+          performanceNow:
+            description: Value of performance.now() at the time of the event
+            type: integer
+examples:
+  - event:
+      surveyCodeName: perceived-performance-survey
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_QuickSurveyInitiation
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: QuickSurveyInitiation
+
