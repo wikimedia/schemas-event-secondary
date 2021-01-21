@@ -1,0 +1,79 @@
+title: analytics/legacy/desktopwebuiactionstracking
+description: >-
+  Logs when certain UI elements get visible and when user interacts with those
+  on desktop
+$id: /analytics/legacy/desktopwebuiactionstracking/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - action
+          - token
+          - isSidebarCollapsed
+          - isAnon
+        properties:
+          action:
+            description: >-
+              Type of interaction. `Shown` is special interaction, not triggered
+              by user. It can be sent to mark that given dynamic UI element got
+              presented to the user
+            type: string
+            enum:
+              - init
+              - click
+          skin:
+            description: >-
+              The skin. Right now the schema is only used on Vector, but this is
+              reserved for future usage.
+            type: string
+          skinVersion:
+            description: The skin version. 1 = legacy. 2 = modern.
+            type: integer
+          name:
+            description: >-
+              Uniquely describes the thing that was interacted. Clicks on
+              element with `data-event-name` attribute will be automatically
+              tracked, using `data-event-name` as `name`. Not required for init
+              events.
+            type: string
+          token:
+            description: >-
+              Session token that survives across pages (mw.user.sessionId()),
+              but not when browser restarts.
+            type: string
+          isSidebarCollapsed:
+            description: Is the sidebar collapsed?
+            type: boolean
+          isAnon:
+            description: Is the user viewing anonymously?
+            type: boolean
+          editCountBucket:
+            description: Number of edits by user. Set only if user is logged in.
+            type: string
+            enum:
+              - 0 edits
+              - 1-4 edits
+              - 5-99 edits
+              - 100-999 edits
+              - 1000+ edits
+examples:
+  - event:
+      action: init
+      token: example_token
+      isSidebarCollapsed: false
+      isAnon: false
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_DesktopWebUIActionsTracking
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: DesktopWebUIActionsTracking
