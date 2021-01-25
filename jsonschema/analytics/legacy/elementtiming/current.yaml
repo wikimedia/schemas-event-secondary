@@ -67,7 +67,9 @@ allOf:
             type: integer
 examples:
   - event:
-      key1: ENTER VALID EXAMPLES HERE!
+      name: example_name
+      left: 123
+      right: 321
     meta:
       dt: '2020-04-02T19:11:20.942Z'
       id: b0caf18d-6c7f-4403-947d-2712bbe28610
@@ -77,4 +79,3 @@ examples:
     $schema:
       $ref: '#/$id'
     schema: ElementTiming
-
