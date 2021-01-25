@@ -1,0 +1,38 @@
+title: analytics/legacy/rumspeedindex
+description: >-
+  Holds the outcome of RUMSpeedIndex measurement made by the NavigationTiming
+  extension
+$id: /analytics/legacy/rumspeedindex/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        properties:
+          pageviewToken:
+            description: >-
+              Token unique to current page's JS execution context. Used to link
+              to NavigationTiming schema events.
+            type: string
+          RSI:
+            description: >-
+              RUMSpeedIndex. Estimate of the SpeedIndex value based on
+              ResourceTiming data.
+            type: integer
+examples:
+  - event:
+      pageviewToken: example_token
+      RSI: 123
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_RUMSpeedIndex
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: RUMSpeedIndex
