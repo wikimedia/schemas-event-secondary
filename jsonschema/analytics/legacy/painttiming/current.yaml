@@ -1,0 +1,59 @@
+title: analytics/legacy/painttiming
+description: Holds the paint event timings captured by the NavigationTiming extension
+$id: /analytics/legacy/painttiming/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - isAnon
+        properties:
+          pageviewToken:
+            description: >-
+              Token unique to current page's JS execution context. Used to link
+              to NavTiming data.
+            type: string
+          name:
+            description: Performance entry name.
+            type: string
+          startTime:
+            description: Performance entry startTime.
+            type: integer
+          isOversample:
+            description: 'Whether this request is an oversample, or a standard sample.'
+            type: boolean
+          oversampleReason:
+            description: The reason that this request was oversampled
+            type: string
+          isAnon:
+            description: True if the user was anonymous; false if logged in.
+            type: boolean
+          mobileMode:
+            description: 'If in mobile view, specifies the mobile mode. Absent otherwise.'
+            enum:
+              - alpha
+              - beta
+              - stable
+            type: string
+          originCountry:
+            description: 'Country in which request originated, based on GeoIP look-up.'
+            type: string
+examples:
+  - event:
+      name: example_name
+      isAnon: false
+      oversampleReason: example_reason
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_PaintTiming
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: PaintTiming
