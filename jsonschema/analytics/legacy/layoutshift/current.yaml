@@ -1,0 +1,50 @@
+title: analytics/legacy/layoutshift
+description: Holds the layout shift data captured by the NavigationTiming extension
+$id: /analytics/legacy/layoutshift/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        properties:
+          pageviewToken:
+            description: >-
+              Token unique to current page's JS execution context. Used to link
+              to NavTiming data.
+            type: string
+          value:
+            description: >-
+              The layout shift score: the fraction of the viewport that is
+              occupied by the geometric union of the previous-frame and
+              current-frame visual representations of all janking elements in
+              that frame.
+            type: number
+          lastInputTime:
+            description: HR Time of the last user input.
+            type: integer
+          entryTime:
+            description: HR Time of the performance entry.
+            type: integer
+          firstSourceNode:
+            description: >-
+              The element type, id and classnames (in "element#id.class1.class2"
+              format) of the first element affected by the shift, as identified
+              by the user agent.
+            type: string
+examples:
+  - event:
+      key1: ENTER VALID EXAMPLES HERE!
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_LayoutShift
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: LayoutShift
+
