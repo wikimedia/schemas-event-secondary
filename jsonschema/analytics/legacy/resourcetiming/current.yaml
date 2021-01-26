@@ -1,0 +1,190 @@
+title: analytics/legacy/resourcetiming
+description: >-
+  Represents a set of client-side latency measurements provided by the
+  ResourceTiming API
+$id: /analytics/legacy/resourcetiming/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        properties:
+          pageviewToken:
+            description: >-
+              Token unique to current page's JS execution context. Used to link
+              NavTiming data to survey responses.
+            type: string
+          label:
+            description: Custom label to identify the resource.
+            type: string
+          startTime:
+            description: The starting time of request.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          workerStart:
+            description: >-
+              The time immediately before the user agent fires an event named
+              `fetch` at the active worker if the worker is available. Or the
+              time immediately before the user agent runs the worker required to
+              service the request.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          redirectStart:
+            description: >-
+              The starting time of the fetch that initiates the redirect (if
+              there is a redirect).
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          redirectEnd:
+            description: >-
+              The time immediately after receiving the last byte of the response
+              of the last redirect (if there is a redirect)
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          fetchStart:
+            description: >-
+              The time immediately before the user agent starts checking any
+              relevant application caches.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          domainLookupStart:
+            description: >-
+              The time immediately before the user agent starts the domain name
+              lookup for the current document.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          domainLookupEnd:
+            description: >-
+              The time immediately after the user agent finishes the domain name
+              lookup for the current document.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          connectStart:
+            description: >-
+              The time immediately before the user agent start establishing the
+              connection to the server to retrieve the document.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          secureConnectionStart:
+            description: >-
+              The time immediately before the user agent starts the handshake
+              process to secure the current connection.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          connectEnd:
+            description: >-
+              The time immediately after the user agent finishes establishing
+              the connection to the server to retrieve the current document.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          requestStart:
+            description: >-
+              The time immediately before the user agent starts requesting the
+              current document from the server, or from relevant application
+              caches or from local resources.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          responseStart:
+            description: >-
+              The time immediately after the user agent receives the first byte
+              of the response from the server, or from relevant application
+              caches or from local resources.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          responseEnd:
+            description: >-
+              The time immediately after the user agent receives the last byte
+              of the current document or immediately before the transport
+              connection is closed, whichever comes first.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          encodedBodySize:
+            description: >-
+              The size, in octets, received from a HTTP-network-or-cache fetch,
+              of the payload body [RFC7230], prior to removing any applied
+              content-codings [RFC7231], if the last non-redirected fetch of the
+              resource passes the timing allow check algorithm. Or the size, in
+              octets, of the payload body prior to removing any applied
+              content-codings if the resource is retrieved from relevant
+              application caches or from local resources.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          decodedBodySize:
+            description: >-
+              The size, in octets, received from a HTTP-network-or-cache fetch,
+              of the message body [RFC7230], after removing any applied
+              content-codings [RFC7231], if the last non-redirected fetch of the
+              resource passes the timing allow check algorithm. The size, in
+              octets, of the payload after removing any applied content-codings,
+              if the resource is retrieved from relevant application caches or
+              from local resources.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          initiatorType:
+            description: >-
+              The same value as the localName of that element [DOM], if the
+              request is a result of processing the element; "css", if the
+              request is a result of processing a CSS url() directive
+              [CSS-SYNTAX-3], such as @import url() or background: url();
+              "navigation", if the request is a navigation request;
+              "xmlhttprequest", if the request is a result of processing an
+              XMLHttpRequest object [XHR]; "fetch", if the request is the result
+              of processing the Fetch method [FETCH]; "beacon", if the request
+              is the result of processing the sendBeacon method [BEACON];
+              "other", if none of the above conditions match.
+            type: string
+          duration:
+            description: 'Difference between responseEnd and startTime, respectively.'
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+          name:
+            description: Resolved URL of the requested resource.
+            type: string
+          nextHopProtocol:
+            description: >-
+              The network protocol used to fetch the resource, as identified by
+              the ALPN Protocol ID [RFC7301]; resources retrieved from relevant
+              application caches or local resources, return an empty string.
+            type: string
+          transferSize:
+            description: >-
+              The size, in octets received from a HTTP-network fetch, consumed
+              by the response header fields and the response payload body
+              [RFC7230] if the last non-redirected fetch of the resource passes
+              the timing allow check algorithm.
+            type: integer
+            maximum: 9223372036854776000
+            minimum: 0
+examples:
+  - event:
+      label: example
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_ResourceTiming
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: ResourceTiming
+

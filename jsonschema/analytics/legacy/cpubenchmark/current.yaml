@@ -1,0 +1,43 @@
+title: analytics/legacy/cpubenchmark
+description: Holds the outcome of CPU microbenchmarks run by the NavigationTiming extension
+$id: /analytics/legacy/cpubenchmark/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        properties:
+          pageviewToken:
+            description: >-
+              Token unique to current page's JS execution context. Used to link
+              to NavTiming data.
+            type: string
+          score:
+            description: >-
+              A score representing the outcome of a CPU microbenchmark. Lower
+              values mean a more powerful device.
+            type: integer
+          batteryLevel:
+            description: >-
+              The current battery level, according to the Battery Status API.
+              Values range from 0 to 1.0.
+            type: number
+examples:
+  - event:
+      batteryLevel: 0.0
+      pageviewToken: example
+      score: 100
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_CpuBenchmark
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: CpuBenchmark
+
