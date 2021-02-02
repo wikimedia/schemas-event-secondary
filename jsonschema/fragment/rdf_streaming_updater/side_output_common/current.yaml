@@ -1,0 +1,42 @@
+title: fragment/rdf_streaming_updater/side_output_common
+description: Common fields for side output events (flink rdf-streaming-updater)
+$id: /fragment/rdf_streaming_updater/side_output_common/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+additionalProperties: false
+allOf:
+  - $ref: /fragment/common/1.0.0#
+  - properties:
+      item:
+        type: string
+        description: Wikibase item
+      dt:
+        type: string
+        format: date-time
+        maxLength: 128
+        description: (should be part of /fragment/common) time at which this event is produced (processing time of the flink pipeline)
+      original_ingestion_dt:
+        type: string
+        format: date-time
+        maxLength: 128
+        description: time at which the event entered the flink pipeline, in ISO-8601 format
+      revision_id:
+        type: integer
+        minimum: 0
+        description: revision for which this event was triggered for
+      original_event_info:
+        type: object
+        allOf:
+          - $ref: /fragment/common/1.0.0#
+          - properties:
+              dt:
+                type: string
+                format: date-time
+                maxLength: 128
+                description: (should be part of /fragment/common) original event time
+          - $ref: /fragment/common/1.0.0#
+required:
+    - item
+    - original_ingestion_dt
+    - revision_id
+    - original_event_info
