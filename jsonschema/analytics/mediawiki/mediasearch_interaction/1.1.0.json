@@ -1,0 +1,192 @@
+{
+  "title": "analytics/mediawiki/mediasearch_interaction",
+  "description": "Measures features on the Special:MediaSearch page.\n",
+  "$id": "/analytics/mediawiki/mediasearch_interaction/1.1.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "$schema",
+    "action",
+    "language_code",
+    "meta",
+    "ui_mw_skin",
+    "web_pageview_id"
+  ],
+  "examples": [
+    {
+      "$schema": "/analytics/mediawiki/mediasearch_interaction/1.1.0",
+      "meta": {
+        "stream": "mediawiki.mediasearch_interaction",
+        "domain": "es.wikipedia.org",
+        "dt": "2020-12-12T00:20:00.649Z"
+      },
+      "action": "search_new",
+      "web_pageview_id": "example_web_pageview_id",
+      "ui_mw_skin": "vector",
+      "language_code": "es",
+      "dt": "2020-12-12T00:20:00.649Z"
+    }
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192,
+          "description": "Unique URI identifying the event or entity"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "dt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128,
+          "description": "UTC event datetime, in ISO-8601 format"
+        },
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer"
+        },
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "dt": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128,
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n"
+    },
+    "action": {
+      "type": "string",
+      "description": "Identifies the context in which the event was created.",
+      "enum": [
+        "search_new",
+        "search_load_more",
+        "search_clear",
+        "tab_change",
+        "filter_change",
+        "result_click",
+        "quickview_hide",
+        "quickview_more_details_click",
+        "quickview_filename_copy",
+        "quickview_wikitext_link_copy"
+      ]
+    },
+    "search_query": {
+      "type": "string",
+      "description": "The search string."
+    },
+    "search_result_page_id": {
+      "type": "integer",
+      "description": "MediaWiki ID of the result page (file, category, etc). Logged when the user interacts with a specific result in the set."
+    },
+    "search_result_count": {
+      "type": "integer",
+      "description": "Total number of results that have been returned within a given tab for a given search."
+    },
+    "search_result_position": {
+      "type": "integer",
+      "description": "The position of the search result in the search result set."
+    },
+    "search_result_has_quickview": {
+      "type": "boolean",
+      "description": "Whether or not the result will trigger the quickview when clicked."
+    },
+    "search_media_type": {
+      "type": "string",
+      "description": "The active media type (aka tab) for the event.",
+      "enum": [
+        "bitmap",
+        "audio",
+        "video",
+        "page",
+        "other"
+      ]
+    },
+    "search_filter_type": {
+      "type": "string",
+      "description": "Type of filter (\"mimeType\", \"sort\", \"imageSize\", etc.) that was changed."
+    },
+    "search_filter_value": {
+      "type": "string",
+      "description": "The new value for a given filter."
+    },
+    "prior_search_filter_type": {
+      "type": "string",
+      "description": "Type of filter (\"mimeType\", \"sort\", \"imageSize\", etc.) that was changed."
+    },
+    "prior_search_filter_value": {
+      "type": "string",
+      "description": "The new value for a given filter."
+    },
+    "web_pageview_id": {
+      "type": "string",
+      "description": "A unique identifier generated per search session."
+    },
+    "ui_mw_skin": {
+      "type": "string",
+      "description": "The name of the skin that the user is using, e.g. \"vector\"."
+    },
+    "language_code": {
+      "type": "string",
+      "description": "Two-letter code representing the user's specified interface language."
+    }
+  }
+}
