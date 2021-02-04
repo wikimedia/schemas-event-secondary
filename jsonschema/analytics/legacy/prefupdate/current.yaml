@@ -1,0 +1,81 @@
+title: analytics/legacy/prefupdate
+description: >-
+  Logs preference changes initiated by a registered user. Each event represents
+  a change to a row in MediaWiki's user_properties table and logs whether the
+  change is from or to a default value. See also Schema:EchoPrefUpdate.
+$id: /analytics/legacy/prefupdate/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - version
+          - saveTimestamp
+          - userId
+          - property
+          - value
+          - isDefault
+          - bucketedUserEditCount
+        properties:
+          version:
+            description: >-
+              Current version of the log. Any change affecting the nature of the
+              data collected in the log should be tracked by bumping the version
+              number. The field is a string to capture minor version changes.
+            type: string
+          saveTimestamp:
+            description: >-
+              A timestamp representing when a set of updates is made.  This
+              field is useful for grouping pref updates into a single changeset.
+            type: string
+          userId:
+            description: user ID
+            type: integer
+          property:
+            description: The name of the property that changed.
+            type: string
+          value:
+            description: >-
+              The new value that the property is set to, encoded as JSON. When a
+              preference is reverted to system default (and the record removed
+              from user_properties), the relevant default value will be logged
+              in this field and isDefault set to true.
+            type: string
+          isDefault:
+            description: True if the new value represents the current system default
+            type: boolean
+          bucketedUserEditCount:
+            type: string
+            enum:
+              - Unknown
+              - 1000+ edits
+              - 100-999 edits
+              - 5-99 edits
+              - 1-4 edits
+              - 0 edits
+            description: |-
+              The user's edit count placed into one of five buckets.
+              "Unknown" represents the user's edit count not being available.
+examples:
+  - event:
+      version: example_version
+      saveTimestamp: '20210204112448'
+      userId: 12345
+      property: example_property
+      value: example_value
+      isDefault: false
+      bucketedUserEditCount: '5-99 edits'
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_PrefUpdate
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: PrefUpdate
