@@ -58,6 +58,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       has_cookies:
         description: True if the http request has any cookies set
         type: boolean
@@ -97,6 +99,8 @@ properties:
   revision:
     description: Revision ID of event schema.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   topic:
     description: The queue topic name this event belongs in.  Deprecated.
     type: string
@@ -111,6 +115,8 @@ properties:
   seqId:
     description: Udp2log sequence ID.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   uuid:
     description: 'Unique event identifier.  Deprecated, use meta.id.'
     type: string
@@ -141,41 +147,65 @@ properties:
       loadTime:
         description: Performance entry loadTime. The element's load time
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       startTime:
         description: Performance entry startTime. The element's start render time
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       renderTime:
         description: Performance entry renderTime. The element's end render time
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       responseEnd:
         description: >-
           Performance entry responseEnd. The element's underlying response end,
           same as Resource Timing
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       bottom:
         description: Performance entry intersectionRect bottom.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       height:
         description: Performance entry intersectionRect height.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       left:
         description: Performance entry intersectionRect left.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       right:
         description: Performance entry intersectionRect right.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       top:
         description: Performance entry intersectionRect top.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       width:
         description: Performance entry intersectionRect width.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       x:
         description: Performance entry intersectionRect x.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       'y':
         description: Performance entry intersectionRect y.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
 examples:
   - event:
       name: example_name

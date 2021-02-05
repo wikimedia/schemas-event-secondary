@@ -75,6 +75,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
   backend_host:
     description: Hostname of sparql endpoint (blazegraph) server handling this sparql query
     type: string
@@ -88,6 +90,8 @@ properties:
   query_time:
     description: query time
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   format:
     description: the format requested (overrides the Accept header if set)
     type: string

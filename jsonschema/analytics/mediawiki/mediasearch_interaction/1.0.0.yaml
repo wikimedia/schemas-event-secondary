@@ -60,6 +60,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       has_cookies:
         description: True if the http request has any cookies set
         type: boolean
@@ -105,14 +107,20 @@ properties:
       MediaWiki ID of the result page (file, category, etc). Logged when the
       user interacts with a specific result in the set.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   search_result_count:
     description: >-
       Total number of results that have been returned within a given tab for a
       given search.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   search_result_position:
     description: The position of the search result in the search result set.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   search_result_has_quickview:
     description: Whether or not the result will trigger the quickview when clicked.
     type: boolean

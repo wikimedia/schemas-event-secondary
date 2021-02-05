@@ -71,6 +71,7 @@ properties:
     type: integer
     minimum: 0
     description: revision for which this event was triggered for
+    maximum: 9007199254740991
   original_event_info:
     title: fragment/common
     description: Common schema fields for event schemas
@@ -132,12 +133,15 @@ properties:
     description: >-
       parent revision for which this event was triggered for (only set for
       revision-create)
+    maximum: 9007199254740991
   inconsistency:
     description: type of the inconsistency
     type: string
   state_revision_id:
     description: revision in flink state
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   state_status:
     description: 'status of the state (UNDEFINED, CREATED or DELETED)'
     type: string

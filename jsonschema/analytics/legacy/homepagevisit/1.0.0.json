@@ -88,7 +88,9 @@
         },
         "status_code": {
           "description": "The HTTP status code returned for this request (when known)",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "has_cookies": {
           "description": "True if the http request has any cookies set",
@@ -130,7 +132,9 @@
     },
     "revision": {
       "description": "Revision ID of event schema.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "topic": {
       "description": "The queue topic name this event belongs in.  Deprecated.",
@@ -148,7 +152,9 @@
     },
     "seqId": {
       "description": "Udp2log sequence ID.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "uuid": {
       "description": "Unique event identifier.  Deprecated, use meta.id.",
@@ -191,7 +197,9 @@
         },
         "referer_namespace": {
           "description": "The namespace associated with the MediaWiki Title (e.g. 0, for Main_Page) that is the referer to this page. Calculated by attempting to load a MediaWiki title from parsing the HTTP REFERER header",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "referer_action": {
           "type": "string",
@@ -204,11 +212,15 @@
         },
         "user_editcount": {
           "description": "The user edit count.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "user_id": {
           "description": "User ID, needed for tracking across login sessions.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "impact_module_state": {
           "type": "string",

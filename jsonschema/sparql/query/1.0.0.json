@@ -107,7 +107,9 @@
         },
         "status_code": {
           "type": "integer",
-          "description": "The HTTP status code returned for this request (when known)"
+          "description": "The HTTP status code returned for this request (when known)",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         }
       }
     },
@@ -125,7 +127,9 @@
     },
     "query_time": {
       "type": "integer",
-      "description": "query time"
+      "description": "query time",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "format": {
       "type": "string",

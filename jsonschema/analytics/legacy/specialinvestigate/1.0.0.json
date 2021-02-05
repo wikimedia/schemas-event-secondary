@@ -83,7 +83,9 @@
         },
         "status_code": {
           "description": "The HTTP status code returned for this request (when known)",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "has_cookies": {
           "description": "True if the http request has any cookies set",
@@ -125,7 +127,9 @@
     },
     "revision": {
       "description": "Revision ID of event schema.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "topic": {
       "description": "The queue topic name this event belongs in.  Deprecated.",
@@ -143,7 +147,9 @@
     },
     "seqId": {
       "description": "Udp2log sequence ID.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "uuid": {
       "description": "Unique event identifier.  Deprecated, use meta.id.",
@@ -174,15 +180,21 @@
         },
         "targetsCount": {
           "description": "Number of targets in the request (if zero, that means a filter form was submitted). Present if action is 'submit' or 'block'.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "excludeTargetsCount": {
           "description": "Number of excluded targets in the request. Present if action is 'submit'.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "relevantTargetsCount": {
           "description": "Number of targets that an action is performed on. Present if action is 'end', 'block' or 'query'.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "tab": {
           "description": "The current tab. Present if action is 'query'.",
@@ -195,11 +207,15 @@
         },
         "queryTime": {
           "description": "Approximate time taken to fetch results, in milliseconds. Present if action is 'query'.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "resultsCount": {
           "description": "Number of result rows. Present if action is 'query'.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "resultsIncomplete": {
           "description": "Whether the results were incomplete. Present if action is 'query'.",

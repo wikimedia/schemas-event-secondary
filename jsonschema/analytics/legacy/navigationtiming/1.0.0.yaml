@@ -58,6 +58,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       has_cookies:
         description: True if the http request has any cookies set
         type: boolean
@@ -102,6 +104,8 @@ properties:
   revision:
     description: Revision ID of event schema.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   topic:
     description: The queue topic name this event belongs in.  Deprecated.
     type: string
@@ -116,6 +120,8 @@ properties:
   seqId:
     description: Udp2log sequence ID.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   uuid:
     description: 'Unique event identifier.  Deprecated, use meta.id.'
     type: string
@@ -146,33 +152,33 @@ properties:
           The time immediately after the user agent finishes establishing the
           connection to the server to retrieve the current document.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       connectStart:
         description: >-
           The time immediately before the user agent start establishing the
           connection to the server to retrieve the document.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       dnsLookup:
         description: Time it took to resolve names (domainLookupEnd - domainLookupStart).
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       domComplete:
         description: >-
           The time immediately before the user agent sets the current document
           readiness to "complete".
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       domInteractive:
         description: >-
           The time immediately before the user agent sets the current document
           readiness to "interactive".
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       netinfoConnectionType:
         description: >-
@@ -191,18 +197,22 @@ properties:
           measurements.  See
           https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       netinfoDownlink:
         description: >-
           The browser's impression of the downlink bandwidth in Mbps, based on
           measurements.  See
           https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation
         type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       fetchStart:
         description: >-
           The time immediately before the user agent starts checking any
           relevant application caches.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       gaps:
         description: >-
@@ -211,6 +221,8 @@ properties:
           domainLookupEnd, requestStart - connectEnd and loadEventStart -
           domComplete
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       isAnon:
         description: True if the user was anonymous; false if logged in.
         type: boolean
@@ -220,12 +232,14 @@ properties:
       loadEventEnd:
         description: The time when the load event of the current document is completed.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       loadEventStart:
         description: >-
           The time immediately before the load event of the current document is
           fired.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       mobileMode:
         description: 'If in mobile view, specifies the mobile mode. Absent otherwise.'
@@ -246,16 +260,20 @@ properties:
       namespaceId:
         description: '`page_namespace` of the requested page. Unset for special pages.'
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       redirecting:
         description: Time spent following redirects.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       requestStart:
         description: >-
           the time immediately before the user agent starts requesting the
           current document from the server, or from relevant application caches
           or from local resources.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       responseEnd:
         description: >-
@@ -263,7 +281,7 @@ properties:
           the current document or immediately before the transport connection is
           closed, whichever comes first.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       responseStart:
         description: >-
@@ -271,28 +289,32 @@ properties:
           the response from the server, or from relevant application caches or
           from local resources.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       secureConnectionStart:
         description: >-
           The time immediately before the user agent starts the handshake
           process to secure the current connection.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       unload:
         description: The time spent unload (unloadEventEnd - unloadEventStart)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       mediaWikiLoadEnd:
         description: >-
           The time at which all ResourceLoader modules for this page have
           completed loading and executing.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       revId:
         description: Revision ID of requested page. Unset for special pages.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       mwSpecialPageName:
         description: >-
           If the page being measured is a Special Page, this will contain the
@@ -306,16 +328,22 @@ properties:
       transferSize:
         description: 'Transfer size of the main document, in octets.'
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       deviceMemory:
         description: >-
           The available RAM on the device, in MB. See
           https://developer.mozilla.org/en-US/docs/Web/API/Navigator/deviceMemory
         type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       hardwareConcurrency:
         description: >-
           The number of logical CPU cores on the device. See
           https://developer.mozilla.org/en-US/docs/Web/API/NavigatorConcurrentHardware/hardwareConcurrency
         type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       cacheResponseType:
         description: >-
           Edge cache response type (eg. "miss", "hit-front"). Collected via the

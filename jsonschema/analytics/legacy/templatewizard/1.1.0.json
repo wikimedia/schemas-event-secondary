@@ -87,7 +87,9 @@
         },
         "status_code": {
           "type": "integer",
-          "description": "The HTTP status code returned for this request (when known)"
+          "description": "The HTTP status code returned for this request (when known)",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "client_ip": {
           "type": "string",
@@ -133,7 +135,9 @@
     },
     "revision": {
       "type": "integer",
-      "description": "Revision ID of event schema.  Deprecated."
+      "description": "Revision ID of event schema.  Deprecated.",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "topic": {
       "type": "string",
@@ -151,7 +155,9 @@
     },
     "seqId": {
       "type": "integer",
-      "description": "Udp2log sequence ID.  Deprecated."
+      "description": "Udp2log sequence ID.  Deprecated.",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "uuid": {
       "type": "string",
@@ -187,7 +193,9 @@
         },
         "namespace_id": {
           "description": "The ID of the page's namespace.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "page_title": {
           "description": "The title (without namespace) of the page on which the action occurred (may not exist).",
@@ -195,7 +203,9 @@
         },
         "revision_id": {
           "description": "The page's current revision ID, for pages that already exist when TemplateWizard is used.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "template_names": {
           "description": "For 'remove-template', 'use-recent', 'insert-template', and 'save-page' actions, the titles of the templates that were acted upon.",
@@ -212,7 +222,8 @@
             "user_edit_count": {
               "description": "The number of edits this user has made at the time of this event.  Not present for anonymous users.",
               "type": "integer",
-              "minimum": 0
+              "minimum": 0,
+              "maximum": 9007199254740991
             },
             "user_edit_count_bucket": {
               "description": "Reduced granularity edit count, safe to keep in the sanitized stream.  This is optional, and will not be present for anonymous users.",
@@ -227,7 +238,9 @@
             },
             "user_id": {
               "description": "The user id that performed this change.  This is optional, and will not be present for anonymous users.",
-              "type": "integer"
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
             }
           }
         }

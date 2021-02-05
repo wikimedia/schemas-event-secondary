@@ -85,7 +85,9 @@
         },
         "status_code": {
           "description": "The HTTP status code returned for this request (when known)",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "has_cookies": {
           "description": "True if the http request has any cookies set",
@@ -127,7 +129,9 @@
     },
     "revision": {
       "description": "Revision ID of event schema.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "topic": {
       "description": "The queue topic name this event belongs in.  Deprecated.",
@@ -145,7 +149,9 @@
     },
     "seqId": {
       "description": "Udp2log sequence ID.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "uuid": {
       "description": "Unique event identifier.  Deprecated, use meta.id.",
@@ -165,11 +171,15 @@
         },
         "processingStart": {
           "description": "The time the first event handler started to execute.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "processingEnd": {
           "description": "The time the last event handler finished executing.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "name": {
           "description": "The type of event dispatched. E.g. \"touchmove\". Doesn't require an event listener of this type to be registered.",
@@ -177,15 +187,21 @@
         },
         "startTime": {
           "description": "The event timestamp.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "duration": {
           "description": "The duration between |startTime| and the next time we \"update the rendering or user interface of that Document and its browsing context to reflect the current state\" in step 7.12 in the HTML event loop processing model.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "FID": {
           "description": "First Input Delay (processingStart - startTime)",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         }
       }
     }

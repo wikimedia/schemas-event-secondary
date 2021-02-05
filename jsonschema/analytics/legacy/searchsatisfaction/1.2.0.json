@@ -97,8 +97,10 @@
           "description": "The HTTP request method (GET, POST, etc.)"
         },
         "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
           "type": "integer",
-          "description": "The HTTP status code returned for this request (when known)"
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "client_ip": {
           "type": "string",
@@ -144,7 +146,9 @@
     },
     "revision": {
       "type": "integer",
-      "description": "Revision ID of event schema.  Deprecated."
+      "description": "Revision ID of event schema.  Deprecated.",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "topic": {
       "type": "string",
@@ -162,7 +166,9 @@
     },
     "seqId": {
       "type": "integer",
-      "description": "Udp2log sequence ID.  Deprecated."
+      "description": "Udp2log sequence ID.  Deprecated.",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "uuid": {
       "type": "string",
@@ -214,23 +220,31 @@
         },
         "checkin": {
           "type": "integer",
-          "description": "A numeric value representing the number of seconds a user has spent on a page. As with Schema:TestSearchSatisfaction2, the pings are at 10s, 20s, ..., 50s, 60s, 90s, 120s (2min), 150s, 180s (3min), 210s, 240s (4min), 300s (5min), 360s (6min), 420s (7min)."
+          "description": "A numeric value representing the number of seconds a user has spent on a page. As with Schema:TestSearchSatisfaction2, the pings are at 10s, 20s, ..., 50s, 60s, 90s, 120s (2min), 150s, 180s (3min), 210s, 240s (4min), 300s (5min), 360s (6min), 420s (7min).",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "query": {
           "type": "string",
-          "description": "The actual terms the user searched for. This is only logged with searchResultPage actions"
+          "description": "The actual terms the user searched for. This is only logged with searchResultPage actions",
         },
         "hitsReturned": {
           "type": "integer",
-          "description": "The number of results returned and shown in the SERP. This is only logged with searchResultPage actions"
+          "description": "The number of results returned and shown in the SERP. This is only logged with searchResultPage actions",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "articleId": {
           "type": "integer",
-          "description": "The mediawiki article id of the current page, if the current page is an article."
+          "description": "The mediawiki article id of the current page, if the current page is an article.",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "position": {
           "type": "integer",
-          "description": "The position of the search result in the search result set, including any offsets."
+          "description": "The position of the search result in the search result set, including any offsets.",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "subTest": {
           "type": "string",
@@ -262,7 +276,9 @@
         },
         "msToDisplayResults": {
           "type": "integer",
-          "description": "The number of milliseconds it took between requesting results and showing them to the user in a searchResultPage event. This is always reported for autocomplete events and is only reported on browsers supporting the navigation timing api for full text."
+          "description": "The number of milliseconds it took between requesting results and showing them to the user in a searchResultPage event. This is always reported for autocomplete events and is only reported on browsers supporting the navigation timing api for full text.",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "searchToken": {
           "type": "string",
@@ -282,7 +298,9 @@
         },
         "sampleMultiplier": {
           "type": "number",
-          "description": "Account for sampling by reporting a multiplier representing the number of events this should count as."
+          "description": "Account for sampling by reporting a multiplier representing the number of events this should count as.",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "skin": {
           "type": "string",

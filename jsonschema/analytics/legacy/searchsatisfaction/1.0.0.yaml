@@ -84,8 +84,10 @@ properties:
         type: string
         description: 'The HTTP request method (GET, POST, etc.)'
       status_code:
-        type: integer
         description: The HTTP status code returned for this request (when known)
+        type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       client_ip:
         type: string
         description: The http client's IP address
@@ -114,8 +116,10 @@ properties:
     type: string
     description: Title of event schema.  Deprecated.
   revision:
-    type: integer
     description: Revision ID of event schema.  Deprecated.
+    type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   topic:
     type: string
     description: The queue topic name this event belongs in.  Deprecated.
@@ -128,8 +132,10 @@ properties:
     format: date-time
     maxLength: 128
   seqId:
-    type: integer
     description: Udp2log sequence ID.  Deprecated.
+    type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   uuid:
     type: string
     description: 'Unique event identifier.  Deprecated, use meta.id.'
@@ -198,6 +204,8 @@ properties:
           a page. As with Schema:TestSearchSatisfaction2, the pings are at 10s,
           20s, ..., 50s, 60s, 90s, 120s (2min), 150s, 180s (3min), 210s, 240s
           (4min), 300s (5min), 360s (6min), 420s (7min).
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       query:
         type: string
         description: >-
@@ -208,17 +216,24 @@ properties:
         description: >-
           The number of results returned and shown in the SERP. This is only
           logged with searchResultPage actions
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       articleId:
         type: integer
         description: >-
           The mediawiki article id of the current page, if the current page is
           an article.
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       position:
         type: integer
         description: >-
           The position of the search result in the search result set, including
           any offsets.
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       subTest:
+
         type: string
         description: The name of any sub-test that this user is participating in.
       mwSessionId:
@@ -259,6 +274,8 @@ properties:
           showing them to the user in a searchResultPage event. This is always
           reported for autocomplete events and is only reported on browsers
           supporting the navigation timing api for full text.
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       searchToken:
         type: string
         description: >-
@@ -288,3 +305,5 @@ properties:
         description: >-
           Account for sampling by reporting a multiplier representing the number
           of events this should count as.
+        minimum: -9007199254740991
+        maximum: 9007199254740991

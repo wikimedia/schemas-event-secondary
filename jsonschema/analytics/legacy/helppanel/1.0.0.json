@@ -94,7 +94,9 @@
         },
         "status_code": {
           "description": "The HTTP status code returned for this request (when known)",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "has_cookies": {
           "description": "True if the http request has any cookies set",
@@ -136,7 +138,9 @@
     },
     "revision": {
       "description": "Revision ID of event schema.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "topic": {
       "description": "The queue topic name this event belongs in.  Deprecated.",
@@ -154,7 +158,9 @@
     },
     "seqId": {
       "description": "Udp2log sequence ID.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "uuid": {
       "description": "Unique event identifier.  Deprecated, use meta.id.",
@@ -219,11 +225,15 @@
         },
         "user_id": {
           "description": "The user id.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "user_editcount": {
           "description": "The total number of edits of the user.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "context": {
           "type": "string",
@@ -256,7 +266,9 @@
         },
         "page_id": {
           "description": "ID of the page the user is attempting to edit.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "page_title": {
           "description": "Full title of the page the user is attempting to edit, including namespace (wgPageName format). This is needed to log edit activity on redlinks, as pageId is not available.",
@@ -264,7 +276,9 @@
         },
         "page_ns": {
           "description": "Namespace ID of the page the user is attempting to edit.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "user_can_edit": {
           "description": "Whether the user is allowed to edit the page. This will be false if e.g. the page is protected or the user is blocked.",

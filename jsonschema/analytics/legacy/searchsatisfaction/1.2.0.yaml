@@ -56,6 +56,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       client_ip:
         description: The http client's IP address
         type: string
@@ -98,6 +100,8 @@ properties:
   revision:
     description: Revision ID of event schema.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   topic:
     description: The queue topic name this event belongs in.  Deprecated.
     type: string
@@ -112,6 +116,8 @@ properties:
   seqId:
     description: Udp2log sequence ID.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   uuid:
     description: 'Unique event identifier.  Deprecated, use meta.id.'
     type: string
@@ -180,6 +186,8 @@ properties:
           20s, ..., 50s, 60s, 90s, 120s (2min), 150s, 180s (3min), 210s, 240s
           (4min), 300s (5min), 360s (6min), 420s (7min).
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       query:
         description: >-
           The actual terms the user searched for. This is only logged with
@@ -190,16 +198,22 @@ properties:
           The number of results returned and shown in the SERP. This is only
           logged with searchResultPage actions
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       articleId:
         description: >-
           The mediawiki article id of the current page, if the current page is
           an article.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       position:
         description: >-
           The position of the search result in the search result set, including
           any offsets.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       subTest:
         description: The name of any sub-test that this user is participating in.
         type: string
@@ -241,6 +255,8 @@ properties:
           reported for autocomplete events and is only reported on browsers
           supporting the navigation timing api for full text.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       searchToken:
         description: >-
           Token, primarily for debugging, which associates a search to a log in
@@ -270,6 +286,8 @@ properties:
           Account for sampling by reporting a multiplier representing the number
           of events this should count as.
         type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       skin:
         description: >-
           The name of the skin that the user is using, e.g. "vector".

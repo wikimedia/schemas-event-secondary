@@ -84,7 +84,9 @@
         },
         "status_code": {
           "description": "The HTTP status code returned for this request (when known)",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "has_cookies": {
           "description": "True if the http request has any cookies set",
@@ -126,7 +128,9 @@
     },
     "revision": {
       "description": "Revision ID of event schema.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "topic": {
       "description": "The queue topic name this event belongs in.  Deprecated.",
@@ -144,7 +148,9 @@
     },
     "seqId": {
       "description": "Udp2log sequence ID.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "uuid": {
       "description": "Unique event identifier.  Deprecated, use meta.id.",
@@ -164,15 +170,21 @@
         },
         "value": {
           "description": "The layout shift score: the fraction of the viewport that is occupied by the geometric union of the previous-frame and current-frame visual representations of all janking elements in that frame.",
-          "type": "number"
+          "type": "number",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "lastInputTime": {
           "description": "HR Time of the last user input.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "entryTime": {
           "description": "HR Time of the performance entry.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "firstSourceNode": {
           "description": "The element type, id and classnames (in \"element#id.class1.class2\" format) of the first element affected by the shift, as identified by the user agent.",

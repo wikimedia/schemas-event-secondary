@@ -53,8 +53,10 @@ properties:
         type: string
         description: 'The HTTP request method (GET, POST, etc.)'
       status_code:
-        type: integer
         description: The HTTP status code returned for this request (when known)
+        type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       client_ip:
         type: string
         description: The http client's IP address
@@ -83,8 +85,10 @@ properties:
     type: string
     description: Title of event schema.  Deprecated.
   revision:
-    type: integer
     description: Revision ID of event schema.  Deprecated.
+    type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   topic:
     type: string
     description: The queue topic name this event belongs in.  Deprecated.
@@ -97,8 +101,10 @@ properties:
     format: date-time
     maxLength: 128
   seqId:
-    type: integer
     description: Udp2log sequence ID.  Deprecated.
+    type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   uuid:
     type: string
     description: 'Unique event identifier.  Deprecated, use meta.id.'

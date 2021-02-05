@@ -12,14 +12,41 @@ required:
   - event
   - meta
 properties:
-  revision:
-    description: Revision ID of event schema.  Deprecated.
-    type: integer
   $schema:
     description: >
       A URI identifying the JSONSchema for this event. This should match an
       schema's $id in a schema repository. E.g. /schema/title/1.0.0
     type: string
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      uri:
+        type: string
+        format: uri-reference
+        maxLength: 8192
+        description: Unique URI identifying the event or entity
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      id:
+        description: Unique ID of this event
+        type: string
+      dt:
+        type: string
+        format: date-time
+        maxLength: 128
+        description: 'UTC event datetime, in ISO-8601 format'
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
   http:
     type: object
     properties:
@@ -29,6 +56,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       client_ip:
         description: The http client's IP address
         type: string
@@ -68,36 +97,11 @@ properties:
   schema:
     description: Title of event schema.  Deprecated.
     type: string
-  meta:
-    type: object
-    required:
-      - dt
-      - stream
-    properties:
-      uri:
-        type: string
-        format: uri-reference
-        maxLength: 8192
-        description: Unique URI identifying the event or entity
-      request_id:
-        description: Unique ID of the request that caused the event
-        type: string
-      id:
-        description: Unique ID of this event
-        type: string
-      dt:
-        type: string
-        format: date-time
-        maxLength: 128
-        description: 'UTC event datetime, in ISO-8601 format'
-      domain:
-        description: Domain the event or entity pertains to
-        type: string
-        minLength: 1
-      stream:
-        description: Name of the stream/queue/dataset that this event belongs in
-        type: string
-        minLength: 1
+  revision:
+    description: Revision ID of event schema.  Deprecated.
+    type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   topic:
     description: The queue topic name this event belongs in.  Deprecated.
     type: string
@@ -112,6 +116,8 @@ properties:
   seqId:
     description: Udp2log sequence ID.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   uuid:
     description: 'Unique event identifier.  Deprecated, use meta.id.'
     type: string
@@ -133,14 +139,6 @@ properties:
       - source
       - uniqueId
     properties:
-      inputLocation:
-        description: >-
-          Sent with searchResultPage events. For autocomplete, identifies the
-          location(header, or Special:Search main input) of the autocomplete
-          that was used. For full text indicates the location of the 'did you
-          mean' that was used (either autorewrite, suggestion, original, or
-          rewritten)
-        type: string
       action:
         type: string
         enum:
@@ -164,6 +162,13 @@ properties:
           ssclick. If the user interacts with a result to explore similar
           (pages, categories, translations), there are hover-on, hover-off, and
           esclick events.
+      searchSessionId:
+        description: >-
+          A unique identifier generated per search session. A search session
+          identifies a single user performing searches within a limited
+          timespan. If no search is performed within ten minutes of a previous
+          search a new session id is generated.
+        type: string
       pageViewId:
         description: >-
           A unique identifier generated per visited page. This allows a
@@ -181,6 +186,8 @@ properties:
           20s, ..., 50s, 60s, 90s, 120s (2min), 150s, 180s (3min), 210s, 240s
           (4min), 300s (5min), 360s (6min), 420s (7min).
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       query:
         description: >-
           The actual terms the user searched for. This is only logged with
@@ -191,16 +198,22 @@ properties:
           The number of results returned and shown in the SERP. This is only
           logged with searchResultPage actions
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       articleId:
         description: >-
           The mediawiki article id of the current page, if the current page is
           an article.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       position:
         description: >-
           The position of the search result in the search result set, including
           any offsets.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       subTest:
         description: The name of any sub-test that this user is participating in.
         type: string
@@ -217,12 +230,13 @@ properties:
         description: >-
           The type of search that triggered the event. Either autocomplete or
           fulltext.
-      searchSessionId:
+      inputLocation:
         description: >-
-          A unique identifier generated per search session. A search session
-          identifies a single user performing searches within a limited
-          timespan. If no search is performed within ten minutes of a previous
-          search a new session id is generated.
+          Sent with searchResultPage events. For autocomplete, identifies the
+          location(header, or Special:Search main input) of the autocomplete
+          that was used. For full text indicates the location of the 'did you
+          mean' that was used (either autorewrite, suggestion, original, or
+          rewritten)
         type: string
       didYouMeanVisible:
         description: >-
@@ -241,6 +255,8 @@ properties:
           reported for autocomplete events and is only reported on browsers
           supporting the navigation timing api for full text.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       searchToken:
         description: >-
           Token, primarily for debugging, which associates a search to a log in
@@ -270,6 +286,8 @@ properties:
           Account for sampling by reporting a multiplier representing the number
           of events this should count as.
         type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       skin:
         description: >-
           The name of the skin that the user is using, e.g. "vector".
@@ -285,13 +303,13 @@ properties:
         type: boolean
 examples:
   - event:
-      uniqueId: cb271b4b1ec0c5c83e84k8j4xj6o
       action: visitPage
+      source: fulltext
       searchSessionId: 637f1345d71834b06463k8j4of7t
       pageViewId: 9b8c9ab1b52c21e966edk8j4xj6f
       scroll: false
       mwSessionId: ee4f8d334a450a0fe63e
-      source: fulltext
+      uniqueId: cb271b4b1ec0c5c83e84k8j4xj6o
       sampleMultiplier: 1
       articleId: 4
       position: 0

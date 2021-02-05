@@ -76,7 +76,8 @@
     "revision_id": {
       "type": "integer",
       "minimum": 0,
-      "description": "revision for which this event was triggered for"
+      "description": "revision for which this event was triggered for",
+      "maximum": 9007199254740991
     },
     "original_event_info": {
       "type": "object",

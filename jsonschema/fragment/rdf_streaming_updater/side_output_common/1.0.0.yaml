@@ -66,6 +66,7 @@ properties:
     type: integer
     minimum: 0
     description: revision for which this event was triggered for
+    maximum: 9007199254740991
   original_event_info:
     title: fragment/common
     description: Common schema fields for event schemas
