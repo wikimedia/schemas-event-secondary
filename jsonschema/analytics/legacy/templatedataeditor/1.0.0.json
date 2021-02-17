@@ -1,0 +1,250 @@
+{
+  "title": "analytics/legacy/templatedataeditor",
+  "description": "Interactions with the TemplateData editor.",
+  "$id": "/analytics/legacy/templatedataeditor/1.0.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "examples": [
+    {
+      "event": {
+        "action": "dialog-open-edit",
+        "page_id": 123,
+        "page_namespace": 1,
+        "page_title": "Template:Test_page",
+        "rev_id": 456,
+        "user_edit_count": 3,
+        "user_edit_count_bucket": "1-4 edits",
+        "user_id": 1000
+      },
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "id": "b0caf18d-6c7f-4403-947d-2712bbe28610",
+        "stream": "eventlogging_TemplateDataEditor"
+      },
+      "dt": "2020-04-02T19:11:20.942Z",
+      "client_dt": "2020-04-02T19:11:20.942Z",
+      "$schema": "/analytics/legacy/templatedataeditor/1.0.0",
+      "schema": "TemplateDataEditor"
+    }
+  ],
+  "required": [
+    "$schema",
+    "event",
+    "meta"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192,
+          "description": "Unique URI identifying the event or entity"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "dt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128,
+          "description": "UTC event datetime, in ISO-8601 format"
+        },
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "client_dt": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128,
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n"
+    },
+    "wiki": {
+      "description": "$wgDBName e.g. enwiki",
+      "type": "string"
+    },
+    "webHost": {
+      "description": "Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST'] on server.",
+      "type": "string"
+    },
+    "schema": {
+      "description": "Title of event schema.  Deprecated.",
+      "type": "string"
+    },
+    "revision": {
+      "description": "Revision ID of event schema.  Deprecated.",
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "topic": {
+      "description": "The queue topic name this event belongs in.  Deprecated.",
+      "type": "string"
+    },
+    "recvFrom": {
+      "description": "Hostname of server emitting the log line.  Deprecated.",
+      "type": "string"
+    },
+    "dt": {
+      "description": "UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "seqId": {
+      "description": "Udp2log sequence ID.  Deprecated.",
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "uuid": {
+      "description": "Unique event identifier.  Deprecated, use meta.id.",
+      "type": "string",
+      "maxLength": 128
+    },
+    "ip": {
+      "description": "Client IP address that sent this event, usually best guess parsed out of from X-Client-IP header which is set by varnish from X-Forwarded-For. Deprecated, use http.client_ip.\n",
+      "type": "string"
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "action",
+        "page_id",
+        "page_namespace",
+        "page_title",
+        "rev_id",
+        "user_edit_count",
+        "user_id"
+      ],
+      "properties": {
+        "action": {
+          "description": "The action that the user took that triggered the log event.\n\n* dialog-open-create - Open the dialog to create a new TemplateData record where none existed.  This is sent each time the dialog is opened.\n* dialog-open-edit - Open the dialog to edit an existing TemplateData.  Sent every time the dialog is opened.  If the templatedata was created earlier in the same editing pageview, we still send \"dialog-open-edit\" on subsequent dialog opening.\n* parameter-default-change - Edit a parameter's \"Default\" field.\n* parameter-description-change - Edit a parameter's \"Description\" field.  Sent once per parameter per dialog session.\n* parameter-example-change - Edit a parameter's \"Example\" field.  Sent once per parameter per dialog session.\n* parameter-label-change - Edit a parameter's \"Label\" field.  Sent once per parameter per dialog session.\n* parameter-priority-change - Change a parameter's priority away from the default \"Optional\".  Sent once per parameter per dialog session.\n* parameter-reorder - Drag parameters to change their order.  Sent once per dialog session.\n* parameter-type-change - A parameter's \"Type\" field was changed away from the default \"Unknown\".  Sent once per parameter per dialog session.\n* save-page-create - User attempts to save the page, and we are creating a new TemplateData record.\n* save-page-edit - User attempts to save changes to an existing TemplateData record.\n* save-tag-edit-generator-used - The page was saved and a meaningfull edit made to the <templatedata> tag. The wizard was used at least once, and most like used to make a change.\n* save-tag-edit-no-generator - As above, but the wizard was never used.\n* template-description-change - Edit the template's Description field.  Sent once per dialog session.",
+          "type": "string",
+          "enum": [
+            "dialog-open-create",
+            "dialog-open-edit",
+            "parameter-default-change",
+            "parameter-description-change",
+            "parameter-example-change",
+            "parameter-label-change",
+            "parameter-priority-change",
+            "parameter-reorder",
+            "parameter-type-change",
+            "save-page-create",
+            "save-page-edit",
+            "save-tag-edit-generator-used",
+            "save-tag-edit-no-generator",
+            "template-description-change"
+          ]
+        },
+        "page_id": {
+          "description": "The title (without namespace) of the page on which the action occurred (may not exist).",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "page_namespace": {
+          "description": "The ID of the page's namespace.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "page_title": {
+          "description": "The title (without namespace) of the page on which the action occurred (may not exist).",
+          "type": "string"
+        },
+        "rev_id": {
+          "description": "The page's current revision ID, for pages that already exist when TemplateWizard is used.  0 if the target page doesn't exist yet.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "user_edit_count": {
+          "description": "Total number of edits made by this user, or 0 if logged out.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "user_id": {
+          "description": "The user id, or 0 if logged out.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "user_edit_count_bucket": {
+          "description": "Reduced granularity edit count, safe to keep in the sanitized stream.  This is optional, and will not be present for anonymous users.",
+          "type": "string",
+          "enum": [
+            "0 edits",
+            "1-4 edits",
+            "5-99 edits",
+            "100-999 edits",
+            "1000+ edits"
+          ]
+        }
+      }
+    }
+  }
+}

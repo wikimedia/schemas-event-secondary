@@ -1,0 +1,144 @@
+title: analytics/legacy/templatedataeditor
+description: Interactions with the TemplateData editor.
+$id: /analytics/legacy/templatedataeditor/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - action
+          - page_id
+          - page_namespace
+          - page_title
+          - rev_id
+          - user_edit_count
+          - user_id
+        properties:
+          action:
+            description: >-
+              The action that the user took that triggered the log event.
+
+
+              * dialog-open-create - Open the dialog to create a new
+              TemplateData record where none existed.  This is sent each time
+              the dialog is opened.
+
+              * dialog-open-edit - Open the dialog to edit an existing
+              TemplateData.  Sent every time the dialog is opened.  If the
+              templatedata was created earlier in the same editing pageview, we
+              still send "dialog-open-edit" on subsequent dialog opening.
+
+              * parameter-default-change - Edit a parameter's "Default" field.
+
+              * parameter-description-change - Edit a parameter's "Description"
+              field.  Sent once per parameter per dialog session.
+
+              * parameter-example-change - Edit a parameter's "Example" field. 
+              Sent once per parameter per dialog session.
+
+              * parameter-label-change - Edit a parameter's "Label" field.  Sent
+              once per parameter per dialog session.
+
+              * parameter-priority-change - Change a parameter's priority away
+              from the default "Optional".  Sent once per parameter per dialog
+              session.
+
+              * parameter-reorder - Drag parameters to change their order.  Sent
+              once per dialog session.
+
+              * parameter-type-change - A parameter's "Type" field was changed
+              away from the default "Unknown".  Sent once per parameter per
+              dialog session.
+
+              * save-page-create - User attempts to save the page, and we are
+              creating a new TemplateData record.
+
+              * save-page-edit - User attempts to save changes to an existing
+              TemplateData record.
+
+              * save-tag-edit-generator-used - The page was saved and a
+              meaningfull edit made to the <templatedata> tag. The wizard was
+              used at least once, and most like used to make a change.
+
+              * save-tag-edit-no-generator - As above, but the wizard was never
+              used.
+
+              * template-description-change - Edit the template's Description
+              field.  Sent once per dialog session.
+            type: string
+            enum:
+              - dialog-open-create
+              - dialog-open-edit
+              - parameter-default-change
+              - parameter-description-change
+              - parameter-example-change
+              - parameter-label-change
+              - parameter-priority-change
+              - parameter-reorder
+              - parameter-type-change
+              - save-page-create
+              - save-page-edit
+              - save-tag-edit-generator-used
+              - save-tag-edit-no-generator
+              - template-description-change
+          page_id:
+            description: >-
+              The title (without namespace) of the page on which the action
+              occurred (may not exist).
+            type: integer
+          page_namespace:
+            description: The ID of the page's namespace.
+            type: integer
+          page_title:
+            description: >-
+              The title (without namespace) of the page on which the action
+              occurred (may not exist).
+            type: string
+          rev_id:
+            description: >-
+              The page's current revision ID, for pages that already exist when
+              TemplateWizard is used.  0 if the target page doesn't exist yet.
+            type: integer
+          user_edit_count:
+            description: 'Total number of edits made by this user, or 0 if logged out.'
+            type: integer
+          user_id:
+            description: 'The user id, or 0 if logged out.'
+            type: integer
+          user_edit_count_bucket:
+            description: >-
+              Reduced granularity edit count, safe to keep in the sanitized
+              stream.  This is optional, and will not be present for anonymous
+              users.
+            type: string
+            enum:
+              - 0 edits
+              - 1-4 edits
+              - 5-99 edits
+              - 100-999 edits
+              - 1000+ edits
+examples:
+  - event:
+      action: dialog-open-edit
+      page_id: 123
+      page_namespace: 1
+      page_title: Template:Test_page
+      rev_id: 456
+      user_edit_count: 3
+      user_edit_count_bucket: 1-4 edits
+      user_id: 1000
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_TemplateDataEditor
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: TemplateDataEditor
+
