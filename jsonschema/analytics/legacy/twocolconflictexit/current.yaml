@@ -1,0 +1,77 @@
+title: analytics/legacy/twocolconflictexit
+description: 'Tracks statistics when exiting the Extension:TwoColConflict conflict page.'
+$id: /analytics/legacy/twocolconflictexit/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - action
+          - start_time_ts_ms
+          - page_namespace
+          - page_title
+          - base_rev_id
+          - latest_rev_id
+        properties:
+          action:
+            description: >-
+              Action causing the workflow to end, or 'unknown'.  Possible events
+              are 'save' if the save button has been pressed, and 'cancel' for
+              the cancel link.
+            type: string
+          start_time_ts_ms:
+            description: >-
+              Timestamp when the editor was first launched.  (unix epoch in
+              milliseconds)
+            # Note: This overrides enforcedNumericBounds of JS Math.MAX_SAFE_INTEGER
+            # because the data is not actually sending unix epoch; they are sending
+            # a  datetime string as an integer.
+            maximum: 99999999999999999
+            type: integer
+          page_namespace:
+            description: Indicates the namespace ID the conflict occurred in.
+            type: integer
+          page_title:
+            description: 'Article title, without the namespace.'
+            type: string
+          base_rev_id:
+            description: Indicates the parent revision this user was editing.
+            type: integer
+          latest_rev_id:
+            description: >-
+              Indicates the latest (and conflicting) revision of the article
+              discovered by the conflict processor.
+            type: integer
+          selections:
+            description: >-
+              Structure holding the column selections, and whether each cell has
+              been edited from the conflict workflow.
+            type: string
+          session_token:
+            description: mw.user.sessionId() for joining with other events
+            type: string
+examples:
+  - event:
+      action: save
+      start_time_ts_ms: 20210101003013000
+      page_namespace: 1
+      page_title: Test Page
+      base_rev_id: 1000
+      latest_rev_id: 2000
+      selections: "v1:c|o>y|c|o?y|c"
+      session_token: 1234567890ABCDEF
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_TwoColConflictExit
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: TwoColConflictExit
+
