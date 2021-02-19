@@ -62,6 +62,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       client_ip:
         description: The http client's IP address
         type: string

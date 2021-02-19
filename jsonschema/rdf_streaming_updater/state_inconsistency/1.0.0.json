@@ -109,7 +109,8 @@
     "revision_id": {
       "type": "integer",
       "minimum": 0,
-      "description": "revision for which this event was triggered for"
+      "description": "revision for which this event was triggered for",
+      "maximum": 9007199254740991
     },
     "original_event_info": {
       "title": "fragment/common",
@@ -180,7 +181,8 @@
     "parent_revision_id": {
       "type": "integer",
       "minimum": 0,
-      "description": "parent revision for which this event was triggered for (only set for revision-create)"
+      "description": "parent revision for which this event was triggered for (only set for revision-create)",
+      "maximum": 9007199254740991
     },
     "inconsistency": {
       "type": "string",
@@ -188,7 +190,9 @@
     },
     "state_revision_id": {
       "type": "integer",
-      "description": "revision in flink state"
+      "description": "revision in flink state",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "state_status": {
       "type": "string",

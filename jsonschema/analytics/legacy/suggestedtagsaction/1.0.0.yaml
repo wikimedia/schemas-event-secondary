@@ -58,6 +58,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       has_cookies:
         description: True if the http request has any cookies set
         type: boolean
@@ -97,6 +99,8 @@ properties:
   revision:
     description: Revision ID of event schema.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   topic:
     description: The queue topic name this event belongs in.  Deprecated.
     type: string
@@ -111,6 +115,8 @@ properties:
   seqId:
     description: Udp2log sequence ID.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   uuid:
     description: 'Unique event identifier.  Deprecated, use meta.id.'
     type: string
@@ -147,11 +153,15 @@ properties:
       suggestions_count:
         description: Total number of suggestions presented to the user
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       approved_count:
         description: >-
           Total number of suggested tags that the user approved. This should be
           provided for the 'publish' and 'confirm' actions.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       is_mobile:
         description: Whether the user is viewing the page on the mobile site
         type: boolean
@@ -161,6 +171,8 @@ properties:
       user_id:
         description: The local user ID
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
 examples:
   - event:
       image_title: example_image_title

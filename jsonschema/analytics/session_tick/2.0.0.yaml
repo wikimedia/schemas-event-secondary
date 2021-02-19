@@ -64,6 +64,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       has_cookies:
         description: True if the http request has any cookies set
         type: boolean
@@ -96,21 +98,28 @@ properties:
       aggregation and enhances privacy.
     type: integer
     minimum: 0
+    maximum: 9007199254740991
   config_tick_ms:
     description: >
       Unit of time, in milliseconds, each tick represents. Gets value from
       MediaWiki config variable; included for data lineage.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   config_idle_ms:
     description: >
       Milliseconds of inactivity until a page is marked idle. Gets value from
       MediaWiki config variable; included for data lineage.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   config_reset_ms:
     description: >
       Milliseconds until session is reset if all pages are idle. Gets value from
       MediaWiki config variable; included for data lineage.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   test:
     description: >
       A string:integer 'map' type for carrying temporary test values e.g. for
@@ -119,6 +128,8 @@ properties:
     type: object
     additionalProperties:
       type: integer
+      minimum: -9007199254740991
+      maximum: 9007199254740991
 examples:
   - $schema: /analytics/session_tick/2.0.0
     meta:

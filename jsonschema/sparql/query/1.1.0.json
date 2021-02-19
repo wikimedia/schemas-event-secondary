@@ -112,7 +112,9 @@
         },
         "status_code": {
           "type": "integer",
-          "description": "The HTTP status code returned for this request (when known)"
+          "description": "The HTTP status code returned for this request (when known)",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         }
       }
     },
@@ -130,7 +132,9 @@
     },
     "query_time": {
       "type": "integer",
-      "description": "query time"
+      "description": "query time",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "format": {
       "type": "string",
@@ -154,15 +158,21 @@
       "properties": {
         "running_queries_before": {
           "type": "integer",
-          "description": "Number of concurrent queries running before this one."
+          "description": "Number of concurrent queries running before this one.",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "running_queries_after": {
           "type": "integer",
-          "description": "Number of concurrent queries running after this one."
+          "description": "Number of concurrent queries running after this one.",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "cpu_load_average": {
           "type": "number",
-          "description": "Average CPU load (defined as an 1 minute average of number of processes queued for execution and running), measured right after the query.\n"
+          "description": "Average CPU load (defined as an 1 minute average of number of processes queued for execution and running), measured right after the query.\n",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         }
       }
     }

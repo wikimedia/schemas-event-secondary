@@ -66,7 +66,9 @@
         },
         "status_code": {
           "description": "The HTTP status code returned for this request (when known)",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "has_cookies": {
           "description": "True if the http request has any cookies set",

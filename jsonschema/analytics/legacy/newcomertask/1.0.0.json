@@ -86,7 +86,9 @@
         },
         "status_code": {
           "description": "The HTTP status code returned for this request (when known)",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "has_cookies": {
           "description": "True if the http request has any cookies set",
@@ -128,7 +130,9 @@
     },
     "revision": {
       "description": "Revision ID of event schema.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "topic": {
       "description": "The queue topic name this event belongs in.  Deprecated.",
@@ -146,7 +150,9 @@
     },
     "seqId": {
       "description": "Udp2log sequence ID.  Deprecated.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "uuid": {
       "description": "Unique event identifier.  Deprecated, use meta.id.",
@@ -180,7 +186,9 @@
         },
         "match_score": {
           "description": "Topic matching score for the most relevant topic. Only present when the topic field is.",
-          "type": "number"
+          "type": "number",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "maintenance_templates": {
           "type": "array",
@@ -191,11 +199,15 @@
         },
         "revision_id": {
           "description": "Revision ID of the current version of the article used for the task.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "page_id": {
           "description": "Page ID of the article used for the task.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "page_title": {
           "description": "Title of the article used for the task (in text form, with page prefix).",
@@ -207,11 +219,15 @@
         },
         "pageviews": {
           "description": "Number of pageviews the article used for the task got in the last 60 days.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "ordinal_position": {
           "description": "0-based position of the task in a result list. Omitted when only a single task is shown.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         }
       }
     }

@@ -83,8 +83,10 @@
           "description": "The HTTP request method (GET, POST, etc.)"
         },
         "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
           "type": "integer",
-          "description": "The HTTP status code returned for this request (when known)"
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "client_ip": {
           "type": "string",

@@ -53,6 +53,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       client_ip:
         description: The http client's IP address
         type: string
@@ -95,6 +97,8 @@ properties:
   revision:
     description: Revision ID of event schema.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   topic:
     description: The queue topic name this event belongs in.  Deprecated.
     type: string
@@ -109,6 +113,8 @@ properties:
   seqId:
     description: Udp2log sequence ID.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   uuid:
     description: 'Unique event identifier.  Deprecated, use meta.id.'
     type: string
@@ -141,6 +147,8 @@ properties:
       namespace_id:
         description: The ID of the page's namespace.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       page_title:
         description: >-
           The title (without namespace) of the page on which the action occurred
@@ -151,6 +159,8 @@ properties:
           The page's current revision ID, for pages that already exist when
           TemplateWizard is used.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       template_names:
         description: >-
           For 'remove-template', 'use-recent', 'insert-template', and

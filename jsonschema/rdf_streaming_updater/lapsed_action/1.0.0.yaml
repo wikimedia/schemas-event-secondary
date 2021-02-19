@@ -68,6 +68,7 @@ properties:
     type: integer
     minimum: 0
     description: revision for which this event was triggered for
+    maximum: 9007199254740991
   original_event_info:
     title: fragment/common
     description: Common schema fields for event schemas
@@ -129,6 +130,7 @@ properties:
     description: >-
       parent revision for which this event was triggered for (only set for
       revision-create)
+    maximum: 9007199254740991
 examples:
   - $schema: /rdf_streaming_updater/lapsed_action/1.0.0
     dt: '2020-12-10T14:12:16.372Z'

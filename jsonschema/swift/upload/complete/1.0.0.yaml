@@ -11,24 +11,12 @@ required:
   - swift_object_prefix
   - swift_prefix_uri
   - swift_user
-examples:
-  - $schema: /swift/upload/complete/1.0.0
-    meta:
-      dt: '2019-07-29T20:12:46.813554Z'
-      id: 9d27895c-da78-4e4f-b968-66622e2b02cd
-      stream: swift.example_container.upload-complete
-    swift_container: example_container
-    swift_object_prefix: '2019-07-29T20:12:46.813554Z/example_prefix'
-    swift_prefix_uri: >-
-      https://ms-fe.svc.eqiad.wmnet/v1/AUTH_analytics/example_container?prefix=2019-07-29T20:12:46.813554Z/example_prefix
-    swift_user: 'analytics:admin'
-    upload_user: example_user
 properties:
   $schema:
-    type: string
     description: >
       A URI identifying the JSONSchema for this event. This should match an
       schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
   meta:
     type: object
     required:
@@ -41,23 +29,23 @@ properties:
         maxLength: 8192
         description: Unique URI identifying the event or entity
       request_id:
-        type: string
         description: Unique ID of the request that caused the event
-      id:
         type: string
+      id:
         description: Unique ID of this event
+        type: string
       dt:
         type: string
         format: date-time
         maxLength: 128
         description: 'UTC event datetime, in ISO-8601 format'
       domain:
-        type: string
         description: Domain the event or entity pertains to
+        type: string
         minLength: 1
       stream:
-        type: string
         description: Name of the stream/queue/dataset that this event belongs in
+        type: string
         minLength: 1
   upload_user:
     description: User that initiated the upload
@@ -81,3 +69,15 @@ properties:
       ?prefix=<swift_object_prefix>/<full_path_to_object>.  In either case,
       requesting this URI will get you a list of objects relevant to this event.
     type: string
+examples:
+  - $schema: /swift/upload/complete/1.0.0
+    meta:
+      dt: '2019-07-29T20:12:46.813554Z'
+      id: 9d27895c-da78-4e4f-b968-66622e2b02cd
+      stream: swift.example_container.upload-complete
+    swift_container: example_container
+    swift_object_prefix: '2019-07-29T20:12:46.813554Z/example_prefix'
+    swift_prefix_uri: >-
+      https://ms-fe.svc.eqiad.wmnet/v1/AUTH_analytics/example_container?prefix=2019-07-29T20:12:46.813554Z/example_prefix
+    swift_user: 'analytics:admin'
+    upload_user: example_user

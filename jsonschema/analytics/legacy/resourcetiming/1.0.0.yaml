@@ -58,6 +58,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       has_cookies:
         description: True if the http request has any cookies set
         type: boolean
@@ -97,6 +99,8 @@ properties:
   revision:
     description: Revision ID of event schema.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   topic:
     description: The queue topic name this event belongs in.  Deprecated.
     type: string
@@ -111,6 +115,8 @@ properties:
   seqId:
     description: Udp2log sequence ID.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   uuid:
     description: 'Unique event identifier.  Deprecated, use meta.id.'
     type: string
@@ -135,7 +141,7 @@ properties:
       startTime:
         description: The starting time of request.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       workerStart:
         description: >-
@@ -144,63 +150,63 @@ properties:
           immediately before the user agent runs the worker required to service
           the request.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       redirectStart:
         description: >-
           The starting time of the fetch that initiates the redirect (if there
           is a redirect).
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       redirectEnd:
         description: >-
           The time immediately after receiving the last byte of the response of
           the last redirect (if there is a redirect)
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       fetchStart:
         description: >-
           The time immediately before the user agent starts checking any
           relevant application caches.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       domainLookupStart:
         description: >-
           The time immediately before the user agent starts the domain name
           lookup for the current document.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       domainLookupEnd:
         description: >-
           The time immediately after the user agent finishes the domain name
           lookup for the current document.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       connectStart:
         description: >-
           The time immediately before the user agent start establishing the
           connection to the server to retrieve the document.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       secureConnectionStart:
         description: >-
           The time immediately before the user agent starts the handshake
           process to secure the current connection.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       connectEnd:
         description: >-
           The time immediately after the user agent finishes establishing the
           connection to the server to retrieve the current document.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       requestStart:
         description: >-
@@ -208,7 +214,7 @@ properties:
           current document from the server, or from relevant application caches
           or from local resources.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       responseStart:
         description: >-
@@ -216,7 +222,7 @@ properties:
           the response from the server, or from relevant application caches or
           from local resources.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       responseEnd:
         description: >-
@@ -224,7 +230,7 @@ properties:
           the current document or immediately before the transport connection is
           closed, whichever comes first.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       encodedBodySize:
         description: >-
@@ -236,7 +242,7 @@ properties:
           content-codings if the resource is retrieved from relevant application
           caches or from local resources.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       decodedBodySize:
         description: >-
@@ -247,7 +253,7 @@ properties:
           after removing any applied content-codings, if the resource is
           retrieved from relevant application caches or from local resources.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       initiatorType:
         description: >-
@@ -264,7 +270,7 @@ properties:
       duration:
         description: 'Difference between responseEnd and startTime, respectively.'
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
       name:
         description: Resolved URL of the requested resource.
@@ -282,7 +288,7 @@ properties:
           the last non-redirected fetch of the resource passes the timing allow
           check algorithm.
         type: integer
-        maximum: 9223372036854776000
+        maximum: 9007199254740991
         minimum: 0
 examples:
   - event:

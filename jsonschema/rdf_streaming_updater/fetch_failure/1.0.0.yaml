@@ -71,6 +71,7 @@ properties:
     type: integer
     minimum: 0
     description: revision for which this event was triggered for
+    maximum: 9007199254740991
   original_event_info:
     title: fragment/common
     description: Common schema fields for event schemas
@@ -132,6 +133,7 @@ properties:
     type: integer
     minimum: 0
     description: the revision it is diffing from
+    maximum: 9007199254740991
   exception_type:
     description: class name of the exception thrown
     type: string

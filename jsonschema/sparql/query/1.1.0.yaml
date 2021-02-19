@@ -75,6 +75,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
   backend_host:
     description: Hostname of sparql endpoint (blazegraph) server handling this sparql query
     type: string
@@ -88,6 +90,8 @@ properties:
   query_time:
     description: query time
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   format:
     description: the format requested (overrides the Accept header if set)
     type: string
@@ -110,15 +114,21 @@ properties:
       running_queries_before:
         description: Number of concurrent queries running before this one.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       running_queries_after:
         description: Number of concurrent queries running after this one.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       cpu_load_average:
         description: >
           Average CPU load (defined as an 1 minute average of number of
           processes queued for execution and running), measured right after the
           query.
         type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
 examples:
   - $schema: /sparql/query/1.1.0
     meta:

@@ -58,6 +58,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       has_cookies:
         description: True if the http request has any cookies set
         type: boolean
@@ -97,6 +99,8 @@ properties:
   revision:
     description: Revision ID of event schema.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   topic:
     description: The queue topic name this event belongs in.  Deprecated.
     type: string
@@ -111,6 +115,8 @@ properties:
   seqId:
     description: Udp2log sequence ID.  Deprecated.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   uuid:
     description: 'Unique event identifier.  Deprecated, use meta.id.'
     type: string
@@ -360,9 +366,13 @@ properties:
       user_id:
         description: The user id.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       user_editcount:
         description: The total number of edits of the user.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       context:
         type: string
         enum:
@@ -398,6 +408,8 @@ properties:
       page_id:
         description: ID of the page the user is attempting to edit.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       page_title:
         description: >-
           Full title of the page the user is attempting to edit, including
@@ -407,6 +419,8 @@ properties:
       page_ns:
         description: Namespace ID of the page the user is attempting to edit.
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       user_can_edit:
         description: >-
           Whether the user is allowed to edit the page. This will be false if

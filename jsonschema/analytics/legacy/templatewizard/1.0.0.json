@@ -81,8 +81,10 @@
           "description": "The HTTP request method (GET, POST, etc.)"
         },
         "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
           "type": "integer",
-          "description": "The HTTP status code returned for this request (when known)"
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "client_ip": {
           "type": "string",
@@ -128,7 +130,9 @@
     },
     "revision": {
       "type": "integer",
-      "description": "Revision ID of event schema.  Deprecated."
+      "description": "Revision ID of event schema.  Deprecated.",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "topic": {
       "type": "string",
@@ -146,7 +150,9 @@
     },
     "seqId": {
       "type": "integer",
-      "description": "Udp2log sequence ID.  Deprecated."
+      "description": "Udp2log sequence ID.  Deprecated.",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "uuid": {
       "type": "string",
@@ -181,7 +187,9 @@
         },
         "namespace_id": {
           "description": "The ID of the page's namespace.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "page_title": {
           "description": "The title (without namespace) of the page on which the action occurred (may not exist).",
@@ -189,7 +197,9 @@
         },
         "revision_id": {
           "description": "The page's current revision ID, for pages that already exist when TemplateWizard is used.",
-          "type": "integer"
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
         },
         "template_names": {
           "description": "For 'remove-template', 'use-recent', 'insert-template', and 'save-page' actions, the titles of the templates that were acted upon.",
