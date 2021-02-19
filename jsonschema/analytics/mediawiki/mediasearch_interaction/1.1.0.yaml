@@ -13,41 +13,14 @@ required:
   - ui_mw_skin
   - web_pageview_id
 properties:
+  search_result_has_quickview:
+    description: Whether or not the result will trigger the quickview when clicked.
+    type: boolean
   $schema:
     description: >
       A URI identifying the JSONSchema for this event. This should match an
       schema's $id in a schema repository. E.g. /schema/title/1.0.0
     type: string
-  meta:
-    type: object
-    required:
-      - dt
-      - stream
-    properties:
-      uri:
-        type: string
-        format: uri-reference
-        maxLength: 8192
-        description: Unique URI identifying the event or entity
-      request_id:
-        description: Unique ID of the request that caused the event
-        type: string
-      id:
-        description: Unique ID of this event
-        type: string
-      dt:
-        type: string
-        format: date-time
-        maxLength: 128
-        description: 'UTC event datetime, in ISO-8601 format'
-      domain:
-        description: Domain the event or entity pertains to
-        type: string
-        minLength: 1
-      stream:
-        description: Name of the stream/queue/dataset that this event belongs in
-        type: string
-        minLength: 1
   http:
     type: object
     properties:
@@ -60,6 +33,8 @@ properties:
       status_code:
         description: The HTTP status code returned for this request (when known)
         type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
       has_cookies:
         description: True if the http request has any cookies set
         type: boolean
@@ -107,17 +82,50 @@ properties:
       MediaWiki ID of the result page (file, category, etc). Logged when the
       user interacts with a specific result in the set.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   search_result_count:
     description: >-
       Total number of results that have been returned within a given tab for a
       given search.
     type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
   search_result_position:
     description: The position of the search result in the search result set.
     type: integer
-  search_result_has_quickview:
-    description: Whether or not the result will trigger the quickview when clicked.
-    type: boolean
+    minimum: -9007199254740991
+    maximum: 9007199254740991
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      uri:
+        type: string
+        format: uri-reference
+        maxLength: 8192
+        description: Unique URI identifying the event or entity
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      id:
+        description: Unique ID of this event
+        type: string
+      dt:
+        type: string
+        format: date-time
+        maxLength: 128
+        description: 'UTC event datetime, in ISO-8601 format'
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
   search_media_type:
     description: The active media type (aka tab) for the event.
     type: string
