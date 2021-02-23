@@ -218,8 +218,8 @@ examples:
       editCount: 0
       conflictChunks: 2
       conflictChars: 1000
-      startTime: 20200402191000
-      editTime: 20200402190000
+      startTime: '20200402191000'
+      editTime: '20200402190000'
       pageTitle: Test Page
       hasJavascript: true
     meta:
