@@ -1,0 +1,36 @@
+title: analytics/legacy/templatedataapi
+description: Tracking presents of template data.
+$id: /analytics/legacy/templatedataapi/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - template_name
+          - has_template_data
+        properties:
+          template_name:
+            description: The title of the template where template data was requested for.
+            type: string
+          has_template_data:
+            description: If template data could be retrieved for the template.
+            type: boolean
+examples:
+  - event:
+      template_name: Test_template
+      has_template_data: true
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_TemplateDataApi
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: TemplateDataApi
+
