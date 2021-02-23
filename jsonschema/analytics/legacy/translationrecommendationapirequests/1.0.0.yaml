@@ -1,0 +1,172 @@
+title: analytics/legacy/translationrecommendationapirequests
+description: Logs requests to Translation Recommendation API
+$id: /analytics/legacy/translationrecommendationapirequests/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - event
+  - meta
+properties:
+  revision:
+    description: Revision ID of event schema.  Deprecated.
+    type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  http:
+    type: object
+    properties:
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+  client_dt:
+    type: string
+    format: date-time
+    maxLength: 128
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+  wiki:
+    description: $wgDBName e.g. enwiki
+    type: string
+  webHost:
+    description: >-
+      Request host. 'window.location.hostname' on client-side events;
+      $_SERVER['HTTP_HOST'] on server.
+    type: string
+  schema:
+    description: Title of event schema.  Deprecated.
+    type: string
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      uri:
+        type: string
+        format: uri-reference
+        maxLength: 8192
+        description: Unique URI identifying the event or entity
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      id:
+        description: Unique ID of this event
+        type: string
+      dt:
+        type: string
+        format: date-time
+        maxLength: 128
+        description: 'UTC event datetime, in ISO-8601 format'
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+  topic:
+    description: The queue topic name this event belongs in.  Deprecated.
+    type: string
+  recvFrom:
+    description: Hostname of server emitting the log line.  Deprecated.
+    type: string
+  dt:
+    description: 'UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.'
+    type: string
+    format: date-time
+    maxLength: 128
+  seqId:
+    description: Udp2log sequence ID.  Deprecated.
+    type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
+  uuid:
+    description: 'Unique event identifier.  Deprecated, use meta.id.'
+    type: string
+    maxLength: 128
+  ip:
+    description: >
+      Client IP address that sent this event, usually best guess parsed out of
+      from X-Client-IP header which is set by varnish from X-Forwarded-For.
+      Deprecated, use http.client_ip.
+    type: string
+  event:
+    type: object
+    required:
+      - timestamp
+      - sourceLanguage
+      - targetLanguage
+    properties:
+      timestamp:
+        description: Time the request was received in seconds since epoch
+        type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
+      sourceLanguage:
+        description: Source language identifier
+        type: string
+      targetLanguage:
+        description: Target language identifier
+        type: string
+      seed:
+        description: Seed parameter used for searching
+        type: string
+      searchAlgorithm:
+        description: Search algorithm used
+        type: string
+      userId:
+        description: Editor's user ID
+        type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
+      origin:
+        description: Origin of the request
+        type: string
+examples:
+  - event:
+      timestamp: 1612367060
+      sourceLanguage: example
+      targetLanguage: example
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_TranslationRecommendationAPIRequests
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema: /analytics/legacy/translationrecommendationapirequests/1.0.0
+    schema: TranslationRecommendationAPIRequests

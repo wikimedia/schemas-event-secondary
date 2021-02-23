@@ -1,0 +1,49 @@
+title: analytics/legacy/translationrecommendationuseraction
+description: Logs when users take an action on articles that have been recommended
+$id: /analytics/legacy/translationrecommendationuseraction/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - requestToken
+          - pageTitle
+          - action
+        properties:
+          requestToken:
+            description: Identifier to associate action with an api request
+            type: string
+          pageTitle:
+            description: Title of the page the user is acting on
+            type: string
+          action:
+            description: Action taken
+            type: string
+            enum:
+              - flag_not_interested
+              - flag_not_notable
+              - create_from_scratch
+              - create_using_content_translation
+          targetTitle:
+            description: Title of the page in the target language
+            type: string
+examples:
+  - event:
+      requestToken: example
+      pageTitle: example
+      action: flag_not_interested
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_TranslationRecommendationUserAction
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: TranslationRecommendationUserAction
+
