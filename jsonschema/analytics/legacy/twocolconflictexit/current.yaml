@@ -31,7 +31,7 @@ allOf:
             # Note: This overrides enforcedNumericBounds of JS Math.MAX_SAFE_INTEGER
             # because the data is not actually sending unix epoch; they are sending
             # a  datetime string as an integer.
-            maximum: 99999999999999999
+            maximum: 100000000000000000
             type: integer
           page_namespace:
             description: Indicates the namespace ID the conflict occurred in.

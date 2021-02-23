@@ -53,6 +53,10 @@ allOf:
           edit_start_ts_ms:
             description: Timestamp when the editor was first launched.
             type: integer
+            # Note: This overrides enforcedNumericBounds of JS Math.MAX_SAFE_INTEGER
+            # because the data is not actually sending unix epoch; they are sending
+            # a  datetime string as an integer.
+            maximum: 100000000000000000
 examples:
   - event:
       editor: wikitext-2017
@@ -60,7 +64,7 @@ examples:
       toggled: false
       session_token: 123456789abcdef
       user_id: 0
-      edit_start_ts_ms: 1585854680000
+      edit_start_ts_ms: 20210223205005000
     meta:
       dt: '2020-04-02T19:11:20.942Z'
       id: b0caf18d-6c7f-4403-947d-2712bbe28610
