@@ -2,7 +2,7 @@ title: analytics/legacy/homepagevisit
 description: >-
   Log visits to Special:Homepage (provided by Extension:GrowthExperiments) from
   the server-side.
-$id: /analytics/legacy/homepagevisit/1.0.0
+$id: /analytics/legacy/homepagevisit/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -67,6 +67,7 @@ allOf:
             enum:
               - activated
               - unactivated
+              - notrendered
             description: Activation state of the impact module.
           start_tutorial_state:
             type: string
