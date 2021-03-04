@@ -1,0 +1,115 @@
+title: analytics/mobile_apps/android_image_recommendation_interaction
+description: >
+  Track user actions when using the new Image Recommendations feature.
+
+  This schema was migrated from legacy MobileWikiAppImageRecommendations.
+$id: /analytics/mobile_apps/android_image_recommendation_interaction/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/common/2.0.0#
+  - $ref: /fragment/analytics/app_identifiers/1.0.0#
+  - properties:
+      lang:
+        type: string
+        description: Language (or list of languages, if more than one) that the user has configured in the app
+      page_title:
+        type: string
+        description: Title of the article that was suggested
+      image_title:
+        type: string
+        description: File name of the image that was suggested for the article
+      suggestion_source:
+        type: string
+        enum:
+          - wikipedia
+          - wikidata
+          - mediasearch
+          - other
+        description: >
+          Source from which this suggestion is being made
+          wikipedia:
+            Image source is in another language wiki
+          wikidata:
+            Image source is in a wikidata item
+          mediasearch:
+            Image source is from mediasearch
+          other:
+            Other image sources
+
+      response_type:
+        type: integer
+        description: >
+          The response that the user gave for this suggestion, as Integer
+          0 - when the user accepts the image recommendation
+          1 - when the user rejects it
+          2 - when the user is not sure
+      reasons:
+        type: array
+        items:
+          type: integer
+        description: >
+          The justification for the user's response.
+          Since the user may select one or more reasons for their response,
+          this will be a comma-separated list of values that correspond to "reasons"
+          Empty list - when user accepts the image recommendation
+          List with one or more of the following reasons
+          when the user rejects, or is not sure of the recommendation
+            0 - Not relevent
+            1 - Not enough information
+            2 - Offensive
+            3 - Low quality
+            4 - Don't know this subject
+            5 - Other
+      info_clicked:
+        type: boolean
+        description: Whether the user tapped on the "i" icon in the toolbar
+      details_clicked:
+        type: boolean
+        description: Whether the user tapped for more information on the image (true/false)
+      scrolled:
+        type: boolean
+        description: Whether the user scrolled the contents of the article that
+          are shown underneath the image suggestion (true/false)
+      time_until_click_ms:
+        type: integer
+        description: Amount of time, in milliseconds, that the user spent before tapping on the Yes/No/Not sure buttons
+      time_until_submit_ms:
+        type: integer
+        description: Amount of time, in milliseconds, that the user spent before submitting the entire response,
+          including specifying the reasons for selecting No or Not sure.
+      user_text:
+        type: string
+        description: The wiki username of this user. May be null if the user did not agree to share.
+      teacher_mode_enabled:
+        type: boolean
+        description: Whether this feature is being used by a superuser/omniscient entity.
+
+
+required:
+  - dt
+  - app_install_id
+  - app_session_id
+
+examples:
+  - meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      stream: 'android.image_recommendation_interaction'
+    dt: '2020-04-02T19:11:20.942Z'
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    lang: en
+    page_title: Earthworm
+    image_title: eathworm_image.jpeg
+    suggestion_source: wikipedia
+    response_type: 0
+    reasons: [2, 3, 1]
+    info_clicked: false
+    details_clicked: true
+    scrolled: true
+    time_until_click_ms: 60
+    time_until_submit_ms: 180
+    user_text: randomUser (WMF)
+    teacher_mode_enabled: false
+    $schema:
+      $ref: '#/$id'
