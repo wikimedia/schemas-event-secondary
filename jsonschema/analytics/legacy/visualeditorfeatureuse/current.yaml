@@ -1,0 +1,108 @@
+title: analytics/legacy/visualeditorfeatureuse
+description: >-
+  Basic data on the use of various tools and feature provided by the
+  VisualEditor. You can join it with Schema:EditAttemptStep data to enrich with
+  user- and session-level data; as of May 2020, some of this is duplicated into
+  this schema as well. For living dictionary of current values, see
+  https://www.mediawiki.org/wiki/VisualEditor/FeatureUse_data_dictionary
+$id: /analytics/legacy/visualeditorfeatureuse/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - editingSessionId
+          - feature
+          - action
+        properties:
+          editingSessionId:
+            description: >-
+              Alphanumeric code used to uniquely identify a single editing
+              attempt. Must be the same ID as used for Schema:EditAttemptStep.
+            type: string
+          feature:
+            description: >-
+              The user-facing capability that is being used, such as 'link',
+              'autosave', 'clipboard' or 'textStyle/bold'. This is not an enum
+              so that the visual editor's maintainers have flexibility in which
+              of its many features to implement and because extensions can add
+              arbitrary new features which could pass through
+              already-instrumented code paths.
+            type: string
+          action:
+            description: >-
+              The specific, technical action that has been trigged, written as a
+              hyphen-separated phrase consisting of the object and the action
+              taken. For example, 'dialog-open' or
+              'annotation-toggle-selection'. This is not an enum so that the
+              visual editor's maintainers have flexibility in which of its many
+              features to implement and because extensions can add arbitrary new
+              features which could pass through already-instrumented code paths.
+            type: string
+          platform:
+            type: string
+            enum:
+              - desktop
+              - tablet
+              - phone
+              - other
+            description: >-
+              The editing device through which the user is attempting to edit
+              the page.
+          integration:
+            type: string
+            enum:
+              - page
+              - flow
+              - lqt
+              - app
+              - discussiontools
+            description: >-
+              The editor integration through which the user is attempting to
+              edit the page.
+          editor_interface:
+            type: string
+            enum:
+              - visualeditor
+              - wikitext-2017
+              - wikitext
+              - other
+            description: >-
+              The editor interface through which the user is attempting to edit
+              the page.
+          user_id:
+            description: The user id (0 if logged out).
+            type: integer
+          user_editcount:
+            description: The total number of edits of the user.
+            type: integer
+          bucket:
+            description: >-
+              If necessary, a string used to identify temporarily relevant
+              groups of users, such as the groups in a controlled experiment.
+              For example '2019-03-mobile-VE-section-editing-control'. If
+              multiple buckets need to be set at once (e.g. for overlapping
+              experiment), separate the strings with commas.
+            type: string
+          is_oversample:
+            description: 'Whether this request is an oversample, or a standard sample.'
+            type: boolean
+examples:
+  - event:
+      action: example
+      editingSessionId: example
+      feature: example
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_VisualEditorFeatureUse
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: VisualEditorFeatureUse
