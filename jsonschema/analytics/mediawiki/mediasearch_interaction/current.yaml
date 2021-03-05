@@ -1,7 +1,7 @@
 title: analytics/mediawiki/mediasearch_interaction
 description: >
   Measures features on the Special:MediaSearch page.
-$id: /analytics/mediawiki/mediasearch_interaction/1.2.0
+$id: /analytics/mediawiki/mediasearch_interaction/1.3.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -64,11 +64,12 @@ allOf:
         description: >-
           The active media type (aka tab) for the event.
         enum:
-          - bitmap
+          - bitmap # now deprecated, use "image" instead
           - audio
           - video
           - page
           - other
+          - image
 
       search_filter_type:
         type: string
