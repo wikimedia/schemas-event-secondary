@@ -105,6 +105,10 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "client_ip": {
+          "description": "The http client's IP address, usually set from the X-Client-IP header, the value of which is extracted from X-Forwarded-For.",
+          "type": "string"
         }
       }
     },
