@@ -1,7 +1,7 @@
 title: analytics/mediawiki/mediasearch_interaction
 description: >
   Measures features on the Special:MediaSearch page.
-$id: /analytics/mediawiki/mediasearch_interaction/1.1.0
+$id: /analytics/mediawiki/mediasearch_interaction/1.2.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -25,6 +25,7 @@ allOf:
           - quickview_more_details_click
           - quickview_filename_copy
           - quickview_wikitext_link_copy
+          - quickview_media_play
           # Other quickview actions TBD
           # concept chip actions TBD
 
