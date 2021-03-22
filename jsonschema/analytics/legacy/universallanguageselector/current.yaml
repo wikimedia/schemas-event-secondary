@@ -2,7 +2,7 @@ title: analytics/legacy/universallanguageselector
 description: >-
   Schema for ULS extension events. Currently this covers both various actions as
   well as events that log usage of certain fonts, input methods and languages.
-$id: /analytics/legacy/universallanguageselector/1.1.0
+$id: /analytics/legacy/universallanguageselector/1.2.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -124,6 +124,12 @@ allOf:
               selectedInterfaceLanguage:
                 description: Language code of selected interface language
                 type: string
+              timeToChangeLanguage:
+                description: >-
+                  The time (in ms, with microsecond precision if the browser supports the Navigation
+                  Timing API) that the page was visible for before the user changed their interface
+                  language.
+                type: number
 
 examples:
   - event:
