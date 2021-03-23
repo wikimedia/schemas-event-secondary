@@ -1,0 +1,56 @@
+title: analytics/pref_diff
+description: >-
+  Represents a user preference change that initiated from a user submitting the
+  user preferences form. This is slightly different from the prefupdate schema
+  in that it logs an arbitrary `intial` and `final` state (e.g. a user switched
+  from latest Vector to Monobook). It also allows for the use of a hashed user
+  ID. Please see T261842 for more info on its initial use case.
+$id: /analytics/pref_diff/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+allOf:
+  - $ref: /fragment/analytics/common/2.0.0#
+  - properties:
+      user_hash:
+        type: string
+        description: >-
+          String is used to allow for the use of a hashed user id.
+      initial_state:
+        type: string
+        description: >-
+          Identifies the state of relevant form field(s) before being changed by
+          the user.
+      final_state:
+        type: string
+        description: >-
+          Identifies the state of relevant form field(s) after being changed by
+          user.
+      bucketed_user_edit_count:
+        type: string
+        enum:
+          - Unknown
+          - 1000+ edits
+          - 100-999 edits
+          - 5-99 edits
+          - 1-4 edits
+          - 0 edits
+        description: >-
+          The user's edit count placed into one of five buckets.
+          "Unknown" represents the user's edit count not being
+          available.
+  - required:
+      - user_hash
+      - initial_state
+      - final_state
+      - bucketed_user_edit_count
+
+examples:
+  - $schema:
+      $ref: '#/$id'
+    meta:
+      stream: mediawiki.pref_diff
+      dt: '2020-04-02T19:11:20.942Z'
+    user_hash: 'c4ca4238a0b923820dcc509a6f75849b'
+    initial_state: 'minerva'
+    final_state: 'vector2'
+    bucketed_user_edit_count: '5-99 edits'
