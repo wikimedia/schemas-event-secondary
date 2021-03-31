@@ -2,7 +2,7 @@ title: analytics/legacy/navigationtiming
 description: >-
   Represents a set of client-side latency measurements provided by
   NavigationTiming API
-$id: /analytics/legacy/navigationtiming/1.0.0
+$id: /analytics/legacy/navigationtiming/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -206,6 +206,12 @@ allOf:
           cacheResponseType:
             description: >-
               Edge cache response type (eg. "miss", "hit-front"). Collected via
+              the Server Timing API when available. See:
+              https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing
+            type: string
+          cacheHost:
+            description: >-
+              Edge cache response host (eg. "cp3062"). Collected via
               the Server Timing API when available. See:
               https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing
             type: string
