@@ -1,0 +1,479 @@
+title: analytics/mediawiki/client/metrics_event
+description: |-
+  The schema defines:
+
+  1. The standard contextual attributes that can be recorded when a user
+     performs an instrumented interaction with a MediaWiki instance; and
+
+  2. The standard shape of the events that model those instrumented
+     interactions.
+
+  These attributes convey information about the who, what, when, and where of
+  the instrumented interaction. They are sent alongside a databag of custom
+  data, which is provided by the instrument. The databag of custom data
+  conveys information about the how of the instrumented interaction.
+
+  The attributes are collected by many instruments in many products and are
+  are used in many kinds of analysis. To ensure these attributes are being
+  implemented faithfully, the Metrics Platform is responsible for assigning
+  values to them.
+
+  See https://wikitech.wikimedia.org/wiki/Metrics_Platform for more detail.
+$id: /analytics/mediawiki/client/metrics_event/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+additionalProperties: false
+allOf:
+  - $ref: /fragment/analytics/common/2.0.0#
+  - properties:
+      name:
+        type: string
+        mexLength: 128
+        description: |-
+          The name of the event. All events have a name used to identify
+          them. This name is passed in by the instrumentation code, and is
+          also used by event stream configuration subscribers to identify
+          which events they would like to appear in the stream.
+
+      #########################################################################
+      # Agent Information
+      #########################################################################
+      agent:
+        type: object
+        description: |-
+          Information related to the Metrics Platform client - the agent
+          responsible for logging the event.
+        additionalProperties: false
+        properties:
+          app_install_id:
+            type: string
+            minLength: 36
+            maxLength: 36
+            pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+            description: |-
+              UUIDv4 identifier generated when an application is installed.
+              Identifies a particular install on a particular device.
+
+          client_platform:
+            type: string
+            enum:
+              - mediawiki_php
+              - mediawiki_js
+              - kaios
+              - android
+              - ios
+            description: |-
+              The client platform on which the event was produced.
+
+          client_platform_family:
+            type: string
+            enum:
+              - mobile_browser
+              - desktop_browser
+              - app
+            description: |-
+              The family of the client platform on which which the event was
+              produced.
+
+      #########################################################################
+      # Page Information
+      #########################################################################
+      page:
+        type: object
+        description: |-
+          Information about the current page
+        additionalProperties: false
+        properties:
+          id:
+            type: integer
+
+            # All special pages have an ID of -1.
+            #
+            # Some events are emitted async from the JobQueue and if the page
+            # was deleted before the event was logged, the page has an ID of 0.
+            minimum: -1
+
+            description: |-
+              Unique identifier assigned to a MediaWiki page when it is created.
+              The identifier remains the same across edits, renames, and moves.
+              It may change if the page is deleted and then restored, however.
+
+              See https://www.mediawiki.org/wiki/Manual:Page_table#page_id
+
+          title:
+            type: string
+            minLength: 1
+            description: |-
+              The MediaWiki page title, with the namespace prefix removed
+              and with spaces replaced by underscores, e.g. "Talk:Foo Bar"
+              becomes "Foo_Bar"
+
+              See https://www.mediawiki.org/wiki/Manual:Page_title and
+              https://www.mediawiki.org/wiki/Manual:Page_table#page_title
+
+          namespace:
+            type: integer
+            description: |-
+              The ID of the namespace that the page is in.
+
+              See
+               * https://www.mediawiki.org/wiki/Manual:Namespace
+               * https://www.mediawiki.org/wiki/Manual:Using_custom_namespaces
+
+          namespace_name:
+            type: string
+
+            # The canonical (English) name of the main namespace ("mainspace")
+            # is "".
+            minLength: 0
+
+            description: |-
+              The canonical (English) name of the namespace that the page is
+              in.
+
+              Namespace names can be translated and translatable aliases can
+              be created for them in the MediaWiki configuration. MediaWiki
+              Core defines the canonical name for a namespace as the English
+              one.
+
+              See
+               * https://www.mediawiki.org/wiki/Manual:Namespace and
+               * https://www.mediawiki.org/wiki/Manual:Using_custom_namespaces
+
+          revision_id:
+            type: integer
+            minimum: 0
+            description: |-
+              The head revision ID of the page at the time of the event.
+
+          # TODO
+          # It might actually be useful to detect if there is no Wikibase item
+          # ID corresponding to the page but our nullity policy prevents this.
+          #
+          # If the page has none, this attribute will not appear.
+          wikidata_id:
+            type: integer
+            description: |-
+              Wikibase item ID corresponding to the page at the time of the event.
+
+              See https://www.wikidata.org/wiki/Wikidata:Identifiers
+
+          content_language:
+            type: string
+            minLength: 1
+            maxLength: 255
+            description: |-
+              The language of the page content, formatted as a language code.
+
+              Semantics to be documented as the "page content language algorithm".
+
+              See
+               * https://www.mediawiki.org/wiki/Manual:Language
+               * https://meta.wikimedia.org/wiki/Language_codes
+               * https://www.mediawiki.org/wiki/Manual:Language#Language_code
+
+          is_redirect:
+            type: boolean
+            description: |-
+              Whether the MediaWiki page is a redirect or not at the time of the
+              event. A page is considered a redirect if it starts with
+
+                  #REDIRECT [[pagename]]
+
+              Note well that this state is also stored on the Mediawiki page
+              table.
+
+              See
+               * https://www.mediawiki.org/wiki/Help:Redirects
+               * https://www.mediawiki.org/wiki/Manual:Page_table#page_is_redirect
+
+          user_groups_allowed_to_move:
+            type: array
+            items:
+              type: string
+            description: |-
+              User groups with permission to move the page at the time of the event.
+
+              This will be an empty array if any user is allowed to move the page.
+
+          user_groups_allowed_to_edit:
+            type: array
+            items:
+              type: string
+            description: |-
+              User groups with permission to edit the page at the time of the event.
+
+              This will be an empty array if any user is allowed to edit the page.
+
+      #########################################################################
+      # MediaWiki Information
+      #########################################################################
+      mediawiki:
+        type: object
+        description: |-
+          Information related to the MediaWiki instance that the user is
+          accessing.
+        additionalProperties: false
+        properties:
+          skin:
+            type: string
+            minLength: 1
+            description: |-
+              MediaWiki skin (e.g. "vector") at the time of the event.
+
+          version:
+            type: string
+            description: |-
+              MediaWiki version at the time of the event, e.g "1.38.0-wmf.18".
+
+          is_production:
+            type: boolean
+            description: |-
+              Whether the MediaWiki instance is considered to be running in
+              production, e.g. mediawikiwiki.
+
+          is_debug_mode:
+            type: boolean
+            description: |-
+              Whether the MediaWiki instance is considered to be running in
+              debug mode.
+
+          site_content_language:
+            type: string
+            minLength: 1
+            maxLength: 255
+            description: |-
+              The site content language, formatted as a language code.
+
+              See
+               * https://www.mediawiki.org/wiki/Manual:Language
+               * https://meta.wikimedia.org/wiki/Language_codes
+               * https://www.mediawiki.org/wiki/Manual:Language#Language_code
+
+          site_content_language_variant:
+            type: string
+            minLength: 1
+            maxLength: 255
+            description: |-
+              The site content language variant, formatted as a language code.
+
+              See
+               * https://www.mediawiki.org/wiki/Manual:Language
+               * https://meta.wikimedia.org/wiki/Language_codes
+               * https://www.mediawiki.org/wiki/Manual:Language#Language_code
+
+      #########################################################################
+      # Performer Information
+      #########################################################################
+      performer:
+        type: object
+        description: |-
+          Information about the user accessing the content and/or performing
+          the action, often referred to as the actor or the "global user" in
+          MediaWiki Core, extensions, and skins.
+
+          For context about the use of "performer" rather than "actor", see
+          https://phabricator.wikimedia.org/T167246#5093402 onwards.
+        additionalProperties: false
+        properties:
+          is_logged_in:
+            type: boolean
+            description: |-
+              Whether the user is currently logged in.
+
+          id:
+            type: integer
+            minLength: 1
+            description: |-
+              The ID associated with the user account.
+
+              User must be be logged in for the property to appear.
+
+          name:
+            type: string
+            description: |-
+              The username associated with the user account.
+
+              User must be be logged in for the property to appear.
+
+          session_id:
+            type: string
+            minLength: 20
+            maxLength: 20
+            pattern: ^[0-9a-z]{20}$
+            description: |-
+              Eighty uniform random bits formatted as a string of twenty
+              hexadecimal digits. Identifies a single user session.
+
+          pageview_id:
+            type: string
+            minLength: 20
+            maxLength: 20
+            pattern: ^[0-9a-z]{20}$
+            description: |-
+              Eighty uniform random bits formatted as a string of twenty
+              hexadecimal digits. Identifies a single pageview within a user
+              session.
+
+          groups:
+            type: array
+            items:
+              type: string
+
+              # The user will always be in the "*" default MediaWiki group.
+              minLength: 1
+            description: |-
+              Groups that the user is in at the time of the event.
+
+          is_bot:
+            type: boolean
+            description: |-
+              Whether the user is considered a bot at the time of the event.
+
+              A user is considered a bot if they are in the "bot" group and
+              if they have the "bot" right.
+
+          language:
+            type: string
+            minLength: 1
+            maxLength: 255
+            description: |-
+              The user's language at the time of the event, formatted as a
+              language code.
+
+              User must be logged in for attribute to appear.
+
+              See
+               - https://www.mediawiki.org/wiki/Manual:Language
+               - https://meta.wikimedia.org/wiki/Language_codes
+               - https://www.mediawiki.org/wiki/Manual:Language#Language_code
+
+          language_variant:
+            type: string
+            minLength: 1
+            maxLength: 255
+            description: |-
+              The user's language variant at the time of the event, formatted
+              as a language code.
+
+              User must be logged in for attribute to appear.
+
+              See
+               - https://www.mediawiki.org/wiki/Manual:Language
+               - https://meta.wikimedia.org/wiki/Language_codes
+               - https://www.mediawiki.org/wiki/Manual:Language#Language_code
+
+              TODO: Documented how the user's language variant is determined.
+
+          can_probably_edit_page:
+            type: boolean
+            description: |-
+              True if the current page at the time of the event is editable by
+              the user, given the user and page's permissions.
+
+              User must be be logged in for attribute to appear.
+
+              TODO: Semantics to be documented as the "user can probably edit
+              page algorithm"
+
+          edit_count:
+            type: integer
+            minimum: 0
+            description: |-
+              Number of edits that the user has performed at the time of the
+              event.
+
+              User must be be logged in for attribute to appear.
+
+          edit_count_bucket:
+            type: string
+            enum:
+              - 0 edits
+              - 1-4 edits
+              - 5-99 edits
+              - 100-999 edits
+              - 1000+ edits
+            description: |-
+              The number of edits that the user has performed at the time of
+              the event placed into one five low-granularity buckets.
+
+              User must be be logged in for attribute to appear.
+
+          registration_dt:
+            type: string
+            format: date-time
+            maxLength: 128
+            description: |-
+              Datetime when the user account was registered.
+
+              User must be be logged in for attribute to appear.
+
+      #########################################################################
+      # Custom Data
+      #########################################################################
+      custom_data:
+        type: object
+        propertyNames:
+          pattern: ^[$a-z]+[a-z0-9_]*$ # "[P]roperties must be snake_case"
+          minLength: 1
+          maxLength: 255
+        properties:
+          data_type:
+            type: string
+            enum:
+              - number
+              - string
+              - boolean
+              - null
+          value:
+            type: string
+
+examples:
+  - $schema:
+      $ref: "#/$id"
+    dt: "2022-02-10T14:28:00.000Z"
+    name: desktop_web_ui_actions.click
+    custom_data:
+      action:
+        data_type: string
+        value: init
+      is_sidebar_collapsed:
+        data_type: boolean
+        value: "false"
+    meta:
+      stream: desktop_web_ui_actions
+      dt: "2022-02-10T14:28:00.250Z"
+    agent:
+      client_platform: mediawiki_js
+      client_platform_family: desktop_browser
+    performer:
+      is_logged_in: false
+      edit_count_bucket: 0 edits
+    mediawiki:
+      skin: vector
+
+  - $schema:
+      $ref: "#/$id"
+    dt: "2022-02-14T12:00:00.000Z"
+    name: desktop_web_ui_actions.click
+    custom_data:
+      action:
+        data_type: string
+        value: click
+      name:
+        data_type: string
+        value: ui.dropdown-p-variants
+      is_sidebar_collapsed:
+        data_type: boolean
+        value: "false"
+    meta:
+      stream: desktop_web_ui_actions
+      dt: "2022-02-14T12:00:00.500Z"
+    agent:
+      client_platform: mediawiki_js
+      client_platform_family: desktop_browser
+    performer:
+      is_logged_in: true
+      edit_count_bucket: 5-99 edits
+    mediawiki:
+      skin: vector-2022
