@@ -1,6 +1,6 @@
 title: analytics/legacy/referencepreviewspopups
 description: Reference Previews interactions tracked by the Popups extension
-$id: /analytics/legacy/referencepreviewspopups/1.0.0
+$id: /analytics/legacy/referencepreviewspopups/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -21,6 +21,8 @@ allOf:
               - pageview
               - poppedOpen
               - scrolled
+              - anonymousEnabled
+              - anonymousDisabled
             description: >-
               `clickedReferencePreviewsContentLink` happens when a link within a
               reference preview is clicked.
@@ -34,6 +36,10 @@ allOf:
 
               `scrolled` is sent once when a reference preview is first
               scrolled, but not again for that pageview.
+
+              `anonymousEnabled` is recorded when an anonymous user enables reference previews.
+
+              `anonymousDisabled` is recorded when an anonymous user disables reference previews.
           scrollbarsPresent:
             description: True when scrollbars are visible in the popup.
             type: boolean
