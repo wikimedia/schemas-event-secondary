@@ -1,0 +1,115 @@
+title: analytics/mediawiki/structured_task/article/link_suggestion_interaction
+description: Analytics events for interactions with link suggestion structured task
+$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+allOf:
+  - $ref: /fragment/analytics/common/2.0.0#
+  - required:
+      - active_interface
+      - action
+      - action_data
+      - newcomer_task_token
+      - homepage_pageview_token
+      - is_mobile
+      - page_id
+      - page_title
+    properties:
+      homepage_pageview_token:
+        description: >-
+          One-time token per page load generated on Special:Homepage. This
+          is a random user session ID that will be exported to the client-side,
+          so that this schema's events can be associated with HomepageModule and
+          HomepageVisit schema events
+        type: string
+      active_interface:
+        type: string
+        description: Name of the currently open interface
+        enum:
+          - onboarding_step_1_dialog
+          - onboarding_step_2_dialog
+          - onboarding_step_3_dialog
+          - nosuggestions_dialog
+          - rejection_dialog
+          - skipall_dialog
+          - editsummary_dialog
+          - recommendedlinktoolbar_dialog
+          - machinesuggestions_mode
+      newcomer_task_token:
+        type: string
+        description: a value by which to join with the NewcomerTask event
+      action:
+        type: string
+        description: >-
+         Action the user took
+         link_click:
+          - The user clicked on the "Learn more" link in onboarding_step_1_dialog
+          - The user clicked on the link target in the recommendedlinktoolbar_dialog
+        enum:
+          - impression # Used to indicate that an interface is seen. Used with all active_interface items.
+          - skip_all # Button for skipping all screens in onboarding_step_1_dialog
+          - get_started # Final button on the onboarding_step_3_dialog
+          - back # Used in onboarding_step_{2/3}_dialog and in recommendedlinktoolbar_dialog
+          - next # Used in onboarding_step_{1/2}_dialog and in recommendedlinktoolbar_dialog
+          - link_click # Used in onboarding_step_2_dialog and in recommendedlinktoolbar_dialog
+          - close # Used with rejection_dialog, editsummary_dialog and onboarding_step_{1/2/3}_dialog
+          - confirm_skip_all_suggestions # Used with skipall_dialog
+          - review_again # Used with skipall_dialog
+          - suggestion_focus # A suggestion has the focus of the recommendedlinktoolbar_dialog, either by tap/click, via auto-advance, or through back/next.
+          - view_help # Only appears for mobile recommendedlinktoolbar_dialog interface. Used with recommendedlinktoolbar_dialog
+          - suggestion_view_rejection_reasons # The user tapped/click the ellipses "View rejection reasons" button to get to the rejection dialog
+          - suggestion_accept # The user accepted a suggestion
+          - suggestion_reject # The user rejected a suggestion
+          - suggestion_skip # The user skipped a suggestion
+          - suggestion_mark_undecided # The user toggled "Yes" or "No" to undecided
+          - editsummary_review # The user pressed the "Review changes" button in the editsummary_dialog
+          - editsummary_approve # The user pressed the back button in the "Review changes" button in the editsummary_dialog
+          - editsummary_report # The user pressed the "report" button in review panel of the editsummary_dialog
+          - editsummary_save # The user pressed the save button in the editsummary_dialog
+      action_data:
+        type: string
+        description: >-
+         Additional data for certain actions
+         For action=skip_all:
+          - dont_show_again is true or false
+         For action=get_started:
+          - dont_show_again is true or false
+         For action=next in onboarding_step_{1/2/3}_dialog:
+          - dont_show_again is true or false
+         For action=back in onboarding_step_{1/2/3}_dialog:
+          - dont_show_again is true or false
+         For action=link_click in the onboarding_step_1_dialog:
+          - dont_show_again checkbox is true or false
+         For action=impression on machinesuggestions_mode:
+          - number_phrases_found An integer value for the number of phrases found in the VisualEditor document
+          - number_phrases_expected An integer value for the number of phrases expected to be found in the VisualEditor document
+         For action=close on rejection_dialog:
+          - rejection_reason The string for the ID of the reason for rejecting the recommendation. Can be empty string if the user pressed escape without selecting a reason.
+         For action=impression on editsummary_dialog:
+          - accepted_count
+          - rejected_count
+          - skipped_count
+         For actions suggestion_focus, suggestion_accept, suggestion_reject, suggestion_skip, suggestion_view_rejection_reasons, link_click, view_help on recommendedlinktoolbar_dialog:
+          - link_target The link target highlighted by the inspector
+          - link_text The anchor text for the link suggestion
+          - probability_score The probability score for the link suggestion
+          - series_number Which suggestion in the series the user is on
+          - rejection_reason The rejection reason, if any
+          - acceptance_state The acceptance state of the suggestion. One of "accepted", "rejected" or "undecided"
+           For actions suggestion_accept, suggestion_reject, suggestion_mark_undecided, the above data, plus:
+            - previous_acceptance_state The previous acceptance state of the suggestion. One of "accepted", "rejected" or "undecided"
+           For action=suggestion_focus on recommendedlinktoolbar_dialog, the above data, plus:
+            - manual_focus true if the user tapped/clicked on the link, false if the user used back/next button or if the suggestion was auto-advanced
+
+      is_mobile:
+        description: Whether the mobile site is being used.
+        type: boolean
+      page_id:
+        description: ID of the page the user is attempting to edit.
+        type: integer
+        minimum: 0
+      page_title:
+        description: >-
+          Title of the article used for the task (in text form, with page
+          prefix).
+        type: string
