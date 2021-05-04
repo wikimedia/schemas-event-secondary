@@ -1,7 +1,7 @@
 {
   "title": "analytics/legacy/helppanel",
   "description": "Logs interactions with the help panel or the post-edit panel displayed to new editors by the GrowthExperiments extension",
-  "$id": "/analytics/legacy/helppanel/1.0.0",
+  "$id": "/analytics/legacy/helppanel/1.0.1",
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "examples": [
@@ -27,7 +27,7 @@
       },
       "dt": "2020-04-02T19:11:20.942Z",
       "client_dt": "2020-04-02T19:11:20.942Z",
-      "$schema": "/analytics/legacy/helppanel/1.0.0",
+      "$schema": "/analytics/legacy/helppanel/1.0.1",
       "schema": "HelpPanel"
     }
   ],
