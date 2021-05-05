@@ -1,0 +1,225 @@
+{
+  "title": "analytics/legacy/wikipediaportal",
+  "description": "Logs basic information about the use of the Wikipedia\nportal (www.wikipedia.org). Most of the things we want (user agent, say) are already tracked. It is important to note that the sessions can last an arbitrary length of time as session ID is set to expire 15 minutes after the initial landing, with the expiration timer resetting every time the user comes back to the page within the 15 minute timer. This means that we can (and do) have sessions that last for hours with thousands of events logged to them.",
+  "$id": "/analytics/legacy/wikipediaportal/1.0.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "examples": [
+    {
+      "event": {
+        "session_id": "example",
+        "event_type": "landing",
+        "accept_language": "example"
+      },
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "id": "b0caf18d-6c7f-4403-947d-2712bbe28610",
+        "stream": "eventlogging_WikipediaPortal"
+      },
+      "dt": "2020-04-02T19:11:20.942Z",
+      "client_dt": "2020-04-02T19:11:20.942Z",
+      "$schema": "/analytics/legacy/wikipediaportal/1.0.0",
+      "schema": "WikipediaPortal"
+    }
+  ],
+  "required": [
+    "$schema",
+    "event",
+    "meta"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192,
+          "description": "Unique URI identifying the event or entity"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "dt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128,
+          "description": "UTC event datetime, in ISO-8601 format"
+        },
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "client_dt": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128,
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n"
+    },
+    "wiki": {
+      "description": "$wgDBName e.g. enwiki",
+      "type": "string"
+    },
+    "webHost": {
+      "description": "Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST'] on server.",
+      "type": "string"
+    },
+    "schema": {
+      "description": "Title of event schema.  Deprecated.",
+      "type": "string"
+    },
+    "revision": {
+      "description": "Revision ID of event schema.  Deprecated.",
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "topic": {
+      "description": "The queue topic name this event belongs in.  Deprecated.",
+      "type": "string"
+    },
+    "recvFrom": {
+      "description": "Hostname of server emitting the log line.  Deprecated.",
+      "type": "string"
+    },
+    "dt": {
+      "description": "UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "seqId": {
+      "description": "Udp2log sequence ID.  Deprecated.",
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "uuid": {
+      "description": "Unique event identifier.  Deprecated, use meta.id.",
+      "type": "string",
+      "maxLength": 128
+    },
+    "ip": {
+      "description": "Client IP address that sent this event, usually best guess parsed out of from X-Client-IP header which is set by varnish from X-Forwarded-For. Deprecated, use http.client_ip.\n",
+      "type": "string"
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "session_id",
+        "event_type",
+        "accept_language"
+      ],
+      "properties": {
+        "session_id": {
+          "description": "A unique session ID that identifies events from a single user, resetting on every portal view. In other words, both 'landing' and 'clickthrough' events from a single user in a single session can be clumped together.",
+          "type": "string"
+        },
+        "event_type": {
+          "type": "string",
+          "enum": [
+            "landing",
+            "clickthrough",
+            "select-language"
+          ],
+          "description": "The type of event we're logging. Options are 'landing' - the start event, when someone shows up on a portal; 'clickthrough', indicating that they chose a link or the search bar or whatever and went somewhere else; and 'select-language', which means the user has selected a different language to search in"
+        },
+        "section_used": {
+          "type": "string",
+          "enum": [
+            "primary links",
+            "search",
+            "language search",
+            "secondary links",
+            "other languages",
+            "other projects"
+          ],
+          "description": "The overall section interacted with. This could be\n 'primary links' (the called-out project links around the globe',\n'search' (the main search box), 'language search' (' Find Wikipedia in a language'),\n 'secondary links' (the less-prominent plaintext links)\n 'other languages' (this page in other langauges)\n or 'other projects' (links to wikisource, wiktionary, et al, portals).\n NULL in the case that 'event_type' is landing"
+        },
+        "destination": {
+          "description": "Where the user clicked through to.\n This may be NULL if the event type is 'landing'",
+          "type": "string"
+        },
+        "referer": {
+          "description": "The referer the user came from, if known. May be NULL.",
+          "type": "string"
+        },
+        "country": {
+          "description": "The ISO code for the country the user geolocates to. May be NULL.",
+          "type": "string"
+        },
+        "accept_language": {
+          "description": "The accept_language header from the user's request",
+          "type": "string"
+        },
+        "cohort": {
+          "description": "A cohort identifier. We can use this for running A/B tests or unrelated experiments, with the population who are *not* in any tests getting a NULL cohort field, meaning we can base our dashboards off those users and A/B test from the same schema in peace.",
+          "type": "string"
+        },
+        "selected_language": {
+          "description": "The language that the user has selected to search in. In most cases, we expect this to be the same as the first language in 'accept_language' since that is selected automatically. When the user searches ('event_type' is 'clickthrough' and 'section_used' is 'search'), this field contains the language the user searched in, in case they went to a SERP rather than a specific article.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
