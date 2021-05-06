@@ -2,7 +2,7 @@ title: analytics/legacy/helppanel
 description: >-
   Logs interactions with the help panel or the post-edit panel displayed to new
   editors by the GrowthExperiments extension
-$id: /analytics/legacy/helppanel/1.0.0
+$id: /analytics/legacy/helppanel/1.0.1
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -269,6 +269,7 @@ allOf:
               - visualeditor
               - wikitext-2017
               - wikitext
+              - machineSuggestions
               - other
             description: >-
               The type of editor used by the user. For context=editing, this is
