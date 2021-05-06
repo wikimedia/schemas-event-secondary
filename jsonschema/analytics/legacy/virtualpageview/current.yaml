@@ -1,0 +1,68 @@
+title: analytics/legacy/virtualpageview
+description: >-
+  Measures views of content associated with a specific wiki page, e.g. a page
+  preview being seen (shown for at least 1 second).
+$id: /analytics/legacy/virtualpageview/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/http/client_ip/1.0.0#
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - page_title
+          - page_namespace
+          - page_id
+          - source_title
+          - source_namespace
+          - source_page_id
+        properties:
+          access_method:
+            description: The type of client where the virtual pageview has taken place.
+            type: string
+            enum:
+              - desktop
+              - mobile web
+              - mobile app
+          page_title:
+            description: The title of the target page being 'viewed'.
+            type: string
+          page_namespace:
+            description: The namespace of the target page being 'viewed'.
+            type: integer
+          page_id:
+            description: The id of the target page being 'viewed'.
+            type: integer
+          source_title:
+            description: The title of the referring page.
+            type: string
+          source_namespace:
+            description: The namespace of the referring page.
+            type: integer
+          source_page_id:
+            description: The id of the referring page.
+            type: integer
+          source_url:
+            description: The url where the view came from.
+            type: string
+examples:
+  - event:
+      page_title: example_page_title
+      page_namespace: 0
+      page_id: 12345
+      source_title: example_source_title
+      source_namespace: 0
+      source_page_id: 12345
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_VirtualPageView
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: VirtualPageView

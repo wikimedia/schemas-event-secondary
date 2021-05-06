@@ -1,0 +1,231 @@
+{
+  "title": "analytics/legacy/virtualpageview",
+  "description": "Measures views of content associated with a specific wiki page, e.g. a page preview being seen (shown for at least 1 second).",
+  "$id": "/analytics/legacy/virtualpageview/1.0.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "examples": [
+    {
+      "event": {
+        "page_title": "example_page_title",
+        "page_namespace": 0,
+        "page_id": 12345,
+        "source_title": "example_source_title",
+        "source_namespace": 0,
+        "source_page_id": 12345
+      },
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "id": "b0caf18d-6c7f-4403-947d-2712bbe28610",
+        "stream": "eventlogging_VirtualPageView"
+      },
+      "dt": "2020-04-02T19:11:20.942Z",
+      "client_dt": "2020-04-02T19:11:20.942Z",
+      "$schema": "/analytics/legacy/virtualpageview/1.0.0",
+      "schema": "VirtualPageView"
+    }
+  ],
+  "required": [
+    "$schema",
+    "event",
+    "meta"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192,
+          "description": "Unique URI identifying the event or entity"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "dt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128,
+          "description": "UTC event datetime, in ISO-8601 format"
+        },
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "client_ip": {
+          "description": "The http client's IP address, usually set from the X-Client-IP header, the value of which is extracted from X-Forwarded-For.",
+          "type": "string"
+        }
+      }
+    },
+    "client_dt": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128,
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n"
+    },
+    "wiki": {
+      "description": "$wgDBName e.g. enwiki",
+      "type": "string"
+    },
+    "webHost": {
+      "description": "Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST'] on server.",
+      "type": "string"
+    },
+    "schema": {
+      "description": "Title of event schema.  Deprecated.",
+      "type": "string"
+    },
+    "revision": {
+      "description": "Revision ID of event schema.  Deprecated.",
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "topic": {
+      "description": "The queue topic name this event belongs in.  Deprecated.",
+      "type": "string"
+    },
+    "recvFrom": {
+      "description": "Hostname of server emitting the log line.  Deprecated.",
+      "type": "string"
+    },
+    "dt": {
+      "description": "UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "seqId": {
+      "description": "Udp2log sequence ID.  Deprecated.",
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "uuid": {
+      "description": "Unique event identifier.  Deprecated, use meta.id.",
+      "type": "string",
+      "maxLength": 128
+    },
+    "ip": {
+      "description": "Client IP address that sent this event, usually best guess parsed out of from X-Client-IP header which is set by varnish from X-Forwarded-For. Deprecated, use http.client_ip.\n",
+      "type": "string"
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "page_title",
+        "page_namespace",
+        "page_id",
+        "source_title",
+        "source_namespace",
+        "source_page_id"
+      ],
+      "properties": {
+        "access_method": {
+          "description": "The type of client where the virtual pageview has taken place.",
+          "type": "string",
+          "enum": [
+            "desktop",
+            "mobile web",
+            "mobile app"
+          ]
+        },
+        "page_title": {
+          "description": "The title of the target page being 'viewed'.",
+          "type": "string"
+        },
+        "page_namespace": {
+          "description": "The namespace of the target page being 'viewed'.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "page_id": {
+          "description": "The id of the target page being 'viewed'.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "source_title": {
+          "description": "The title of the referring page.",
+          "type": "string"
+        },
+        "source_namespace": {
+          "description": "The namespace of the referring page.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "source_page_id": {
+          "description": "The id of the referring page.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "source_url": {
+          "description": "The url where the view came from.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
