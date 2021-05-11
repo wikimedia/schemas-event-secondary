@@ -1,0 +1,61 @@
+title: analytics/mediawiki/wd_propertysuggester/server_side_property_request
+description: >-
+  Represents data logged server-side required for A/B testing
+  for the Wikidata PropertySuggester.
+$id: /analytics/mediawiki/wd_propertysuggester/server_side_property_request/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+allOf:
+  - $ref: /fragment/common/1.0.0
+properties:
+  propertysuggester_name:
+    type: string
+    description: Name of the property suggester used
+  existing_properties:
+    type: array
+    items:
+      type: string
+      description: Existing properties the entity has
+  existing_types:
+    type: array
+    items:
+      type: string
+      description: Existing types the entity has
+  request_duration_ms:
+    type: integer
+    descriptions: Time it took for the request to execute (ms), -1 if the request failed
+    minimum: -1
+  add_suggestions_made:
+    type: array
+    items:
+      type: string
+      description: Additional suggestions made by the recommender when a search query is entered
+  language_code:
+    type: string
+    description: The language code the request was made with
+  event_id:
+    type: string
+    description: Unique key used to link events logged client and server side
+required:
+  - propertysuggester_name
+  - existing_properties
+  - existing_types
+  - request_duration_ms
+  - add_suggestions_made
+  - language_code
+  - event_id
+
+examples:
+  - $schema:
+      $ref: '#/$id'
+    meta:
+      stream: wd_propertysuggester.server_side_property_request
+      dt: '2021-01-01T00:00:00Z'
+    propertysuggester_name : "SchemaTreeRecommender"
+    existing_properties: ["P1", "P2", "P3"]
+    existing_types: ["Q1", "Q2"]
+    request_duration_ms: 600
+    add_suggestions_made: ["P1", "P2"]
+    language_code: "en"
+    event_id: "1234455a"
+

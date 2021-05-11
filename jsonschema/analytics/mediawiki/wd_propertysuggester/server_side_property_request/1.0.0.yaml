@@ -1,0 +1,104 @@
+title: analytics/mediawiki/wd_propertysuggester/server_side_property_request
+description: >-
+  Represents data logged server-side required for A/B testing for the Wikidata
+  PropertySuggester.
+$id: /analytics/mediawiki/wd_propertysuggester/server_side_property_request/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+required:
+  - $schema
+  - add_suggestions_made
+  - event_id
+  - existing_properties
+  - existing_types
+  - language_code
+  - meta
+  - propertysuggester_name
+  - request_duration_ms
+properties:
+  propertysuggester_name:
+    description: Name of the property suggester used
+    type: string
+  existing_properties:
+    type: array
+    items:
+      description: Existing properties the entity has
+      type: string
+  existing_types:
+    type: array
+    items:
+      description: Existing types the entity has
+      type: string
+  request_duration_ms:
+    type: integer
+    descriptions: 'Time it took for the request to execute (ms), -1 if the request failed'
+    minimum: -1
+    maximum: 9007199254740991
+  add_suggestions_made:
+    type: array
+    items:
+      description: >-
+        Additional suggestions made by the recommender when a search query is
+        entered
+      type: string
+  language_code:
+    description: The language code the request was made with
+    type: string
+  event_id:
+    description: Unique key used to link events logged client and server side
+    type: string
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      uri:
+        type: string
+        format: uri-reference
+        maxLength: 8192
+        description: Unique URI identifying the event or entity
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      id:
+        description: Unique ID of this event
+        type: string
+      dt:
+        type: string
+        format: date-time
+        maxLength: 128
+        description: 'UTC event datetime, in ISO-8601 format'
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+examples:
+  - $schema: >-
+      /analytics/mediawiki/wd_propertysuggester/server_side_property_request/1.0.0
+    meta:
+      stream: wd_propertysuggester.server_side_property_request
+      dt: '2021-01-01T00:00:00Z'
+    propertysuggester_name: SchemaTreeRecommender
+    existing_properties:
+      - P1
+      - P2
+      - P3
+    existing_types:
+      - Q1
+      - Q2
+    request_duration_ms: 600
+    add_suggestions_made:
+      - P1
+      - P2
+    language_code: en
+    event_id: 1234455a

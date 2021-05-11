@@ -1,0 +1,51 @@
+title: analytics/mediawiki/wd_propertysuggester/client_side_property_request
+description: >-
+  Represents data logged client-side required for A/B testing
+  for the Wikidata PropertySuggester.
+$id: /analytics/mediawiki/wd_propertysuggester/client_side_property_request/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+allOf:
+  - $ref: /fragment/common/1.0.0
+properties:
+  rank_selected:
+    type: integer
+    description: Rank of the suggested property that was selected by the user
+    minimum: 0
+  recommendation_selected:
+    type: string
+    description: The property from the suggestions which was selected by the user
+  num_characters:
+    type: integer
+    description: Number of characters typed before selecting a property
+    minimum: 0
+  user_id:
+    type: string
+    description: String is used to allow for the use of a hashed user id
+  entity_id:
+    type: string
+    description: The Q code representing the entity page being edited
+  event_id:
+    type: string
+    description: Unique key used to link events logged client and server side
+  session_id:
+    type: string
+    description: ID of the current user page load session
+required:
+  - session_id
+
+examples:
+  - $schema:
+      $ref: '#/$id'
+    meta:
+      stream: wd_propertysuggester.client_side_property_request
+      dt: '2021-01-01T00:00:00Z'
+    rank_selected: 2
+    recommendation_selected: "P31"
+    num_characters: 2
+    user_id: "1a2b341234"
+    entity_id: "Q1234"
+    event_id: "1234455a"
+    session_id: "abcd1234"
+
+
