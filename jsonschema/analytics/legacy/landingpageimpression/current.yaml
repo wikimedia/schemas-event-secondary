@@ -1,0 +1,72 @@
+title: analytics/legacy/landingpageimpression
+description: FundraiserLandingPage pageview events
+$id: /analytics/legacy/landingpageimpression/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/http/client_ip/1.0.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - landingpage
+        properties:
+          appeal:
+            type: string
+          appeal_template:
+            type: string
+          contact_id:
+            type: string
+          country:
+            type: string
+          form_countryspecific:
+            type: string
+          form_template:
+            type: string
+          landingpage:
+            description: >-
+              The full page name of the wiki page viewed, including the
+              namespace.
+            type: string
+          language:
+            type: string
+          link_id:
+            type: string
+          sample_rate:
+            description: Sample rate used for logging these events.
+            type: number
+          template:
+            type: string
+          uselang:
+            type: string
+          utm_campaign:
+            type: string
+          utm_key:
+            type: string
+          utm_medium:
+            type: string
+          utm_source:
+            type: string
+examples:
+  - $schema:
+      $ref: '#/$id'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    dt: '2020-04-02T19:11:20.942Z'
+    event:
+      landingpage: Special:LandingPage
+      sample_rate: 1.0
+      country: US
+      language: en
+      utm_campaign: C13_en.wikipedia.org
+      utm_medium: sidebar
+      utm_source: donate
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_LandingPageImpression
+    schema: LandingPageImpression
+    http:
+      client_ip: 10.0.2.2
