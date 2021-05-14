@@ -4,3 +4,4 @@ schemaBaseUris:
   # Look in primary schema repository for $ref fragments.
   - https://schema.wikimedia.org/repositories/primary/jsonschema/
 logLevel: info
+shouldGenerateExample: true
