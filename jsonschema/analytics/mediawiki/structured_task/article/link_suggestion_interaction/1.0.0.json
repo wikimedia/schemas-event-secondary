@@ -4,6 +4,25 @@
   "$id": "/analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.0.0",
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
+  "examples": [
+    {
+      "$schema": "/analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.0.0",
+      "meta": {
+        "stream": "mediawiki.structured_task.article.link_suggestion_interaction",
+        "domain": "es.wikipedia.org",
+        "dt": "2020-12-12T00:20:00.649Z"
+      },
+      "dt": "2020-12-12T00:20:00.649Z",
+      "active_interface": "onboarding_step_1_dialog",
+      "action": "skip_all",
+      "action_data": "dont_show_again=true",
+      "newcomer_task_token": "example",
+      "homepage_pageview_token": "example",
+      "is_mobile": false,
+      "page_id": 0,
+      "page_title": "example"
+    }
+  ],
   "required": [
     "$schema",
     "action",
