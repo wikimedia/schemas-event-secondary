@@ -1,6 +1,6 @@
 title: analytics/legacy/cpubenchmark
 description: Holds the outcome of CPU microbenchmarks run by the NavigationTiming extension
-$id: /analytics/legacy/cpubenchmark/1.0.0
+$id: /analytics/legacy/cpubenchmark/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -26,6 +26,25 @@ allOf:
               The current battery level, according to the Battery Status API.
               Values range from 0 to 1.0.
             type: number
+          isOversample:
+            description: 'Whether this request is an oversample, or a standard sample.'
+            type: boolean
+          oversampleReason:
+            description: The reason that this request was oversampled
+            type: string
+          isAnon:
+            description: True if the user was anonymous; false if logged in.
+            type: boolean
+          mobileMode:
+            description: 'If in mobile view, specifies the mobile mode. Absent otherwise.'
+            enum:
+              - alpha
+              - beta
+              - stable
+            type: string
+          originCountry:
+            description: 'Country in which request originated, based on GeoIP look-up.'
+            type: string
 examples:
   - event:
       batteryLevel: 0.0
