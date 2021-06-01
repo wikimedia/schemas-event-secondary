@@ -2,7 +2,7 @@ title: analytics/legacy/universallanguageselector
 description: >-
   Schema for ULS extension events. Currently this covers both various actions as
   well as events that log usage of certain fonts, input methods and languages.
-$id: /analytics/legacy/universallanguageselector/1.3.0
+$id: /analytics/legacy/universallanguageselector/1.4.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -72,6 +72,9 @@ allOf:
                   ** menu - the input tools popup menu
                   ** preferences - from link in Special:Preferences language selection
                   * more-languages-access: Same as for language-change
+                  * compact-language-links-open
+                  ** other - trigger is elsewhere on the page
+                  ** header - trigger is in the header
                 type: string
               ulsPurpose:
                 description: >-
@@ -132,6 +135,12 @@ allOf:
                   Timing API) that the page was visible for before the user changed their interface
                   language.
                 type: number
+              skin:
+                description: The skin the user is using
+                type: string
+              skinVersion:
+                description: The version of the skin that the user is using.
+                type: string
 
 examples:
   - event:
