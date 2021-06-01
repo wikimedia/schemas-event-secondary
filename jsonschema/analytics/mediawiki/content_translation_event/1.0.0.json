@@ -11,10 +11,7 @@
     "content_translation_session_position",
     "event_type",
     "meta",
-    "user_global_edit_count",
-    "user_global_edit_count_bucket",
     "user_is_anonymous",
-    "user_name",
     "wiki_db"
   ],
   "examples": [
@@ -362,21 +359,21 @@
       "maximum": 9007199254740991
     },
     "user_name": {
-      "description": "The name of the user's account. Required since anonymous users are not yet supported.\n",
+      "description": "The name of the user's account. Not applicable to anonymous users.\n",
       "type": "string"
     },
     "user_is_anonymous": {
-      "description": "Whether the user is an anonymous (unregistered) user. Always false since anonymous users are not yet supported.\n",
+      "description": "Whether the user is an anonymous (unregistered) user.\n",
       "type": "boolean"
     },
     "user_global_edit_count": {
-      "description": "The user’s edit count across all Wikimedia wikis, available from CentralAuth.\nIn the context of Content Translation, the global edit count is much more useful than a single local edit count, since the user will have different edit counts at the source and target wikis.\nRequired since anonymous users are not yet supported.\n",
+      "description": "The user’s edit count across all Wikimedia wikis, available from CentralAuth. Not applicable to anonymous users.\nIn the context of Content Translation, the global edit count is much more useful than a single local edit count, since the user will have different edit counts at the source and target wikis.\n",
       "type": "integer",
       "minimum": 0,
       "maximum": 9007199254740991
     },
     "user_global_edit_count_bucket": {
-      "description": "A bucketed version of `user_global_edit_count`. Unlike that field, this one can be retained in the sanitized version, since it provides less information that could be used to reidentify the user.\nThe values are the ones returned by EventLogging's `getUserEditCountBucket` function, which can be used to populate this field.\nRequired since anonymous users are not yet supported.\n",
+      "description": "A bucketed version of `user_global_edit_count`. Unlike that field, this one can be retained in the sanitized version, since it provides less information that could be used to reidentify the user. Not applicable to anonymous users.\nThe values are the ones returned by EventLogging's `getUserEditCountBucket` function, which can be used to populate this field.\n",
       "type": "string",
       "enum": [
         "0 edits",
