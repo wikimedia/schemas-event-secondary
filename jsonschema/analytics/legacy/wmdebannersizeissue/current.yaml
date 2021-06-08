@@ -1,0 +1,52 @@
+title: analytics/legacy/wmdebannersizeissue
+description: >-
+  Store viewport size for WMDE fundraising banners that weren't shown because
+  they would have obscured the content too much
+$id: /analytics/legacy/wmdebannersizeissue/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - bannerName
+          - viewportWidth
+          - viewportHeight
+          - bannerHeight
+          - eventRate
+        properties:
+          bannerName:
+            description: Name of the banner
+            type: string
+          viewportWidth:
+            description: Viewport width in pixel
+            type: integer
+          viewportHeight:
+            description: Viewport height in pixel
+            type: integer
+          bannerHeight:
+            description: How many pixel high the banner would have been
+            type: integer
+          eventRate:
+            description: Ratio of recorded size issues (between 0.01 and 1)
+            type: number
+examples:
+  - event:
+      bannerName: example_banner_name
+      viewportWidth: 1234
+      viewportHeight: 1234
+      bannerHeight: 1234
+      eventRate: 0.1
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_WMDEBannerSizeIssue
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: WMDEBannerSizeIssue
