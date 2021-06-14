@@ -1,0 +1,328 @@
+title: analytics/legacy/centralnoticeimpression
+description: >-
+  CentralNotice state from pageviews selected to be part of a CentralNotice
+  campaign. Successor to beacon/impressoin and Special:RecordImpression.
+$id: /analytics/legacy/centralnoticeimpression/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - event
+  - meta
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      uri:
+        type: string
+        format: uri-reference
+        maxLength: 8192
+        description: Unique URI identifying the event or entity
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      id:
+        description: Unique ID of this event
+        type: string
+      dt:
+        type: string
+        format: date-time
+        maxLength: 128
+        description: 'UTC event datetime, in ISO-8601 format'
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+  http:
+    type: object
+    properties:
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        minimum: -9007199254740991
+        maximum: 9007199254740991
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+  client_dt:
+    type: string
+    format: date-time
+    maxLength: 128
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+  wiki:
+    description: $wgDBName e.g. enwiki
+    type: string
+  webHost:
+    description: >-
+      Request host. 'window.location.hostname' on client-side events;
+      $_SERVER['HTTP_HOST'] on server.
+    type: string
+  schema:
+    description: Title of event schema.  Deprecated.
+    type: string
+  revision:
+    description: Revision ID of event schema.  Deprecated.
+    type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
+  topic:
+    description: The queue topic name this event belongs in.  Deprecated.
+    type: string
+  recvFrom:
+    description: Hostname of server emitting the log line.  Deprecated.
+    type: string
+  dt:
+    description: 'UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.'
+    type: string
+    format: date-time
+    maxLength: 128
+  seqId:
+    description: Udp2log sequence ID.  Deprecated.
+    type: integer
+    minimum: -9007199254740991
+    maximum: 9007199254740991
+  uuid:
+    description: 'Unique event identifier.  Deprecated, use meta.id.'
+    type: string
+    maxLength: 128
+  ip:
+    description: >
+      Client IP address that sent this event, usually best guess parsed out of
+      from X-Client-IP header which is set by varnish from X-Forwarded-For.
+      Deprecated, use http.client_ip.
+    type: string
+  event:
+    type: object
+    required:
+      - anonymous
+      - project
+      - db
+      - uselang
+      - device
+      - country
+      - debug
+      - randomcampaign
+      - randombanner
+      - impressionEventSampleRate
+      - status
+      - statusCode
+      - campaignStatuses
+      - campaignCategory
+      - campaign
+      - campaignCategoryUsesLegacy
+      - bucket
+    properties:
+      anonymous:
+        description: Anonymous vs. logged-in user.
+        type: boolean
+      project:
+        description: CentralNotice project for the pageview; same as $wgNoticeProject.
+        type: string
+      db:
+        description: Databse of the wiki; same as $wgDBname.
+        type: string
+      uselang:
+        description: Interface language of the pageview; same as $wgUserLanguage.
+        type: string
+      device:
+        description: >-
+          Device category (as detected by CentralNotice and used for campaign
+          and banner targeting).
+        type: string
+        enum:
+          - desktop
+          - android
+          - iphone
+          - ipad
+          - unknown
+      country:
+        description: 'Country, as per ext.centralNotice.GeoIP (from Geo cookie).'
+        type: string
+      region:
+        description: >-
+          Region, as per ext.centralNotice.GeoIP (from Geo cookie) (may
+          sometimes be empty).
+        type: string
+      debug:
+        description: Whether pageview was in debug mode (triggered by the debug URL param).
+        type: boolean
+      randomcampaign:
+        description: >-
+          Random number used to select a campaign, if multiple campaigns are
+          available for this pageview.
+        type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
+      randombanner:
+        description: >-
+          Random number used to select a banner, if multiple banners within the
+          selected campaign are available for this pageview.
+        type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
+      recordImpressionSampleRate:
+        description: Sample rate for calls to beacon/impression.
+        type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
+      impressionEventSampleRate:
+        description: Sample rate for calls to send this event.
+        type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
+      status:
+        description: >-
+          Status of CentralNotice processing at the time the event was sent.
+          (See
+          https://www.mediawiki.org/wiki/Extension:CentralNotice/Statuses,_reasons_and_status_codes.)
+        type: string
+      statusCode:
+        description: >-
+          Status code of CentralNotice processing at the time the event was
+          sent. (See
+          https://www.mediawiki.org/wiki/Extension:CentralNotice/Statuses,_reasons_and_status_codes.)
+        type: string
+      campaignStatuses:
+        description: >-
+          JSON-serialized array of objects with data about campaigns chosen
+          during this pageview, including campaigns for which a banner was not
+          shown. Object properties are campaign, statusCode and bannerCount.
+          Note: It is expected that this will eventually be changed from a JSON
+          string to an actual array of objects.
+        type: string
+      campaignCategory:
+        description: >-
+          Category of the banners in the campaign, provided they are all in the
+          same category; if not, value will be 'mixed_banner_categories'.
+        type: string
+      campaign:
+        description: Campaign selected for this pageview.
+        type: string
+      banner:
+        description: Banner selected for this pageview (if one was selected).
+        type: string
+      campaignCategoryUsesLegacy:
+        description: >-
+          Whether this campaign category may use legacy mechanisms (such as
+          cookies).
+        type: boolean
+      bannerCategory:
+        description: >-
+          Category of the banner selected for this pageview (if one was
+          selected).
+        type: string
+      bucket:
+        description: Bucket for this client in this campaign.
+        type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
+      bannersNotGuaranteedToDisplay:
+        description: >-
+          true if the banner was flagged to possibly not display, even if
+          injected into the page.
+        type: boolean
+      bannerCanceledReason:
+        description: Reason the display of the banner was canceled.
+        type: string
+      result:
+        description: Legacy status field (superceded by status and statusCode).
+        type: string
+      reason:
+        description: Legacy field for the reason of the current status.
+        type: string
+      requestedBanner:
+        description: >-
+          Name of the banner requested via the mw.centralNotice.requestBanner().
+          (This property is set only when the requested banner was not
+          available).
+        type: string
+      alterFunctionMissing:
+        description: >-
+          true when banners were set as not guaranteed to display, but no
+          alterImpressionData() function was found to provide appropriate data
+          for CentralNotice status.
+        type: boolean
+      banner_count:
+        description: Legacy field for counting and limiting impressions.
+        type: number
+        minimum: -9007199254740991
+        maximum: 9007199254740991
+      errorMsg:
+        description: Error message from banner loader error.
+        type: string
+      testIdentifiers:
+        description: >-
+          Identifiers for (non-CentralNotice) tests registered for this
+          pageview.
+        type: string
+      debugInfo:
+        description: Extra information for debugging.
+        type: string
+examples:
+  - event:
+      anonymous: false
+      project: example
+      db: example
+      uselang: example
+      device: unknown
+      country: example
+      debug: false
+      randomcampaign: 0.1
+      randombanner: 0.1
+      impressionEventSampleRate: 0.1
+      status: example
+      statusCode: example
+      campaignStatuses: example
+      campaignCategory: example
+      campaign: example
+      campaignCategoryUsesLegacy: false
+      bucket: 0.1
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_CentralNoticeImpression
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema: /analytics/legacy/centralnoticeimpression/1.0.0
+    schema: CentralNoticeImpression
