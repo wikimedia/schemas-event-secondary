@@ -2,7 +2,7 @@ title: analytics/legacy/helppanel
 description: >-
   Logs interactions with the help panel or the post-edit panel displayed to new
   editors by the GrowthExperiments extension
-$id: /analytics/legacy/helppanel/1.0.1
+$id: /analytics/legacy/helppanel/1.0.2
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -54,6 +54,7 @@ allOf:
               - postedit-close
               - postedit-link-click
               - postedit-task-click
+              - postedit-task-refresh
             description: >-
               Action the user took:
 
@@ -139,6 +140,9 @@ allOf:
 
               - postedit-task-click: the task card in the postedit panel is
               clicked by the user
+
+              - postedit-task-refresh: the refresh button in the postedit panel is clicked by the user
+
           action_data:
             description: >-
               Additional data for certain actions:
