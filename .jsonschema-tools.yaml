@@ -7,7 +7,24 @@ logLevel: info
 shouldGenerateExample: true
 
 skipSchemaTestCases:
+    # /analytics/legacy/* schemas don't conform to all schema robustness
+    # rules.  Disable snake-case properties check.
+    '/analytics/legacy/.*':
+      - schema-snake-case-properties
     # /analytics/legacy/test/1.1.0 added 'event' as a required property.
     # This should have been required in 1.0.0. Skip compatibility
     # check between 1.0.0 and 1.1.0.
-    '/analytics/legacy/test/1.1.0': ['schema-version-compatibility']
+    '/analytics/legacy/test/1.1.0':
+      - schema-version-compatibility
+    # The 'token' property was removed between universallanguageselector 1.0.0 and 1.1.0.
+    # Skip compatibility check until this is resolved.
+    '/analytics/legacy/universallanguageselector/.*':
+      - schema-version-compatibilty
+      # The token property was left in the list of required properties though, so we need
+      # To disable this check too!
+      - schema-required-properties-exist
+    # codemirrorusage's edit_start_ts_ms and twocolconflict's start_time_ts_ms properties
+    # have a explicitly declared maximums above max JS integer.
+    '/analytics/legacy/(codemirrorusage|twocolconflict|twocolconflictexit)/.*':
+      - schema-enforced-numeric-bounds
+
