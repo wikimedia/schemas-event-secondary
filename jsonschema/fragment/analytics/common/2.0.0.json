@@ -5,11 +5,13 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "$schema",
-    "meta"
-  ],
   "properties": {
+    "dt": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128,
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n"
+    },
     "$schema": {
       "type": "string",
       "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n"
@@ -56,23 +58,17 @@
     "http": {
       "type": "object",
       "properties": {
-        "protocol": {
-          "description": "The protocol used for the request (HTTP or HTTPS)",
-          "type": "string"
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
         },
         "method": {
           "description": "The HTTP request method (GET, POST, etc.)",
           "type": "string"
         },
-        "status_code": {
-          "description": "The HTTP status code returned for this request (when known)",
-          "type": "integer",
-          "minimum": -9007199254740991,
-          "maximum": 9007199254740991
-        },
-        "has_cookies": {
-          "description": "True if the http request has any cookies set",
-          "type": "boolean"
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
         },
         "request_headers": {
           "description": "Request headers sent by the client.  E.g. user-agent, etc.",
@@ -87,14 +83,44 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991
         }
       }
-    },
-    "dt": {
-      "type": "string",
-      "format": "date-time",
-      "maxLength": 128,
-      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n"
     }
-  }
+  },
+  "required": [
+    "$schema",
+    "meta"
+  ],
+  "examples": [
+    {
+      "$schema": "/fragment/analytics/common/2.0.0",
+      "meta": {
+        "dt": "2021-01-01T00:00:00.0Z",
+        "stream": "dolor",
+        "request_id": "dolor",
+        "id": "dolor",
+        "domain": "dolor",
+        "uri": "http://example.org"
+      },
+      "http": {
+        "method": "dolor",
+        "protocol": "dolor",
+        "request_headers": {
+          "dolorb": "dolor"
+        },
+        "response_headers": {
+          "dolorb": "dolor"
+        },
+        "status_code": -6305039478318694,
+        "has_cookies": false
+      },
+      "dt": "2021-01-01T00:00:00.0Z"
+    }
+  ]
 }

@@ -10,16 +10,16 @@ allOf:
   ### These are from schemas/event/primary repository
   - $ref: /fragment/common/1.0.0#
   - $ref: /fragment/http/1.2.0#
-  - properties:
-      dt:
-        type: string
-        format: date-time
-        maxLength: 128
-        description: >
-          ISO-8601 formatted timestamp of when the event occurred/was generated
-          in UTC). This exists separately from meta.dt in the main common
-          schema. For external client-sent instrumentation events, we want to
-          allow meta.dt to be the received time (filled in by EventGate at
-          ingest time), as we don't trust client-sent events to always set the
-          proper date and time. Client-set event generation time should be set
-          here instead. See: https://phabricator.wikimedia.org/T240460
+properties:
+  dt:
+    type: string
+    format: date-time
+    maxLength: 128
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated
+      in UTC). This exists separately from meta.dt in the main common
+      schema. For external client-sent instrumentation events, we want to
+      allow meta.dt to be the received time (filled in by EventGate at
+      ingest time), as we don't trust client-sent events to always set the
+      proper date and time. Client-set event generation time should be set
+      here instead. See: https://phabricator.wikimedia.org/T240460

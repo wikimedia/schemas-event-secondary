@@ -25,5 +25,14 @@
       "type": "string",
       "description": "Identifies what specifically was clicked to bring the user to the site, such as a banner ad, a text link, or a sidebar button. It is often used for A/B testing and content-targeted ads.\nMediaWiki-based instrumentation can assign the value of this field by retrieving it with `mw.util.getParamValue( 'utm_content' )`\n"
     }
-  }
+  },
+  "examples": [
+    {
+      "utm_medium": "dolor",
+      "utm_campaign": "dolor",
+      "utm_term": "dolor",
+      "utm_content": "dolor",
+      "utm_source": "dolor"
+    }
+  ]
 }

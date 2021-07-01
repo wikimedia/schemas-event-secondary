@@ -12,11 +12,24 @@ $id: /fragment/analytics/web_identifiers/1.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 properties:
-  web_session_id:
+  web_pageview_id:
+    description: >
+      Identifies a single web page view (visit). This identifier is randomly
+      generated the first time it is requested by the instrumentation code on
+      any page view and persists for the lifetime of the page. When the user
+      navigates to another page or refreshes/reloads the page, this identifier
+      disappears and a new one is regenerated (when needed). Different visits to
+      the same page will yield different pageview IDs (also called tokens).
+
+      Interactions with multiple features (instrumented separately) on the same
+      web page may be linked together via this identifier.
+
+      Instrumentation code should assign this with mw.user.getPageviewToken()
     type: string
-    minLength: 20
     maxLength: 20
+    minLength: 20
     pattern: '^[0-9a-z]{20}$'
+  web_session_id:
     description: >
       Identifies a web session: a cluster of actions taken by the user on a
       website within a limited period of time. A session ID is generated the
@@ -32,20 +45,10 @@ properties:
       together via this identifier.
 
       Instrumentation code should assign this with mw.user.sessionId()
-  web_pageview_id:
     type: string
-    minLength: 20
     maxLength: 20
+    minLength: 20
     pattern: '^[0-9a-z]{20}$'
-    description: >
-      Identifies a single web page view (visit). This identifier is randomly
-      generated the first time it is requested by the instrumentation code on
-      any page view and persists for the lifetime of the page. When the user
-      navigates to another page or refreshes/reloads the page, this identifier
-      disappears and a new one is regenerated (when needed). Different visits to
-      the same page will yield different pageview IDs (also called tokens).
-
-      Interactions with multiple features (instrumented separately) on the same
-      web page may be linked together via this identifier.
-
-      Instrumentation code should assign this with mw.user.getPageviewToken()
+examples:
+  - web_pageview_id: '55555555555555555555'
+    web_session_id: '55555555555555555555'

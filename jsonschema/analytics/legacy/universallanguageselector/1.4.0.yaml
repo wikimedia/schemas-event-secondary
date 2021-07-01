@@ -11,47 +11,12 @@ required:
   - event
   - meta
 properties:
-  revision:
-    description: Revision ID of event schema.  Deprecated.
-    type: integer
-    minimum: -9007199254740991
-    maximum: 9007199254740991
   $schema:
     description: >
       A URI identifying the JSONSchema for this event. This should match an
       schema's $id in a schema repository. E.g. /schema/title/1.0.0
     type: string
-  http:
-    type: object
-    properties:
-      protocol:
-        description: The protocol used for the request (HTTP or HTTPS)
-        type: string
-      method:
-        description: 'The HTTP request method (GET, POST, etc.)'
-        type: string
-      status_code:
-        description: The HTTP status code returned for this request (when known)
-        type: integer
-        minimum: -9007199254740991
-        maximum: 9007199254740991
-      has_cookies:
-        description: True if the http request has any cookies set
-        type: boolean
-      request_headers:
-        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
-        type: object
-        additionalProperties:
-          type: string
-      response_headers:
-        description: Response headers sent back to the client (when known).
-        type: object
-        additionalProperties:
-          type: string
   client_dt:
-    type: string
-    format: date-time
-    maxLength: 128
     description: >
       ISO-8601 formatted timestamp of when the event occurred/was generated in
       UTC). This exists separately from meta.dt in the main common schema. For
@@ -60,73 +25,14 @@ properties:
       trust client-sent events to always set the proper date and time.
       Client-set event generation time should be set here instead. See:
       https://phabricator.wikimedia.org/T240460
-  wiki:
-    description: $wgDBName e.g. enwiki
     type: string
-  webHost:
-    description: >-
-      Request host. 'window.location.hostname' on client-side events;
-      $_SERVER['HTTP_HOST'] on server.
-    type: string
-  schema:
-    description: Title of event schema.  Deprecated.
-    type: string
-  meta:
-    type: object
-    required:
-      - dt
-      - stream
-    properties:
-      uri:
-        type: string
-        format: uri-reference
-        maxLength: 8192
-        description: Unique URI identifying the event or entity
-      request_id:
-        description: Unique ID of the request that caused the event
-        type: string
-      id:
-        description: Unique ID of this event
-        type: string
-      dt:
-        type: string
-        format: date-time
-        maxLength: 128
-        description: 'UTC event datetime, in ISO-8601 format'
-      domain:
-        description: Domain the event or entity pertains to
-        type: string
-        minLength: 1
-      stream:
-        description: Name of the stream/queue/dataset that this event belongs in
-        type: string
-        minLength: 1
-  topic:
-    description: The queue topic name this event belongs in.  Deprecated.
-    type: string
-  recvFrom:
-    description: Hostname of server emitting the log line.  Deprecated.
-    type: string
+    format: date-time
+    maxLength: 128
   dt:
     description: 'UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.'
     type: string
     format: date-time
     maxLength: 128
-  seqId:
-    description: Udp2log sequence ID.  Deprecated.
-    type: integer
-    minimum: -9007199254740991
-    maximum: 9007199254740991
-  uuid:
-    description: 'Unique event identifier.  Deprecated, use meta.id.'
-    type: string
-    maxLength: 128
-  ip:
-    description: >
-      Client IP address that sent this event, usually best guess parsed out of
-      from X-Client-IP header which is set by varnish from X-Forwarded-For.
-      Deprecated, use http.client_ip.
-    type: string
   event:
     title: fragment/analytics/web_identifiers
     description: >
@@ -149,37 +55,11 @@ properties:
       - interfaceLanguage
       - contentLanguage
     properties:
-      inputMethod:
-        description: Input method identifier or 'system'
-        type: string
-      web_session_id:
-        type: string
-        minLength: 20
-        maxLength: 20
-        pattern: '^[0-9a-z]{20}$'
-        description: >
-          Identifies a web session: a cluster of actions taken by the user on a
-          website within a limited period of time. A session ID is generated the
-          first time it is requested by the instrumentation code, which is
-          usually the first time the user visits the website.
-
-          In the current implementation, this ID is shared across windows, tabs,
-          and page views in the same browser. The ID is normally regenerated
-          after the browser is shut down; however, if the browser's "restore
-          previous session" feature is used when it restarts, the previous ID is
-          retained.
-
-          Interactions across multiple pages in the same web session may be
-          linked together via this identifier.
-
-          Instrumentation code should assign this with mw.user.sessionId()
-      version:
+      title:
         description: >-
-          Version number. This field can be used to track changes in
-          instrumentation that affect the nature of the data collected.
-        type: integer
-        minimum: -9007199254740991
-        maximum: 9007199254740991
+          Page title. Used with no-search-results to analyze on which pages do
+          people search for a page in a different language.
+        type: string
       action:
         description: >-
           What the user caused or did:
@@ -243,6 +123,12 @@ properties:
           - webfonts-enable
           - webfonts-disable
           - compact-language-links-open
+      contentFont:
+        description: Font name or 'system'
+        type: string
+      contentLanguage:
+        description: Language code of current content language
+        type: string
       context:
         description: |-
           Arbitrary action related data clarifying the context.
@@ -262,28 +148,70 @@ properties:
           ** other - trigger is elsewhere on the page
           ** header - trigger is in the header
         type: string
+      inputMethod:
+        description: Input method identifier or 'system'
+        type: string
+      interfaceFont:
+        description: Font name or 'system'
+        type: string
+      interfaceLanguage:
+        description: Language code of current interface language
+        type: string
+      isAnon:
+        description: Is the user viewing anonymously?
+        type: boolean
+      languageSelectionMethod:
+        description: |-
+          How was the language selected.
+          * Null if none of the below were used.
+          * map - user clicked the map
+          * search - user used the search filed
+          * common - user clicked from the list of common languages
+        type: string
+        enum:
+          - map
+          - search
+          - common
+      selectedInterfaceLanguage:
+        description: Language code of selected interface language
+        type: string
+      skin:
+        description: The skin the user is using
+        type: string
+      skinVersion:
+        description: The version of the skin that the user is using.
+        type: string
+      timeToChangeLanguage:
+        description: >-
+          The time (in ms, with microsecond precision if the browser supports
+          the Navigation Timing API) that the page was visible for before the
+          user changed their interface language.
+        type: number
+        maximum: 9007199254740991
+        minimum: -9007199254740991
       ulsPurpose:
         description: >-
           An identifier for the ULS panel. Defined as the ulsPurpose option in
           ULS initialization. Used with the no-search-results action to
           understand in what context did the person search for a language.
         type: string
-      title:
+      userEditBucket:
+        description: The user's bucketized edit count
+        type: string
+        enum:
+          - 1000+ edits
+          - 100-999 edits
+          - 5-99 edits
+          - 1-4 edits
+          - 0 edits
+      version:
         description: >-
-          Page title. Used with no-search-results to analyze on which pages do
-          people search for a page in a different language.
-        type: string
-      interfaceLanguage:
-        description: Language code of current interface language
-        type: string
-      contentLanguage:
-        description: Language code of current content language
-        type: string
+          Version number. This field can be used to track changes in
+          instrumentation that affect the nature of the data collected.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
       web_pageview_id:
-        type: string
-        minLength: 20
-        maxLength: 20
-        pattern: '^[0-9a-z]{20}$'
         description: >
           Identifies a single web page view (visit). This identifier is randomly
           generated the first time it is requested by the instrumentation code
@@ -298,55 +226,133 @@ properties:
 
           Instrumentation code should assign this with
           mw.user.getPageviewToken()
-      contentFont:
-        description: Font name or 'system'
         type: string
-      interfaceFont:
-        description: Font name or 'system'
+        maxLength: 20
+        minLength: 20
+        pattern: '^[0-9a-z]{20}$'
+      web_session_id:
+        description: >
+          Identifies a web session: a cluster of actions taken by the user on a
+          website within a limited period of time. A session ID is generated the
+          first time it is requested by the instrumentation code, which is
+          usually the first time the user visits the website.
+
+          In the current implementation, this ID is shared across windows, tabs,
+          and page views in the same browser. The ID is normally regenerated
+          after the browser is shut down; however, if the browser's "restore
+          previous session" feature is used when it restarts, the previous ID is
+          retained.
+
+          Interactions across multiple pages in the same web session may be
+          linked together via this identifier.
+
+          Instrumentation code should assign this with mw.user.sessionId()
         type: string
-      languageSelectionMethod:
-        description: |-
-          How was the language selected.
-          * Null if none of the below were used.
-          * map - user clicked the map
-          * search - user used the search filed
-          * common - user clicked from the list of common languages
-        type: string
-        enum:
-          - map
-          - search
-          - common
-      isAnon:
-        description: Is the user viewing anonymously?
+        maxLength: 20
+        minLength: 20
+        pattern: '^[0-9a-z]{20}$'
+    examples:
+      - web_pageview_id: '55555555555555555555'
+        web_session_id: '55555555555555555555'
+  http:
+    type: object
+    properties:
+      has_cookies:
+        description: True if the http request has any cookies set
         type: boolean
-      userEditBucket:
-        description: The user's bucketized edit count
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
         type: string
-        enum:
-          - 1000+ edits
-          - 100-999 edits
-          - 5-99 edits
-          - 1-4 edits
-          - 0 edits
-      selectedInterfaceLanguage:
-        description: Language code of selected interface language
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
         type: string
-      timeToChangeLanguage:
-        description: >-
-          The time (in ms, with microsecond precision if the browser supports
-          the Navigation Timing API) that the page was visible for before the
-          user changed their interface language.
-        type: number
-        minimum: -9007199254740991
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
         maximum: 9007199254740991
-      skin:
-        description: The skin the user is using
+        minimum: -9007199254740991
+  ip:
+    description: >
+      Client IP address that sent this event, usually best guess parsed out of
+      from X-Client-IP header which is set by varnish from X-Forwarded-For.
+      Deprecated, use http.client_ip.
+    type: string
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
         type: string
-      skinVersion:
-        description: The version of the skin that the user is using.
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
         type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  recvFrom:
+    description: Hostname of server emitting the log line.  Deprecated.
+    type: string
+  revision:
+    description: Revision ID of event schema.  Deprecated.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  schema:
+    description: Title of event schema.  Deprecated.
+    type: string
+  seqId:
+    description: Udp2log sequence ID.  Deprecated.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  topic:
+    description: The queue topic name this event belongs in.  Deprecated.
+    type: string
+  uuid:
+    description: 'Unique event identifier.  Deprecated, use meta.id.'
+    type: string
+    maxLength: 128
+  webHost:
+    description: >-
+      Request host. 'window.location.hostname' on client-side events;
+      $_SERVER['HTTP_HOST'] on server.
+    type: string
+  wiki:
+    description: $wgDBName e.g. enwiki
+    type: string
 examples:
-  - event:
+  - $schema: /analytics/legacy/universallanguageselector/1.4.0
+    client_dt: '2020-04-02T19:11:20.942Z'
+    dt: '2020-04-02T19:11:20.942Z'
+    event:
       action: settings-open
       contentLanguage: en
       context: interlanguage
@@ -357,7 +363,4 @@ examples:
       dt: '2020-04-02T19:11:20.942Z'
       id: b0caf18d-6c7f-4403-947d-2712bbe28610
       stream: eventlogging_UniversalLanguageSelector
-    dt: '2020-04-02T19:11:20.942Z'
-    client_dt: '2020-04-02T19:11:20.942Z'
-    $schema: /analytics/legacy/universallanguageselector/1.4.0
     schema: UniversalLanguageSelector

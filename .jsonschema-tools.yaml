@@ -5,3 +5,9 @@ schemaBaseUris:
   - https://schema.wikimedia.org/repositories/primary/jsonschema/
 logLevel: info
 shouldGenerateExample: true
+
+skipSchemaTestCases:
+    # /analytics/legacy/test/1.1.0 added 'event' as a required property.
+    # This should have been required in 1.0.0. Skip compatibility
+    # check between 1.0.0 and 1.1.0.
+    '/analytics/legacy/test/1.1.0': ['schema-version-compatibility']

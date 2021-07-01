@@ -143,5 +143,41 @@
       "type": "string",
       "description": "Client IP address that sent this event, usually best guess parsed out of from X-Client-IP header which is set by varnish from X-Forwarded-For. Deprecated, use http.client_ip.\n"
     }
-  }
+  },
+  "examples": [
+    {
+      "$schema": "/fragment/analytics/legacy/eventcapsule/1.2.0",
+      "meta": {
+        "dt": "2021-01-01T00:00:00.0Z",
+        "stream": "dolor",
+        "request_id": "dolor",
+        "id": "dolor",
+        "domain": "dolor",
+        "uri": "http://example.org"
+      },
+      "topic": "dolor",
+      "wiki": "dolor",
+      "webHost": "dolor",
+      "schema": "dolor",
+      "revision": -6305039478318694,
+      "http": {
+        "method": "dolor",
+        "status_code": -6305039478318694,
+        "has_cookies": false,
+        "request_headers": {
+          "dolorb": "dolor"
+        },
+        "response_headers": {
+          "dolorb": "dolor"
+        },
+        "protocol": "dolor"
+      },
+      "recvFrom": "dolor",
+      "dt": "2021-01-01T00:00:00.0Z",
+      "seqId": -6305039478318694,
+      "uuid": "dolor",
+      "ip": "dolor",
+      "client_dt": "2021-01-01T00:00:00.0Z"
+    }
+  ]
 }

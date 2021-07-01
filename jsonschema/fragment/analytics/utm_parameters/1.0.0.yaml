@@ -6,21 +6,6 @@ $id: /fragment/analytics/utm_parameters/1.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 properties:
-  utm_source:
-    description: >
-      Identifies which site or app sent the traffic, and is a *required
-      parameter*; for example: "Wikipedia", "Twitter", "Facebook"
-
-      MediaWiki-based instrumentation can assign the value of this field by
-      retrieving it with `mw.util.getParamValue( 'utm_source' )`
-    type: string
-  utm_medium:
-    description: >
-      Identifies what type of link was used such as "socialmedia" or "email"
-
-      MediaWiki-based instrumentation can assign the value of this field by
-      retrieving it with `mw.util.getParamValue( 'utm_medium' )`
-    type: string
   utm_campaign:
     description: >
       Identifies a specific product promotion or strategic campaign; for
@@ -28,13 +13,6 @@ properties:
 
       MediaWiki-based instrumentation can assign the value of this field by
       retrieving it with `mw.util.getParamValue( 'utm_campaign' )`
-    type: string
-  utm_term:
-    description: >
-      Identifies search terms (e.g. "mobile+app")
-
-      MediaWiki-based instrumentation can assign the value of this field by
-      retrieving it with `mw.util.getParamValue( 'utm_term' )`
     type: string
   utm_content:
     description: >
@@ -45,3 +23,31 @@ properties:
       MediaWiki-based instrumentation can assign the value of this field by
       retrieving it with `mw.util.getParamValue( 'utm_content' )`
     type: string
+  utm_medium:
+    description: >
+      Identifies what type of link was used such as "socialmedia" or "email"
+
+      MediaWiki-based instrumentation can assign the value of this field by
+      retrieving it with `mw.util.getParamValue( 'utm_medium' )`
+    type: string
+  utm_source:
+    description: >
+      Identifies which site or app sent the traffic, and is a *required
+      parameter*; for example: "Wikipedia", "Twitter", "Facebook"
+
+      MediaWiki-based instrumentation can assign the value of this field by
+      retrieving it with `mw.util.getParamValue( 'utm_source' )`
+    type: string
+  utm_term:
+    description: >
+      Identifies search terms (e.g. "mobile+app")
+
+      MediaWiki-based instrumentation can assign the value of this field by
+      retrieving it with `mw.util.getParamValue( 'utm_term' )`
+    type: string
+examples:
+  - utm_campaign: dolor
+    utm_content: dolor
+    utm_medium: dolor
+    utm_source: dolor
+    utm_term: dolor

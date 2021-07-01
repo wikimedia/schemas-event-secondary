@@ -13,53 +13,30 @@ properties:
       A URI identifying the JSONSchema for this event. This should match an
       schema's $id in a schema repository. E.g. /schema/title/1.0.0
     type: string
-  meta:
-    type: object
-    required:
-      - dt
-      - stream
-    properties:
-      uri:
-        type: string
-        format: uri-reference
-        maxLength: 8192
-        description: Unique URI identifying the event or entity
-      request_id:
-        description: Unique ID of the request that caused the event
-        type: string
-      id:
-        description: Unique ID of this event
-        type: string
-      dt:
-        type: string
-        format: date-time
-        maxLength: 128
-        description: 'UTC event datetime, in ISO-8601 format'
-      domain:
-        description: Domain the event or entity pertains to
-        type: string
-        minLength: 1
-      stream:
-        description: Name of the stream/queue/dataset that this event belongs in
-        type: string
-        minLength: 1
+  dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
   http:
     type: object
     properties:
-      protocol:
-        description: The protocol used for the request (HTTP or HTTPS)
-        type: string
-      method:
-        description: 'The HTTP request method (GET, POST, etc.)'
-        type: string
-      status_code:
-        description: The HTTP status code returned for this request (when known)
-        type: integer
-        minimum: -9007199254740991
-        maximum: 9007199254740991
       has_cookies:
         description: True if the http request has any cookies set
         type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
       request_headers:
         description: 'Request headers sent by the client.  E.g. user-agent, etc.'
         type: object
@@ -70,15 +47,57 @@ properties:
         type: object
         additionalProperties:
           type: string
-  dt:
-    type: string
-    format: date-time
-    maxLength: 128
-    description: >
-      ISO-8601 formatted timestamp of when the event occurred/was generated in
-      UTC). This exists separately from meta.dt in the main common schema. For
-      external client-sent instrumentation events, we want to allow meta.dt to
-      be the received time (filled in by EventGate at ingest time), as we don't
-      trust client-sent events to always set the proper date and time.
-      Client-set event generation time should be set here instead. See:
-      https://phabricator.wikimedia.org/T240460
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+examples:
+  - $schema: /fragment/analytics/common/2.0.0
+    dt: '2021-01-01T00:00:00.0Z'
+    http:
+      has_cookies: false
+      method: dolor
+      protocol: dolor
+      request_headers:
+        dolorb: dolor
+      response_headers:
+        dolorb: dolor
+      status_code: -6305039478318694
+    meta:
+      domain: dolor
+      dt: '2021-01-01T00:00:00.0Z'
+      id: dolor
+      request_id: dolor
+      stream: dolor
+      uri: 'http://example.org'

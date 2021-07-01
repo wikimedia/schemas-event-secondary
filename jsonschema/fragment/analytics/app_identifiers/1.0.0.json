@@ -19,5 +19,11 @@
       "pattern": "^[0-9a-z]{20}$",
       "description": "Identifies an app session: a cluster of actions taken by the user in the app within a limited period of time. A session ID is generated the first time it is requested by the instrumentation code, which will usually be soon after the user launches the app. A new session ID is generated anytime the app has been inactive (that is, in the background state) for at least 15 minutes or has been forcibly stopped by the OS or the user.\nThis identifier is managed and assigned automatically by the EPC library in the Wikipedia app for Android and iOS.\n"
     }
-  }
+  },
+  "examples": [
+    {
+      "app_session_id": "55555555555555555555",
+      "app_install_id": "33333333-3333-3333-3333-333333333333"
+    }
+  ]
 }

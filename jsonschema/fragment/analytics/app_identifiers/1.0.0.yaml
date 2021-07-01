@@ -7,11 +7,6 @@ $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 properties:
   app_install_id:
-    type: string
-    minLength: 36
-    maxLength: 36
-    pattern: >-
-      ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
     description: >
       Identifies an install of the app and persists across all sessions. When
       the user uninstalls the app and re-installs it, a new app install ID is
@@ -19,11 +14,12 @@ properties:
 
       This UUIDv4 identifier is assigned automatically by the EPC library in the
       the Wikipedia app for Android and iOS.
-  app_session_id:
     type: string
-    minLength: 20
-    maxLength: 20
-    pattern: '^[0-9a-z]{20}$'
+    maxLength: 36
+    minLength: 36
+    pattern: >-
+      ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+  app_session_id:
     description: >
       Identifies an app session: a cluster of actions taken by the user in the
       app within a limited period of time. A session ID is generated the first
@@ -34,3 +30,10 @@ properties:
 
       This identifier is managed and assigned automatically by the EPC library
       in the Wikipedia app for Android and iOS.
+    type: string
+    maxLength: 20
+    minLength: 20
+    pattern: '^[0-9a-z]{20}$'
+examples:
+  - app_install_id: 33333333-3333-3333-3333-333333333333
+    app_session_id: '55555555555555555555'

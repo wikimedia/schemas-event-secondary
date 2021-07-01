@@ -19,7 +19,7 @@
     "stream"
   ],
   "devDependencies": {
-    "@wikimedia/jsonschema-tools": "latest",
+    "@wikimedia/jsonschema-tools": "^0.10.4",
     "mocha": "^6.2.0",
     "node-fetch": "^2.6.1"
   }

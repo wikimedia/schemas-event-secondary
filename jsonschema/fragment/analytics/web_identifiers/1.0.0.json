@@ -19,5 +19,11 @@
       "pattern": "^[0-9a-z]{20}$",
       "description": "Identifies a single web page view (visit). This identifier is randomly generated the first time it is requested by the instrumentation code on any page view and persists for the lifetime of the page. When the user navigates to another page or refreshes/reloads the page, this identifier disappears and a new one is regenerated (when needed). Different visits to the same page will yield different pageview IDs (also called tokens).\nInteractions with multiple features (instrumented separately) on the same web page may be linked together via this identifier.\nInstrumentation code should assign this with mw.user.getPageviewToken()\n"
     }
-  }
+  },
+  "examples": [
+    {
+      "web_pageview_id": "55555555555555555555",
+      "web_session_id": "55555555555555555555"
+    }
+  ]
 }
