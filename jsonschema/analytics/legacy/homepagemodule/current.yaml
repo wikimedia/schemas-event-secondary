@@ -2,7 +2,7 @@ title: analytics/legacy/homepagemodule
 description: >-
   Logs interactions with the homepage modules on the Special:Homepage provided
   by the GrowthExperiments extension
-$id: /analytics/legacy/homepagemodule/1.1.0
+$id: /analytics/legacy/homepagemodule/1.2.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -53,6 +53,8 @@ allOf:
               - se-explanation-open
               - se-explanation-close
               - se-explanation-link-click
+              - se-task-navigation-swipe
+              - se-edit-button-click
             description: >-
               Action the user took:
 
@@ -168,6 +170,11 @@ allOf:
 
               - se-explanation-link-click: User clicks on the "Learn more" link
               in the explanation popup.
+
+              - se-task-navigation-swipe: User changes tasks via swiping.
+
+              - se-edit-button-click: User clicks on edit button for the task (and is taken to the
+              recommended article).
           action_data:
             description: >-
               Additional data for certain actions:
@@ -218,7 +225,7 @@ allOf:
               button; omitted for the variant A StartEditing button).
 
 
-              For the se-task-impression and se-task-click actions:
+              For the se-task-impression, se-task-click and se-edit-button-click actions:
 
               - newcomerTaskToken: a value by which to join with the
               NewcomerTask event.
@@ -240,7 +247,7 @@ allOf:
               - errorMessage: error message, only when type=error
 
 
-              For the se-task-navigation action:
+              For the se-task-navigation and se-task-navigation-swipe actions:
 
               - dir: 'prev' or 'next'.
 
