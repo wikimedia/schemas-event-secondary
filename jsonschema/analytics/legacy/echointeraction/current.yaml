@@ -1,0 +1,94 @@
+title: analytics/legacy/echointeraction
+description: >-
+  Logs activity related to how users interact with notifications produced via
+  the Echo extension
+$id: /analytics/legacy/echointeraction/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+required:
+  - event
+properties:
+  event:
+    type: object
+    required:
+      - version
+      - action
+      - userId
+    properties:
+      action:
+        description: >-
+          List of possible client-side actions. ui-* actions refer to UI
+          elements, notification-* actions refer to individual notifications.
+           ui-badge-link-click is fired when the user clicks on the badge and has no context; ui-archive-link-click can only have flyout as a context; ui-help-click and ui-prefs-click actions can occur in the flyout and archive context. mark-all-read-click is fired when the user clicks the mark all read button, either in the popup or the special page. mark-entire-xwiki-bundle-read-click is fired when an entire cross-wiki bundle is marked as read.
+        type: string
+        enum:
+          - notification-impression
+          - notification-link-click
+          - notification-bundle-expand
+          - mark-all-read-click
+          - mark-entire-xwiki-bundle-read-click
+          - special-page-visit
+          - ui-archive-link-click
+          - ui-badge-link-click
+          - ui-help-click
+          - ui-prefs-click
+      context:
+        description: >-
+          Context in which the action occurred, applies to all actions except
+          for badge-link-click
+        type: string
+        enum:
+          - flyout
+          - archive
+          - mobile-overlay
+          - mobile-archive
+      editCount:
+        description: 'Lifetime edit count, for registered users only'
+        type: integer
+      eventId:
+        description: >-
+          Unique identifier of the event triggering the current notification
+          (matching the same field in Schema:Echo), only available for
+          notification-* actions.
+        type: integer
+      mobile:
+        description: True if interaction happened in a mobile interface
+        type: boolean
+      notificationType:
+        description: >-
+          Type of notification, matching definitions from Schema:Echo. This is
+          only available for notification-* actions.
+        type: string
+      notifWiki:
+        description: >-
+          Wiki the notification is from, omitted if the notification is from the
+          current wiki
+        type: string
+      userId:
+        description: >-
+          User ID, change to required if the feature is being tested on
+          registered only
+        type: integer
+      version:
+        description: >-
+          References the full specifications of the current version of Echo
+          (adding new notification types or changing the schema requires a
+          version change), example: 1.1
+        type: string
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+examples:
+  - $schema:
+      $ref: '#/$id'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    dt: '2020-04-02T19:11:20.942Z'
+    event:
+      version: example
+      action: notification-impression
+      userId: 0
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_EchoInteraction
+    schema: EchoInteraction
+

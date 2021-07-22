@@ -100,7 +100,7 @@ const exampleTemplate = {
 async function convertEventLoggingSchema(schemaName) {
     const eventSubSchema = await getEventLoggingSchema(schemaName);
 
-    const newSchema = Object.assign({}, legacySchemaTemplate);
+    let newSchema = Object.assign({}, legacySchemaTemplate);
     newSchema.description = eventSubSchema.description;
     newSchema.title = eventLoggingSchemaNameToTitle(schemaName);
     newSchema.$id = eventLoggingSchemaNameToFileUri(schemaName, '1.0.0');
@@ -116,8 +116,7 @@ async function convertEventLoggingSchema(schemaName) {
         }
     });
 
-    newSchema.allOf.push(eventSubProperties)
-
+    newSchema = Object.assign(newSchema, eventSubProperties)
 
     const example = Object.assign({}, exampleTemplate);
     example.$schema = { $ref: '#/$id' };
