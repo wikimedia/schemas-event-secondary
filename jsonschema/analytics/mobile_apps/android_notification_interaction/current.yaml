@@ -1,0 +1,93 @@
+title: analytics/mobile_apps/android_notification_interaction
+description: >
+  Track user interactions with Echo notifications.
+
+  This schema was migrated from legacy :MobileWikiAppNotificationInteraction.
+$id: /analytics/mobile_apps/android_notification_interaction/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/common/2.0.0#
+  - $ref: /fragment/analytics/app_identifiers/1.0.0#
+properties:
+  notification_id:
+    type: integer
+    description: Unique identifier of the Echo event triggering the notification
+  notification_wiki:
+    type: string
+    description: The wiki which the notification came from
+  notification_type:
+    type: string
+    description: Type of notification interacted with, for example, welcome, edit-thank, and thank-you-edit (milestone)
+  action_rank:
+    type: integer
+    description: >
+      0 - Mark as read and archive
+
+      1 - Primary action (as specified by Echo API)
+
+      2 - Secondary action (as specified by Echo API)
+
+      3 - Link clicked (as specified by Echo API)
+
+      10 - Poll notification - clicked
+
+      11 - Poll notification - dismissed
+  action_icon:
+    type: string
+    description: >
+      The icon associated with the link, which can be used to determine action.
+      For example, if type:edit-thank and link_rank:2,
+      then this field can tell us whether the user clicked on the name of the thanker (link_icon:userAvatar) or
+      the article that they were thanked for editing (link_icon:article)
+  selection_token:
+    type: string
+    description: >
+      In cases where user has selected multiple notifications and has marked all as read (and archived),
+      a unique identifier is generated for the set and included with the event sent for each of the notifications.
+      This enables us to analyze usage of the multi-select feature
+  incoming_only:
+    type: boolean
+    description: Is this the first instance of notification
+  device_level_enabled:
+    type: boolean
+    description: User has device level notifications enabled
+
+
+required:
+  - dt
+  - app_install_id
+  - notification_id
+  - notification_wiki
+  - notification_type
+
+examples:
+  - meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      stream: 'android.notification_interaction'
+    dt: '2020-04-02T19:11:20.942Z'
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    notification_id: 562648
+    notification_wiki: ndswiki
+    notification_type: edit-user-talk
+    action_rank: 0
+    action_icon: icon
+    selection_token: token
+    incoming_only: true
+    device_level_enabled: true
+    $schema:
+      $ref: '#/$id'
+  - meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      stream: 'android.notification_interaction'
+    dt: '2020-04-02T19:11:20.942Z'
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    notification_id: 562648
+    notification_wiki: ndswiki
+    notification_type: edit-user-talk
+    action_rank: 0
+    action_icon: ''
+    incoming_only: true
+    device_level_enabled: true
+    $schema:
+      $ref: '#/$id'
