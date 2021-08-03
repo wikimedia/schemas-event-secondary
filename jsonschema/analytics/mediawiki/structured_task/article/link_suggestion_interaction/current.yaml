@@ -1,10 +1,11 @@
 title: analytics/mediawiki/structured_task/article/link_suggestion_interaction
 description: Analytics events for interactions with link suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.0.0
+$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
   - $ref: /fragment/analytics/common/2.0.0#
+  - $ref: /fragment/http/client_ip/1.0.0#
   - required:
       - active_interface
       - action
@@ -35,6 +36,7 @@ allOf:
           - editsummary_dialog
           - recommendedlinktoolbar_dialog
           - machinesuggestions_mode
+          - editmode_confirmation_dialog
       newcomer_task_token:
         type: string
         description: a value by which to join with the NewcomerTask event
@@ -66,6 +68,11 @@ allOf:
           - editsummary_approve # The user pressed the back button in the "Review changes" button in the editsummary_dialog
           - editsummary_report # The user pressed the "report" button in review panel of the editsummary_dialog
           - editsummary_save # The user pressed the save button in the editsummary_dialog
+          - editmode_click # The user opened the edit mode dropdown
+          - editmode_select # The user selected an editing mode
+          - editmode_confirm_switch # The user clicked on confirm button in editmode_confirmation_dialog
+          - editmode_cancel_switch # The user clicked on cancel button in editmode_confirmation_dialog
+          - reopen_dialog_click # The user clicked on the robot button (for re-opening recommendedlinktoolbar_dialog)
       action_data:
         type: string
         description: >-
@@ -100,7 +107,8 @@ allOf:
             - previous_acceptance_state The previous acceptance state of the suggestion. One of "accepted", "rejected" or "undecided"
            For action=suggestion_focus on recommendedlinktoolbar_dialog, the above data, plus:
             - manual_focus true if the user tapped/clicked on the link, false if the user used back/next button or if the suggestion was auto-advanced
-
+         For actions editmode_select and editmode_confirm_switch:
+            - selected_mode is one of "visual", "machinesuggestions" or "source"
       is_mobile:
         description: Whether the mobile site is being used.
         type: boolean
