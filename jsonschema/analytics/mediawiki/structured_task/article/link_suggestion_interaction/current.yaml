@@ -1,6 +1,6 @@
 title: analytics/mediawiki/structured_task/article/link_suggestion_interaction
 description: Analytics events for interactions with link suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.1.0
+$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.2.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -37,6 +37,7 @@ allOf:
           - recommendedlinktoolbar_dialog
           - machinesuggestions_mode
           - editmode_confirmation_dialog
+          - outdatedsuggestions_dialog
       newcomer_task_token:
         type: string
         description: a value by which to join with the NewcomerTask event
