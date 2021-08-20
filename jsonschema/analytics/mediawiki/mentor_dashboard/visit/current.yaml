@@ -1,0 +1,30 @@
+title: analytics/mediawiki/mentor_dashboard/visit
+description: >-
+  Log visits to Special:MentorDashboard (provided by Extension:GrowthExperiments) from
+  the server-side.
+$id: /analytics/mediawiki/mentor_dashboard/visit/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+allOf:
+  - $ref: /fragment/analytics/common/2.0.0#
+  - required:
+      - is_mobile
+      - user_id
+    properties:
+        is_mobile:
+          description: Whether the mobile site is being used.
+          type: boolean
+        user_id:
+          description: User ID, needed for tracking across login sessions.
+          type: integer
+
+examples:
+  - $schema:
+      $ref: '#/$id'
+    meta:
+      stream: mediawiki.mentor_dashboard.visit
+      domain: cs.wikipedia.org
+      dt: '2021-10-12T00:20:00.649Z'
+    dt: '2021-10-12T00:20:00.649Z'
+    is_mobile: false
+    user_id: 123
