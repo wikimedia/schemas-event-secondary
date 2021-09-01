@@ -2,7 +2,7 @@ title: analytics/legacy/universallanguageselector
 description: >-
   Schema for ULS extension events. Currently this covers both various actions as
   well as events that log usage of certain fonts, input methods and languages.
-$id: /analytics/legacy/universallanguageselector/1.4.0
+$id: /analytics/legacy/universallanguageselector/1.5.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -41,7 +41,7 @@ allOf:
                   * more-languages-access: Used accessed "..." to get more languages for something. The something is defined in the context field.
                   * webfonts-enable: User enabled the webfonts functionality via ULS settings.
                   * webfonts-disable: User completely disabled the webfonts functionality via ULS settings.
-                  * compact-language-links-open: User opens the compact language links treatment.
+                  * compact-language-links-open: User opens the compact language links treatment. The context field defines which trigger was used to open the treatment.
                 type: string
                 enum:
                   - ime-change
@@ -65,6 +65,8 @@ allOf:
                   ** content - user changed content language
                   ** ime - user changed input language
                   ** other - any other language selection via ULS
+                  ** languages-list - user changed content language by clicking a direct language link in the sidebar
+                  ** content-language-switcher - user changed content language after opening the compact language links treatment
                   * no-search-results: The search string
                   * settings-open:
                   ** personal - uls trigger in personal tools
@@ -72,7 +74,7 @@ allOf:
                   ** menu - the input tools popup menu
                   ** preferences - from link in Special:Preferences language selection
                   * more-languages-access: Same as for language-change
-                  * compact-language-links-open
+                  * compact-language-links-open:
                   ** other - trigger is elsewhere on the page
                   ** header - trigger is in the header
                 type: string
@@ -107,7 +109,7 @@ allOf:
                   How was the language selected.
                   * Null if none of the below were used.
                   * map - user clicked the map
-                  * search - user used the search filed
+                  * search - user used the search field
                   * common - user clicked from the list of common languages
                 type: string
                 enum:
