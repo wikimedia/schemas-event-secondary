@@ -1,0 +1,37 @@
+title: analytics/legacy/wikibasetermboxinteraction
+description: Tracks interactions with the Wikibase termbox
+$id: /analytics/legacy/wikibasetermboxinteraction/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        required:
+          - actionType
+        properties:
+          actionType:
+            description: >-
+              Type of interaction with the termbox. "hide"/"show" refers to toggling
+              of termbox itself. "all" refers to extending it to show all languages.
+              All actions are counted only once per page view!
+            type: string
+            enum:
+              - hide
+              - show
+              - all
+examples:
+  - $schema:
+      $ref: '#/$id'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    dt: '2020-04-02T19:11:20.942Z'
+    event:
+      actionType: show
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_WikibaseTermboxInteraction
+    schema: WikibaseTermboxInteraction
