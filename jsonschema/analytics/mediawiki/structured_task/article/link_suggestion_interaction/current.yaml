@@ -1,6 +1,6 @@
 title: analytics/mediawiki/structured_task/article/link_suggestion_interaction
 description: Analytics events for interactions with link suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.2.0
+$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.3.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -110,6 +110,8 @@ allOf:
             - manual_focus true if the user tapped/clicked on the link, false if the user used back/next button or if the suggestion was auto-advanced
          For actions editmode_select and editmode_confirm_switch:
             - selected_mode is one of "visual", "machinesuggestions" or "source"
+         For actions back, next on recommendedlinktoolbar_dialog:
+            - navigation_type is swipe or click
       is_mobile:
         description: Whether the mobile site is being used.
         type: boolean
