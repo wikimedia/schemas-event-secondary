@@ -228,7 +228,7 @@
           "description": "Mechanism information about action=init\n\nclick: Editing has been initiated from an edit link\n\nnew: Editing has been initiated by clicking on redlink if type=page or new section link if type=section\n\nurl: Editing has been initiated by direct navigation.\n\nurl-new: Editing has been initiated by direct navigation to a non-existent page if type=page or a new section link if type=section"
         },
         "init_timing": {
-          "description": "Timing information about action=init – time in milliseconds since the page was loaded.",
+          "description": "Timing information about action=init – this is mostly not logged / logged as 0 because it's rarely meaningful. If a specific integration chooses to log this, it should document that here.",
           "type": "integer",
           "minimum": -9007199254740991,
           "maximum": 9007199254740991

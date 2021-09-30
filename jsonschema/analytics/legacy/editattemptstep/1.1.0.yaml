@@ -239,8 +239,9 @@ properties:
           - url-new
       init_timing:
         description: >-
-          Timing information about action=init – time in milliseconds since the
-          page was loaded.
+          Timing information about action=init – this is mostly not logged /
+          logged as 0 because it's rarely meaningful. If a specific integration
+          chooses to log this, it should document that here.
         type: integer
         maximum: 9007199254740991
         minimum: -9007199254740991

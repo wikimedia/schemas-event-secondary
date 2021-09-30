@@ -136,8 +136,9 @@ allOf:
               type=section
           init_timing:
             description: >-
-              Timing information about action=init – time in milliseconds since
-              the page was loaded.
+              Timing information about action=init – this is mostly not logged /
+              logged as 0 because it's rarely meaningful. If a specific integration
+              chooses to log this, it should document that here.
             type: integer
           ready_timing:
             description: >-
