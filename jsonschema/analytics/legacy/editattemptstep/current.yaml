@@ -394,7 +394,9 @@ allOf:
           anonymous_user_token:
             description: >-
               A random, cookie-stored token used to temporarily distinguish
-              individual anonymous editors. Null for registered editors.
+              individual anonymous editors in certain A/B tests (ref T225209).
+              Null for registered editors and for any anonymous editors who
+              were not assigned a test condition.
             type: string
 examples:
   - event:
