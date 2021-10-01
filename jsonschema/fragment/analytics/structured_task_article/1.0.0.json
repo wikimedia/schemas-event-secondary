@@ -1,0 +1,163 @@
+{
+  "title": "fragment/analytics/structured_task_article",
+  "description": "Common fields for structured task analytics and instrumentation events on articles",
+  "$id": "/fragment/analytics/structured_task_article/1.0.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "homepage_pageview_token",
+    "is_mobile",
+    "meta",
+    "newcomer_task_token",
+    "page_id",
+    "page_title"
+  ],
+  "properties": {
+    "homepage_pageview_token": {
+      "description": "One-time token per page load generated on Special:Homepage. This is a random user session ID that will be exported to the client-side, so that this schema's events can be associated with HomepageModule and HomepageVisit schema events",
+      "type": "string"
+    },
+    "newcomer_task_token": {
+      "type": "string",
+      "description": "a value by which to join with the NewcomerTask event"
+    },
+    "is_mobile": {
+      "description": "Whether the mobile site is being used.",
+      "type": "boolean"
+    },
+    "page_id": {
+      "description": "ID of the page the user is attempting to edit.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "page_title": {
+      "description": "Title of the article used for the task (in text form, with page prefix).",
+      "type": "string"
+    },
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "dt": {
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991
+        },
+        "client_ip": {
+          "description": "The http client's IP address, usually set from the X-Client-IP header, the value of which is extracted from X-Forwarded-For.",
+          "type": "string"
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "dt": {
+          "description": "UTC event datetime, in ISO-8601 format",
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "description": "Unique URI identifying the event or entity",
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "$schema": "/fragment/analytics/structured_task_article/1.0.0",
+      "homepage_pageview_token": "dolor",
+      "is_mobile": false,
+      "meta": {
+        "dt": "2021-01-01T00:00:00.0Z",
+        "stream": "dolor",
+        "id": "dolor",
+        "request_id": "dolor",
+        "uri": "http://example.org",
+        "domain": "dolor"
+      },
+      "newcomer_task_token": "dolor",
+      "page_id": 1351079888211148,
+      "page_title": "dolor",
+      "http": {
+        "client_ip": "dolor",
+        "protocol": "dolor",
+        "request_headers": {
+          "dolorb": "dolor"
+        },
+        "response_headers": {
+          "dolorb": "dolor"
+        },
+        "status_code": -6305039478318694,
+        "has_cookies": false,
+        "method": "dolor"
+      },
+      "dt": "2021-01-01T00:00:00.0Z"
+    }
+  ]
+}
