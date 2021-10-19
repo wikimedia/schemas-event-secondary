@@ -1,0 +1,146 @@
+{
+  "title": "analytics/mediawiki/web_ab_test_enrollment",
+  "description": "Tracks bucketing of users for an A/B test",
+  "$id": "/analytics/mediawiki/web_ab_test_enrollment/1.0.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "$schema",
+    "experiment_name",
+    "group",
+    "meta",
+    "wiki"
+  ],
+  "properties": {
+    "wiki": {
+      "description": "The project in which the experiment event happens.",
+      "type": "string"
+    },
+    "group": {
+      "description": "The experiment group to which the user is assigned.",
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "control"
+      ]
+    },
+    "experiment_name": {
+      "description": "The experiment project name.",
+      "type": "string"
+    },
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "dt": {
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "dt": {
+          "description": "UTC event datetime, in ISO-8601 format",
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "description": "Unique URI identifying the event or entity",
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192
+        }
+      }
+    },
+    "web_pageview_id": {
+      "description": "Identifies a single web page view (visit). This identifier is randomly generated the first time it is requested by the instrumentation code on any page view and persists for the lifetime of the page. When the user navigates to another page or refreshes/reloads the page, this identifier disappears and a new one is regenerated (when needed). Different visits to the same page will yield different pageview IDs (also called tokens).\nInteractions with multiple features (instrumented separately) on the same web page may be linked together via this identifier.\nInstrumentation code should assign this with mw.user.getPageviewToken()\n",
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 20,
+      "pattern": "^[0-9a-z]{20}$"
+    },
+    "web_session_id": {
+      "description": "Identifies a web session: a cluster of actions taken by the user on a website within a limited period of time. A session ID is generated the first time it is requested by the instrumentation code, which is usually the first time the user visits the website.\nIn the current implementation, this ID is shared across windows, tabs, and page views in the same browser. The ID is normally regenerated after the browser is shut down; however, if the browser's \"restore previous session\" feature is used when it restarts, the previous ID is retained.\nInteractions across multiple pages in the same web session may be linked together via this identifier.\nInstrumentation code should assign this with mw.user.sessionId()\n",
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 20,
+      "pattern": "^[0-9a-z]{20}$"
+    }
+  },
+  "examples": [
+    {
+      "$schema": "/analytics/mediawiki/web_ab_test_enrollment/1.0.0",
+      "meta": {
+        "stream": "mediawiki.web_ab_test_enrollment_example",
+        "dt": "2021-10-27T18:10:08.108Z"
+      },
+      "wiki": "enwiki",
+      "group": "B",
+      "experiment_name": "sticky_header_2021_10"
+    }
+  ],
+  "additionalProperties": false
+}
