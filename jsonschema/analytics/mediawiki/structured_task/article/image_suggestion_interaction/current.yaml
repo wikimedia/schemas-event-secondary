@@ -1,6 +1,6 @@
 title: analytics/mediawiki/structured_task/article/image_suggestion_interaction
 description: Analytics events for interactions with image suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.0.0
+$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -17,12 +17,19 @@ allOf:
           - onboarding_step_1_dialog
           - onboarding_step_2_dialog
           - onboarding_step_3_dialog
+          - onboarding_step_4_dialog
           - nosuggestions_dialog
           - rejection_dialog
           - editsummary_dialog
           - recommendedimagetoolbar_dialog
           - machinesuggestions_mode
           - editmode_confirmation_dialog
+          - skip_dialog
+          - captioninfo_dialog
+          - imagedetails_dialog
+          - imageviewer_dialog
+          - qualitygate_dialog
+          - caption_entry
       action:
         type: string
         description: >-
@@ -33,12 +40,12 @@ allOf:
         enum:
           - impression # Used to indicate that an interface is seen. Used with all active_interface items.
           - skip_all # Button for skipping all screens in onboarding_step_1_dialog
-          - get_started # Final button on the onboarding_step_3_dialog
-          - back # Used in onboarding_step_{2/3}_dialog
-          - next # Used in onboarding_step_{1/2}_dialog
-          - link_click # Used in onboarding_step_2_dialog and in recommendedimagetoolbar_dialog
-          - close # Used with rejection_dialog, editsummary_dialog and onboarding_step_{1/2/3}_dialog
-          - view_help # Only appears for mobile recommendedimagetoolbar_dialog interface. Used with recommendedimagetoolbar_dialog
+          - get_started # Final button on the onboarding_step_4_dialog
+          - back # Used in onboarding_step_{2/3/4}_dialog
+          - next # Used in onboarding_step_{1/2/3}_dialog
+          - link_click # Used in onboarding_step_1_dialog, recommendedimagetoolbar_dialog and imagedetails_dialog
+          - close # Used with dialog active_interface items
+          - view_help # Used with recommendedimagetoolbar_dialog and caption_entry
           - suggestion_accept # The user accepted a suggestion
           - suggestion_reject # The user rejected a suggestion
           - suggestion_skip # The user skipped a suggestion
@@ -51,6 +58,12 @@ allOf:
           - editmode_confirm_switch # The user clicked on confirm button in editmode_confirmation_dialog
           - editmode_cancel_switch # The user clicked on cancel button in editmode_confirmation_dialog
           - reopen_dialog_click # The user clicked on the robot button (for re-opening recommendedimagetoolbar_dialog)
+          - confirm_skip_suggestion # Used with skip_dialog
+          - expand # Used with recommendedimagetoolbar_dialog
+          - collapse # Used with recommendedimagetoolbar_dialog
+          - focus # Used with caption_entry, when the user clicks on the caption box
+          - validate # Used with caption_entry, when validation is triggerd
+          - editor_save # The user pressed the save button in the VisualEditor toolbar in machinesuggestions_mode
       action_data:
         type: string
         description: >-
@@ -59,25 +72,32 @@ allOf:
           - dont_show_again is true or false
          For action=get_started:
           - dont_show_again is true or false
-         For action=next in onboarding_step_{1/2/3}_dialog:
+         For action=next in onboarding_step_{1/2/3/4}_dialog:
           - dont_show_again is true or false
-         For action=back in onboarding_step_{1/2/3}_dialog:
+         For action=back in onboarding_step_{1/2/3/4}_dialog:
           - dont_show_again is true or false
          For action=link_click in the onboarding_step_1_dialog:
           - dont_show_again checkbox is true or false
          For action=close on rejection_dialog:
-          - rejection_reason The string for the ID of the reason for rejecting the recommendation.
-         For actions suggestion_accept, suggestion_reject, suggestion_skip, link_click, view_help on recommendedimagetoolbar_dialog:
+          - rejection_reasons A list of strings for the IDs of the reason for rejecting the recommendation.
+         For actions suggestion_accept, suggestion_reject, suggestion_skip, link_click, view_help, expand, collapse on recommendedimagetoolbar_dialog:
           - filename The name of the suggested image
           - recommendation_source One of 'wikidata', 'wikipedia', 'commons'
           - recommendation_source_projects A list of wiki IDs. Only when recommendation_source is 'wikipedia'.
-          - rejection_reason The rejection reason, if any
+          - rejection_reasons The rejection reason, if any
           - acceptance_state The acceptance state of the suggestion. One of "accepted", "rejected" or "undecided"
-           For actions suggestion_accept, suggestion_reject, the above data, plus:
-            - previous_acceptance_state The previous acceptance state of the suggestion. One of "accepted", "rejected" or "undecided"
+          - series_number Which suggestion in the series the user is on
+          - total_suggestions The number of suggestion in the series
          For actions editmode_select and editmode_confirm_switch:
-            - selected_mode is one of "visual", "machinesuggestions" or "source"
-
+          - selected_mode is one of "visual", "machinesuggestions" or "source"
+         For actions impression and close with "captioninfo_dialog" active_interface:
+          - dialog_context is one of "onboarding" or "help"
+         For action=close with "captioninfo_dialog" active_interface:
+          - dont_show_again, when dialog_context is "onboarding", is true or false
+         For action=validate with "caption_entry" active_interface:
+          - validation_rules A list of validation rules triggered
+         For action=impression with "qualitygate_dialog" active_interface:
+          - quality_gates A list of quality gates triggered
 examples:
   - $schema:
       $ref: '#/$id'
