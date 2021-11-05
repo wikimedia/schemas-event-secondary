@@ -2,7 +2,7 @@ title: analytics/legacy/mobilewebuiactionstracking
 description: >-
   Logs when certain UI elements get visible and when user interacts with those
   on Wikimedia Minerva skin
-$id: /analytics/legacy/mobilewebuiactionstracking/1.0.0
+$id: /analytics/legacy/mobilewebuiactionstracking/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -26,6 +26,7 @@ allOf:
               presented to the user
             type: string
             enum:
+              - init
               - show
               - click
           name:
