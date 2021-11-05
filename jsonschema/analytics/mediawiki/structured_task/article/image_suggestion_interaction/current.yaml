@@ -1,6 +1,6 @@
 title: analytics/mediawiki/structured_task/article/image_suggestion_interaction
 description: Analytics events for interactions with image suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.1.0
+$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.1.1
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -63,7 +63,6 @@ allOf:
           - collapse # Used with recommendedimagetoolbar_dialog
           - focus # Used with caption_entry, when the user clicks on the caption box
           - validate # Used with caption_entry, when validation is triggerd
-          - editor_save # The user pressed the save button in the VisualEditor toolbar in machinesuggestions_mode
       action_data:
         type: string
         description: >-
@@ -98,6 +97,10 @@ allOf:
           - validation_rules A list of validation rules triggered
          For action=impression with "qualitygate_dialog" active_interface:
           - quality_gates A list of quality gates triggered
+         For active_interface=editsummary_dialog:
+          - acceptance_state The acceptance state of the suggestion. One of "accepted" or "rejected"
+          - caption_length The number of characters in the caption (when acceptance_state is "accepted")
+
 examples:
   - $schema:
       $ref: '#/$id'

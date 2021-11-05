@@ -1,7 +1,7 @@
 title: analytics/mediawiki/structured_task/article/image_suggestion_interaction
 description: Analytics events for interactions with image suggestion structured task
 $id: >-
-  /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.1.0
+  /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.1.1
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 additionalProperties: false
@@ -209,7 +209,7 @@ properties:
     type: string
 examples:
   - $schema: >-
-      /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.1.0
+      /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.1.1
     action: skip_all
     action_data: dont_show_again=true
     active_interface: onboarding_step_1_dialog
