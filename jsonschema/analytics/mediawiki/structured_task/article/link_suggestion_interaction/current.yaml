@@ -1,6 +1,6 @@
 title: analytics/mediawiki/structured_task/article/link_suggestion_interaction
 description: Analytics events for interactions with link suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.3.1
+$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.4.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -58,6 +58,8 @@ allOf:
           - editmode_confirm_switch # The user clicked on confirm button in editmode_confirmation_dialog
           - editmode_cancel_switch # The user clicked on cancel button in editmode_confirmation_dialog
           - reopen_dialog_click # The user clicked on the robot button (for re-opening recommendedlinktoolbar_dialog)
+          - expand # Used with recommendedlinktoolbar_dialog
+          - collapse # Used with recommendedlinktoolbar_dialog
       action_data:
         type: string
         description: >-
