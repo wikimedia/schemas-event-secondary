@@ -1,0 +1,299 @@
+{
+  "title": "analytics/mediawiki/web_ui_reading_depth",
+  "description": "Measures reading depth. Events only logged for UAs that support the Beacon API <http://caniuse.com/#feat=beacon> and the Page Visibility API <https://caniuse.com/#feat=pagevisibility>.",
+  "$id": "/analytics/mediawiki/web_ui_reading_depth/1.0.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "$schema",
+    "action",
+    "dom_interactive_time",
+    "is_anon",
+    "meta",
+    "page_token",
+    "session_token",
+    "skin"
+  ],
+  "properties": {
+    "is_anon": {
+      "type": "boolean",
+      "description": "Is the user viewing anonymously?"
+    },
+    "skin": {
+      "type": "string",
+      "description": "Skin being used by reader."
+    },
+    "total_length": {
+      "type": "integer",
+      "description": "Total length of time (in milliseconds) from the firstPaint (if available) or DOMinteractive (if first paint unavailable) event to the page being unloaded.",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "dom_interactive_time": {
+      "type": "integer",
+      "description": "Total length of time (in milliseconds) till DOM interactive event.",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "first_paint_time": {
+      "type": "integer",
+      "description": "Total length of time (in milliseconds) till first paint (null if not available).",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "visible_length": {
+      "type": "integer",
+      "description": "Total length of time (in milliseconds) that the page content was visible to the user as defined by the Page Visibility API.",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "action": {
+      "type": "string",
+      "description": "The `pageLoaded event happens once per page view, near the beginning. `pageUnloaded` is sent upon leaving the page (if caught).",
+      "enum": [
+        "pageLoaded",
+        "pageUnloaded"
+      ]
+    },
+    "page_token": {
+      "type": "string",
+      "description": "One-time token per page load (consistent with Schema:PageIssues and other schemas that use https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.user-method-getPageviewToken )"
+    },
+    "session_token": {
+      "type": "string",
+      "description": "Session token that survives across pages (mw.user.sessionId()), but not browser restarts, used in deterministic user bucketing"
+    },
+    "default_sample": {
+      "type": "boolean",
+      "description": "Default sample group. Set when schema has been initiated by the ReadingDepth test."
+    },
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "dt": {
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "dt": {
+          "description": "UTC event datetime, in ISO-8601 format",
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "description": "Unique URI identifying the event or entity",
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192
+        }
+      }
+    },
+    "web_pageview_id": {
+      "description": "Identifies a single web page view (visit). This identifier is randomly generated the first time it is requested by the instrumentation code on any page view and persists for the lifetime of the page. When the user navigates to another page or refreshes/reloads the page, this identifier disappears and a new one is regenerated (when needed). Different visits to the same page will yield different pageview IDs (also called tokens).\nInteractions with multiple features (instrumented separately) on the same web page may be linked together via this identifier.\nInstrumentation code should assign this with mw.user.getPageviewToken()\n",
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 20,
+      "pattern": "^[0-9a-z]{20}$"
+    },
+    "web_session_id": {
+      "description": "Identifies a web session: a cluster of actions taken by the user on a website within a limited period of time. A session ID is generated the first time it is requested by the instrumentation code, which is usually the first time the user visits the website.\nIn the current implementation, this ID is shared across windows, tabs, and page views in the same browser. The ID is normally regenerated after the browser is shut down; however, if the browser's \"restore previous session\" feature is used when it restarts, the previous ID is retained.\nInteractions across multiple pages in the same web session may be linked together via this identifier.\nInstrumentation code should assign this with mw.user.sessionId()\n",
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 20,
+      "pattern": "^[0-9a-z]{20}$"
+    },
+    "database": {
+      "description": "The name of the wiki database this event entity belongs to.",
+      "type": "string",
+      "minLength": 1
+    },
+    "page_id": {
+      "description": "The (database) page ID.",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": 0
+    },
+    "page_is_redirect": {
+      "description": "True if this page is currently a redirect page.  This fact is ultimately represented by revision content containing redirect wikitext.  If rev_id's content has redirect wikitext, then this page is a redirect.  Note that this state is also stored on the Mediawiki page table.\n",
+      "type": "boolean"
+    },
+    "page_namespace": {
+      "description": "The namespace ID this page belongs to.",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "page_title": {
+      "description": "The normalized title of the page.",
+      "type": "string",
+      "minLength": 1
+    },
+    "performer": {
+      "description": "Represents the user that performed this change.",
+      "type": "object",
+      "properties": {
+        "user_edit_count": {
+          "description": "The number of edits this user has made at the time of this event. Not present for anonymous users.\n",
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "minimum": 0
+        },
+        "user_groups": {
+          "description": "A list of the groups this user belongs to.  E.g. bot, sysop etc.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "user_id": {
+          "description": "The user id that performed this change.  This is optional, and will not be present for anonymous users.\n",
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991
+        },
+        "user_is_bot": {
+          "description": "True if this user is considered to be a bot at the time of this event. This is checked via the $user->isBot() method, which considers both user_groups and user permissions.\n",
+          "type": "boolean"
+        },
+        "user_registration_dt": {
+          "description": "The datetime of the user account registration. Not present for anonymous users or if missing in the MW database.\n",
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128
+        },
+        "user_text": {
+          "description": "The text representation of the user that performed this change.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "rev_id": {
+      "description": "The head revision of the page at the time of this event.",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "$schema": "/analytics/mediawiki/web_ui_reading_depth/1.0.0",
+      "action": "pageLoaded",
+      "dom_interactive_time": -6305039478318694,
+      "is_anon": false,
+      "meta": {
+        "dt": "2021-01-01T00:00:00.0Z",
+        "stream": "dolor",
+        "id": "dolor",
+        "request_id": "dolor",
+        "uri": "http://example.org",
+        "domain": "dolor"
+      },
+      "page_token": "dolor",
+      "session_token": "dolor",
+      "skin": "dolor",
+      "web_pageview_id": "55555555555555555555",
+      "performer": {
+        "user_groups": [
+          "dolor"
+        ],
+        "user_id": -6305039478318694,
+        "user_is_bot": false,
+        "user_registration_dt": "2021-01-01T00:00:00.0Z",
+        "user_text": "dolor",
+        "user_edit_count": 1351079888211148
+      },
+      "default_sample": false,
+      "dt": "2021-01-01T00:00:00.0Z",
+      "http": {
+        "method": "dolor",
+        "protocol": "dolor",
+        "request_headers": {
+          "dolorb": "dolor"
+        },
+        "response_headers": {
+          "dolorb": "dolor"
+        },
+        "status_code": -6305039478318694,
+        "has_cookies": false
+      },
+      "total_length": -6305039478318694,
+      "web_session_id": "55555555555555555555",
+      "database": "dolor",
+      "page_id": 1351079888211148,
+      "page_is_redirect": false,
+      "page_namespace": -6305039478318694,
+      "page_title": "dolor",
+      "first_paint_time": -6305039478318694,
+      "rev_id": 1351079888211148,
+      "visible_length": -6305039478318694
+    }
+  ]
+}
