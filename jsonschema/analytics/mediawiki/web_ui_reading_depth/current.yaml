@@ -1,0 +1,50 @@
+title: analytics/mediawiki/web_ui_reading_depth
+description: Measures reading depth. Events only logged for UAs that support the Beacon API <http://caniuse.com/#feat=beacon> and the Page Visibility API <https://caniuse.com/#feat=pagevisibility>.
+$id: /analytics/mediawiki/web_ui_reading_depth/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+allOf:
+  - $ref: /fragment/analytics/common/2.0.0#
+  - $ref: /fragment/analytics/web_identifiers/1.0.0#
+  - $ref: /fragment/mediawiki/page/common/2.0.0#
+required:
+  - is_anon
+  - skin
+  - dom_interactive_time
+  - action
+  - page_token
+  - session_token
+properties:
+    is_anon:
+      type: boolean
+      description: Is the user viewing anonymously?
+    skin:
+      type: string
+      description: Skin being used by reader.
+    total_length:
+      type: integer
+      description: Total length of time (in milliseconds) from the firstPaint (if available) or DOMinteractive (if first paint unavailable) event to the page being unloaded.
+    dom_interactive_time:
+      type: integer
+      description: Total length of time (in milliseconds) till DOM interactive event.
+    first_paint_time:
+      type: integer
+      description: Total length of time (in milliseconds) till first paint (null if not available).
+    visible_length:
+      type: integer
+      description: Total length of time (in milliseconds) that the page content was visible to the user as defined by the Page Visibility API.
+    action:
+      type: string
+      description: The `pageLoaded event happens once per page view, near the beginning. `pageUnloaded` is sent upon leaving the page (if caught).
+      enum:
+        - pageLoaded
+        - pageUnloaded
+    page_token:
+      type: string
+      description: One-time token per page load (consistent with Schema:PageIssues and other schemas that use https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.user-method-getPageviewToken )
+    session_token:
+      type: string
+      description: Session token that survives across pages (mw.user.sessionId()), but not browser restarts, used in deterministic user bucketing
+    default_sample:
+      type: boolean
+      description: Default sample group. Set when schema has been initiated by the ReadingDepth test.
