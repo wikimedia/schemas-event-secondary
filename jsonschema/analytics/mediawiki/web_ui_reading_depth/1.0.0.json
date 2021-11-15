@@ -10,7 +10,7 @@
     "dom_interactive_time",
     "is_anon",
     "meta",
-    "page_token",
+    "page_length",
     "session_token",
     "skin"
   ],
@@ -55,9 +55,11 @@
         "pageUnloaded"
       ]
     },
-    "page_token": {
-      "type": "string",
-      "description": "One-time token per page load (consistent with Schema:PageIssues and other schemas that use https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.user-method-getPageviewToken )"
+    "page_length": {
+      "type": "integer",
+      "description": "Total length of page text.",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
     },
     "session_token": {
       "type": "string",
@@ -241,59 +243,20 @@
       "minimum": 0
     }
   },
-  "additionalProperties": false,
   "examples": [
     {
       "$schema": "/analytics/mediawiki/web_ui_reading_depth/1.0.0",
-      "action": "pageLoaded",
-      "dom_interactive_time": -6305039478318694,
-      "is_anon": false,
       "meta": {
-        "dt": "2021-01-01T00:00:00.0Z",
-        "stream": "dolor",
-        "id": "dolor",
-        "request_id": "dolor",
-        "uri": "http://example.org",
-        "domain": "dolor"
+        "stream": "mediawiki.web_ui_reading_depth_example",
+        "dt": "2021-11-15T18:10:08.108Z"
       },
-      "page_token": "dolor",
-      "session_token": "dolor",
-      "skin": "dolor",
-      "web_pageview_id": "55555555555555555555",
-      "performer": {
-        "user_groups": [
-          "dolor"
-        ],
-        "user_id": -6305039478318694,
-        "user_is_bot": false,
-        "user_registration_dt": "2021-01-01T00:00:00.0Z",
-        "user_text": "dolor",
-        "user_edit_count": 1351079888211148
-      },
-      "default_sample": false,
-      "dt": "2021-01-01T00:00:00.0Z",
-      "http": {
-        "method": "dolor",
-        "protocol": "dolor",
-        "request_headers": {
-          "dolorb": "dolor"
-        },
-        "response_headers": {
-          "dolorb": "dolor"
-        },
-        "status_code": -6305039478318694,
-        "has_cookies": false
-      },
-      "total_length": -6305039478318694,
-      "web_session_id": "55555555555555555555",
-      "database": "dolor",
-      "page_id": 1351079888211148,
-      "page_is_redirect": false,
-      "page_namespace": -6305039478318694,
-      "page_title": "dolor",
-      "first_paint_time": -6305039478318694,
-      "rev_id": 1351079888211148,
-      "visible_length": -6305039478318694
+      "is_anon": true,
+      "skin": "minerva",
+      "dom_interactive_time": 326,
+      "action": "pageUnloaded",
+      "page_length": 14804,
+      "session_token": "0560fbfbf12184203f65"
     }
-  ]
+  ],
+  "additionalProperties": false
 }

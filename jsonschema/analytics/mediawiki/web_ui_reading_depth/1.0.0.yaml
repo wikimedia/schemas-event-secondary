@@ -13,7 +13,7 @@ required:
   - dom_interactive_time
   - is_anon
   - meta
-  - page_token
+  - page_length
   - session_token
   - skin
 properties:
@@ -135,6 +135,11 @@ properties:
       content has redirect wikitext, then this page is a redirect.  Note that
       this state is also stored on the Mediawiki page table.
     type: boolean
+  page_length:
+    description: Total length of page text.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
   page_namespace:
     description: The namespace ID this page belongs to.
     type: integer
@@ -144,13 +149,6 @@ properties:
     description: The normalized title of the page.
     type: string
     minLength: 1
-  page_token:
-    description: >-
-      One-time token per page load (consistent with Schema:PageIssues and other
-      schemas that use
-      https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.user-method-getPageviewToken
-      )
-    type: string
   performer:
     description: Represents the user that performed this change.
     type: object
@@ -259,46 +257,12 @@ properties:
     pattern: '^[0-9a-z]{20}$'
 examples:
   - $schema: /analytics/mediawiki/web_ui_reading_depth/1.0.0
-    action: pageLoaded
-    database: dolor
-    default_sample: false
-    dom_interactive_time: -6305039478318694
-    dt: '2021-01-01T00:00:00.0Z'
-    first_paint_time: -6305039478318694
-    http:
-      has_cookies: false
-      method: dolor
-      protocol: dolor
-      request_headers:
-        dolorb: dolor
-      response_headers:
-        dolorb: dolor
-      status_code: -6305039478318694
-    is_anon: false
+    action: pageUnloaded
+    dom_interactive_time: 326
+    is_anon: true
     meta:
-      domain: dolor
-      dt: '2021-01-01T00:00:00.0Z'
-      id: dolor
-      request_id: dolor
-      stream: dolor
-      uri: 'http://example.org'
-    page_id: 1351079888211148
-    page_is_redirect: false
-    page_namespace: -6305039478318694
-    page_title: dolor
-    page_token: dolor
-    performer:
-      user_edit_count: 1351079888211148
-      user_groups:
-        - dolor
-      user_id: -6305039478318694
-      user_is_bot: false
-      user_registration_dt: '2021-01-01T00:00:00.0Z'
-      user_text: dolor
-    rev_id: 1351079888211148
-    session_token: dolor
-    skin: dolor
-    total_length: -6305039478318694
-    visible_length: -6305039478318694
-    web_pageview_id: '55555555555555555555'
-    web_session_id: '55555555555555555555'
+      dt: '2021-11-15T18:10:08.108Z'
+      stream: mediawiki.web_ui_reading_depth_example
+    page_length: 14804
+    session_token: 0560fbfbf12184203f65
+    skin: minerva

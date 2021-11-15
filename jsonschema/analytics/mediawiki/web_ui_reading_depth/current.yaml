@@ -12,7 +12,7 @@ required:
   - skin
   - dom_interactive_time
   - action
-  - page_token
+  - page_length
   - session_token
 properties:
     is_anon:
@@ -39,12 +39,24 @@ properties:
       enum:
         - pageLoaded
         - pageUnloaded
-    page_token:
-      type: string
-      description: One-time token per page load (consistent with Schema:PageIssues and other schemas that use https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.user-method-getPageviewToken )
+    page_length:
+      type: integer
+      description: Total length of page text.
     session_token:
       type: string
       description: Session token that survives across pages (mw.user.sessionId()), but not browser restarts, used in deterministic user bucketing
     default_sample:
       type: boolean
       description: Default sample group. Set when schema has been initiated by the ReadingDepth test.
+examples:
+  - $schema:
+      $ref: '#/$id'
+    meta:
+      stream: mediawiki.web_ui_reading_depth_example
+      dt: '2021-11-15T18:10:08.108Z'
+    is_anon: true
+    skin: minerva
+    dom_interactive_time: 326
+    action: pageUnloaded
+    page_length: 14804
+    session_token: 0560fbfbf12184203f65
