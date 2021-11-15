@@ -1,6 +1,6 @@
 title: analytics/mediawiki/structured_task/article/link_suggestion_interaction
 description: Analytics events for interactions with link suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.4.0
+$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.4.1
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -25,6 +25,7 @@ allOf:
           - machinesuggestions_mode
           - editmode_confirmation_dialog
           - outdatedsuggestions_dialog
+          - qualitygate_dialog
       action:
         type: string
         description: >-
@@ -98,6 +99,8 @@ allOf:
             - selected_mode is one of "visual", "machinesuggestions" or "source"
          For actions back, next on recommendedlinktoolbar_dialog:
             - navigation_type is swipe or click
+         For action=impression on qualitygate_dialog:
+          - dailyLimit
 
 examples:
   - $schema:
