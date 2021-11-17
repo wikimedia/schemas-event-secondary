@@ -14,6 +14,7 @@ required:
   - action
   - page_length
   - session_token
+  - access_method
 properties:
     is_anon:
       type: boolean
@@ -48,6 +49,9 @@ properties:
     default_sample:
       type: boolean
       description: Default sample group. Set when schema has been initiated by the ReadingDepth test.
+    access_method:
+      type: string
+      description: The method by which the user is accessing the page (i.e. desktop or mobile)
 examples:
   - $schema:
       $ref: '#/$id'
@@ -60,3 +64,4 @@ examples:
     action: pageUnloaded
     page_length: 14804
     session_token: 0560fbfbf12184203f65
+    access_method: desktop

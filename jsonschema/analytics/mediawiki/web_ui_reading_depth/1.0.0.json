@@ -6,6 +6,7 @@
   "type": "object",
   "required": [
     "$schema",
+    "access_method",
     "action",
     "dom_interactive_time",
     "is_anon",
@@ -68,6 +69,10 @@
     "default_sample": {
       "type": "boolean",
       "description": "Default sample group. Set when schema has been initiated by the ReadingDepth test."
+    },
+    "access_method": {
+      "type": "string",
+      "description": "The method by which the user is accessing the page (i.e. desktop or mobile)"
     },
     "$schema": {
       "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
@@ -255,7 +260,8 @@
       "dom_interactive_time": 326,
       "action": "pageUnloaded",
       "page_length": 14804,
-      "session_token": "0560fbfbf12184203f65"
+      "session_token": "0560fbfbf12184203f65",
+      "access_method": "desktop"
     }
   ],
   "additionalProperties": false
