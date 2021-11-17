@@ -1,7 +1,7 @@
 title: sparql/query
 description: >
   A sparql query received on the triplet store backends (e.g. query.wikidata.org)
-$id: /sparql/query/1.1.0
+$id: /sparql/query/1.2.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -79,6 +79,16 @@ allOf:
               description: >
                 Average CPU load (defined as an 1 minute average of number of processes queued
                 for execution and running), measured right after the query.
+      performer:
+        description: Represents the user that performed this query.
+        type: object
+        required:
+          - user_text
+        properties:
+          user_text:
+            description: The text representation of the user that performed this query.
+            type: string
+            minLength: 1
 
     required:
       - http
@@ -103,3 +113,5 @@ examples:
       running_queries_before: 3
       running_queries_after: 2
       cpu_load_average: 0.84
+    performer:
+      user_text: example_event_user
