@@ -11,12 +11,12 @@ required:
   - $schema
   - access_method
   - action
-  - dom_interactive_time
   - is_anon
   - meta
   - page_length
   - session_token
   - skin
+  - visibility_listeners_time
 properties:
   $schema:
     description: >
@@ -211,9 +211,15 @@ properties:
     type: string
   total_length:
     description: >-
-      Total length of time (in milliseconds) from the firstPaint (if available)
-      or DOMinteractive (if first paint unavailable) event to the page being
-      unloaded.
+      Total length of time (in milliseconds) from the visibility_listeners_time
+      to the page being unloaded.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  visibility_listeners_time:
+    description: >-
+      Total length of time (in milliseconds) till visibility event listeners
+      were added.
     type: integer
     maximum: 9007199254740991
     minimum: -9007199254740991
@@ -265,7 +271,6 @@ examples:
   - $schema: /analytics/mediawiki/web_ui_reading_depth/1.0.0
     access_method: desktop
     action: pageUnloaded
-    dom_interactive_time: 326
     is_anon: true
     meta:
       dt: '2021-11-15T18:10:08.108Z'
@@ -273,3 +278,4 @@ examples:
     page_length: 14804
     session_token: 0560fbfbf12184203f65
     skin: minerva
+    visibility_listeners_time: 326
