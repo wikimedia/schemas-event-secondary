@@ -55,7 +55,6 @@ properties:
   component_type:
     type: string
     enum:
-      - topic
       - comment
       - response
   database:
@@ -184,14 +183,16 @@ properties:
 
           The values are the ones returned by EventLogging's
           `getUserEditCountBucket` function, which can be used to populate this
-          field.
+          field. A N/A value exists for cases where we can't meaningfully tell
+          how many edits may have been made by the user.
         type: string
         enum:
           - 0 edits
-          - '1-4 edits '
+          - 1-4 edits
           - 5-99 edits
           - 100-999 edits
           - 1000+ edits
+          - N/A
       user_groups:
         description: 'A list of the groups this user belongs to.  E.g. bot, sysop etc.'
         type: array

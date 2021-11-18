@@ -8,7 +8,6 @@
     "component_type": {
       "type": "string",
       "enum": [
-        "topic",
         "comment",
         "response"
       ]
@@ -64,14 +63,15 @@
           "type": "boolean"
         },
         "user_edit_count_bucket": {
-          "description": "A bucketed version of `user_edit_count`. Unlike that field, this one can be retained in the sanitized version, since it provides less information that could be used to reidentify the user. Not applicable to anonymous users.\nThe values are the ones returned by EventLogging's `getUserEditCountBucket` function, which can be used to populate this field.\n",
+          "description": "A bucketed version of `user_edit_count`. Unlike that field, this one can be retained in the sanitized version, since it provides less information that could be used to reidentify the user. Not applicable to anonymous users.\nThe values are the ones returned by EventLogging's `getUserEditCountBucket` function, which can be used to populate this field. A N/A value exists for cases where we can't meaningfully tell how many edits may have been made by the user.\n",
           "type": "string",
           "enum": [
             "0 edits",
-            "1-4 edits ",
+            "1-4 edits",
             "5-99 edits",
             "100-999 edits",
-            "1000+ edits"
+            "1000+ edits",
+            "N/A"
           ]
         },
         "user_edit_count": {
