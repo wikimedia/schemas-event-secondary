@@ -6,6 +6,7 @@
   "type": "object",
   "required": [
     "$schema",
+    "access_method",
     "action",
     "is_anon",
     "meta",
@@ -44,6 +45,10 @@
       "type": "integer",
       "minimum": -9007199254740991,
       "maximum": 9007199254740991
+    },
+    "access_method": {
+      "type": "string",
+      "description": "The method by which the user is accessing the page (i.e. desktop or mobile)"
     },
     "$schema": {
       "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
@@ -155,7 +160,8 @@
       },
       "action": "scroll",
       "is_anon": true,
-      "page_id": 18842359
+      "page_id": 18842359,
+      "access_method": "desktop"
     }
   ],
   "additionalProperties": false

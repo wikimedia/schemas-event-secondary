@@ -11,6 +11,7 @@ required:
   - action
   - is_anon
   - page_id
+  - access_method
 properties:
   action:
     description: >-
@@ -38,6 +39,9 @@ properties:
     description: >-
       ID of the page the user is scrolling
     type: integer
+  access_method:
+    type: string
+    description: The method by which the user is accessing the page (i.e. desktop or mobile)
 examples:
   - $schema:
       $ref: '#/$id'
@@ -47,3 +51,4 @@ examples:
     action: scroll
     is_anon: true
     page_id: 18842359
+    access_method: desktop

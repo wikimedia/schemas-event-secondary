@@ -6,6 +6,7 @@ type: object
 additionalProperties: false
 required:
   - $schema
+  - access_method
   - action
   - is_anon
   - meta
@@ -15,6 +16,11 @@ properties:
     description: >
       A URI identifying the JSONSchema for this event. This should match an
       schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  access_method:
+    description: >-
+      The method by which the user is accessing the page (i.e. desktop or
+      mobile)
     type: string
   action:
     description: Type of scroll interaction.
@@ -150,6 +156,7 @@ properties:
     pattern: '^[0-9a-z]{20}$'
 examples:
   - $schema: /analytics/mediawiki/web_ui_scroll/1.0.0
+    access_method: desktop
     action: scroll
     is_anon: true
     meta:
