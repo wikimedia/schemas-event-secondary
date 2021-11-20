@@ -1,8 +1,10 @@
 title: analytics/mediawiki/web_ui_reading_depth
-description: >-
-  Measures reading depth. Events only logged for UAs that support the Beacon API
-  <http://caniuse.com/#feat=beacon> and the Page Visibility API
-  <https://caniuse.com/#feat=pagevisibility>.
+description: >
+  Measures reading depth. Events only logged for UAs that support the
+  performance `getEntriesByType` API [1] and `now` API [2]
+
+  [1] https://caniuse.com/mdn-api_performance_getentriesbytype [2]
+  https://caniuse.com/high-resolution-time
 $id: /analytics/mediawiki/web_ui_reading_depth/1.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
@@ -46,7 +48,18 @@ properties:
       ReadingDepth test.
     type: boolean
   dom_interactive_time:
-    description: Total length of time (in milliseconds) till DOM interactive event.
+    description: >
+      Total length of time (in milliseconds) till DOM interactive event which is
+      the point at which the browser has finished parsing the HTML and DOM
+      construction is complete [1]. Note that the user may or may not be able to
+      see any pixels on the screen at this point in time.
+
+      Note that this will only be present for UAs that support the
+      `PerformanceNavigationTiming` API [2].
+
+      [1]
+      <https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp>.
+      [2] <https://caniuse.com/mdn-api_performancenavigationtiming>.
     type: integer
     maximum: 9007199254740991
     minimum: -9007199254740991
@@ -63,9 +76,16 @@ properties:
     format: date-time
     maxLength: 128
   first_paint_time:
-    description: >-
-      Total length of time (in milliseconds) till first paint (null if not
-      available).
+    description: >
+      Total length of time (in milliseconds) till first paint which is the point
+      at which the first pixels get displayed to the user. Note that although at
+      least part of the page is visible to the user at this point in time, the
+      user may or may not be able to see the entire page.
+
+      Note that this will only be present for UAs that support the
+      `PerformancePaintTiming` API [1].
+
+      [1] https://caniuse.com/mdn-api_performancepainttiming
     type: integer
     maximum: 9007199254740991
     minimum: -9007199254740991
@@ -210,23 +230,38 @@ properties:
     description: Skin being used by reader.
     type: string
   total_length:
-    description: >-
-      Total length of time (in milliseconds) from the visibility_listeners_time
-      to the page being unloaded.
+    description: >
+      Total length of time (in milliseconds) from the
+      `visibility_listeners_time` to the point at which the page is unloaded.
+
+      Note that this time may include time that the user has the page hidden. If
+      interested in the page's total visible time, see the `visible_length`
+      field.
     type: integer
     maximum: 9007199254740991
     minimum: -9007199254740991
   visibility_listeners_time:
-    description: >-
+    description: >
       Total length of time (in milliseconds) till visibility event listeners
-      were added.
+      were added to the document which enable the tracking of the page's
+      visibility as defined by the `visibilitychange` event [1][2]. This point
+      in time is also used as the starting point in the calculation of the
+      `total_length` and `visible_length` fields.
+
+      [1]
+      <https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event
+      [2] https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
     type: integer
     maximum: 9007199254740991
     minimum: -9007199254740991
   visible_length:
-    description: >-
-      Total length of time (in milliseconds) that the page content was visible
-      to the user as defined by the Page Visibility API.
+    description: >
+      Total length of time (in milliseconds) from the
+      `visibility_listeners_time` to the point at which the page was unloaded
+      excluding the total time that the document was "hidden" as defined by the
+      Page Visibility API [1].
+
+      [1] https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
     type: integer
     maximum: 9007199254740991
     minimum: -9007199254740991
