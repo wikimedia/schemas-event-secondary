@@ -1,0 +1,140 @@
+title: analytics/mediawiki/welcomesurvey/interaction
+description: >-
+  Interactions with Special:WelcomeSurvey (provided by
+  Extension:GrowthExperiments)
+$id: /analytics/mediawiki/welcomesurvey/interaction/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - action
+  - is_mobile
+  - meta
+  - returnto_param_is_present
+  - token
+  - user_id
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  action:
+    description: Type of interaction from the user
+    type: string
+    enum:
+      - view
+      - submit_attempt
+      - skip
+      - save
+      - submit_success
+      - show_confirmation_page
+  dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  http:
+    type: object
+    properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  is_mobile:
+    description: >-
+      Whether the user is using Minerva. Most of the time, this means the user
+      is on a mobile device, but they could also be on a tablet, or on a desktop
+      using Minerva skin
+    type: boolean
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  returnto_param_is_present:
+    description: Was the returnto parameter set in the query?
+    type: boolean
+  token:
+    description: >-
+      Unique token for the user viewing the welcome survey. Used to correlate
+      events if the user is logged out during the POST (T267273)
+    type: string
+  user_id:
+    description: ID of the user
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  was_posted:
+    description: Was the event associated with a POST request?
+    type: boolean
+examples:
+  - $schema: /analytics/mediawiki/welcomesurvey/interaction/1.0.0
+    action: view
+    is_mobile: false
+    meta:
+      domain: ar.wikipedia.org
+      dt: '2019-01-01T00:00:00Z'
+      stream: mediawiki.welcomesurvey.interaction
+    returnto_param_is_present: true
+    token: abc
+    user_id: 123
+    was_posted: true
