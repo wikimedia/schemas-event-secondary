@@ -1,0 +1,176 @@
+title: analytics/mediawiki/mediasearch_interaction
+description: |
+  Measures features on the Special:MediaSearch page.
+$id: /analytics/mediawiki/mediasearch_interaction/1.4.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - action
+  - language_code
+  - meta
+  - ui_mw_skin
+  - web_pageview_id
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  action:
+    description: Identifies the context in which the event was created.
+    type: string
+    enum:
+      - search_new
+      - search_load_more
+      - search_clear
+      - tab_change
+      - filter_change
+      - result_click
+      - quickview_hide
+      - quickview_more_details_click
+      - quickview_filename_copy
+      - quickview_wikitext_link_copy
+      - quickview_media_play
+  dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  http:
+    type: object
+    properties:
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  language_code:
+    description: Two-letter code representing the user's specified interface language.
+    type: string
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  prior_search_filter_type:
+    description: 'Type of filter ("mimeType", "sort", "imageSize", etc.) that was changed.'
+    type: string
+  prior_search_filter_value:
+    description: The new value for a given filter.
+    type: string
+  search_filter_type:
+    description: 'Type of filter ("mimeType", "sort", "imageSize", etc.) that was changed.'
+    type: string
+  search_filter_value:
+    description: The new value for a given filter.
+    type: string
+  search_media_type:
+    description: The active media type (aka tab) for the event.
+    type: string
+    enum:
+      - bitmap
+      - audio
+      - video
+      - page
+      - other
+      - image
+  search_query:
+    description: The search string.
+    type: string
+  search_result_count:
+    description: >-
+      Total number of results that have been returned within a given tab for a
+      given search.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  search_result_has_quickview:
+    description: Whether or not the result will trigger the quickview when clicked.
+    type: boolean
+  search_result_page_id:
+    description: >-
+      Deprecated. MediaWiki ID of the result page (file, category, etc). Logged
+      when the user interacts with a specific result in the set.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  search_result_page_title:
+    description: >-
+      Title of the result page (file, category, etc). Logged when the user
+      interacts with a specific result in the set.
+    type: string
+  search_result_position:
+    description: The position of the search result in the search result set.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  ui_mw_skin:
+    description: 'The name of the skin that the user is using, e.g. "vector".'
+    type: string
+  web_pageview_id:
+    description: A unique identifier generated per search session.
+    type: string
+examples:
+  - $schema: /analytics/mediawiki/mediasearch_interaction/1.4.0
+    action: search_new
+    dt: '2020-12-12T00:20:00.649Z'
+    language_code: es
+    meta:
+      domain: es.wikipedia.org
+      dt: '2020-12-12T00:20:00.649Z'
+      stream: mediawiki.mediasearch_interaction
+    ui_mw_skin: vector
+    web_pageview_id: example_web_pageview_id

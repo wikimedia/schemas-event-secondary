@@ -1,7 +1,7 @@
 title: analytics/mediawiki/mediasearch_interaction
 description: >
   Measures features on the Special:MediaSearch page.
-$id: /analytics/mediawiki/mediasearch_interaction/1.3.0
+$id: /analytics/mediawiki/mediasearch_interaction/1.4.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -40,8 +40,14 @@ allOf:
       search_result_page_id:
         type: integer
         description: >-
-          MediaWiki ID of the result page (file, category, etc). Logged when the
-          user interacts with a specific result in the set.
+          Deprecated. MediaWiki ID of the result page (file, category, etc).
+          Logged when the user interacts with a specific result in the set.
+
+      search_result_page_title:
+        type: string
+        description: >-
+          Title of the result page (file, category, etc). Logged when the user
+          interacts with a specific result in the set.
 
       search_result_count:
         type: integer
