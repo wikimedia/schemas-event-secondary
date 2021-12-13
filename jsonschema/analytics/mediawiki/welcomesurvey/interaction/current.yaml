@@ -1,7 +1,7 @@
 title: analytics/mediawiki/welcomesurvey/interaction
 description: >-
   Interactions with Special:WelcomeSurvey (provided by Extension:GrowthExperiments)
-$id: /analytics/mediawiki/welcomesurvey/interaction/1.0.0
+$id: /analytics/mediawiki/welcomesurvey/interaction/1.0.1
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -24,6 +24,7 @@ allOf:
           - save
           - submit_success
           - show_confirmation_page
+          - logged_out
       returnto_param_is_present:
         type: boolean
         description: Was the returnto parameter set in the query?
