@@ -3,7 +3,7 @@ description: >-
   Logs generic events related to editing activity. All events are logged
   client-side, except that init, saveSuccess, and saveFailure events for the
   wikitext editor are logged server-side.
-$id: /analytics/legacy/editattemptstep/1.1.0
+$id: /analytics/legacy/editattemptstep/1.2.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -323,6 +323,8 @@ allOf:
               - flow
               - lqt
               - app
+              - app-android
+              - app-ios
               - discussiontools
               - contenttranslation
             description: >-
