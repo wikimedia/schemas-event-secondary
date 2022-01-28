@@ -1,6 +1,6 @@
 title: rdf_streaming_updater/reconcile
 description: Event to reconcile a particular entity when a discrepancy is found
-$id: /rdf-streaming-updater/reconcile/1.0.0
+$id: /rdf_streaming_updater/reconcile/1.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 additionalProperties: false
@@ -119,7 +119,7 @@ properties:
     maximum: 9007199254740991
     minimum: 0
 examples:
-  - $schema: /rdf-streaming-updater/reconcile/1.0.0
+  - $schema: /rdf_streaming_updater/reconcile/1.0.0
     dt: '2021-11-19T19:02:04Z'
     item: Q123
     meta:
@@ -127,7 +127,7 @@ examples:
       dt: '2021-11-19T19:02:04Z'
       stream: rdf-streaming-updater.reconcile
     original_event_info:
-      $schema: /rdf-streaming-updater/reconcile/1.0.0
+      $schema: /rdf_streaming_updater/reconcile/1.0.0
       meta:
         domain: test.wikidata.org
         dt: '2021-11-17T17:02:04Z'

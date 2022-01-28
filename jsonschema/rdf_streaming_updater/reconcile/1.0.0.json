@@ -1,7 +1,7 @@
 {
   "title": "rdf_streaming_updater/reconcile",
   "description": "Event to reconcile a particular entity when a discrepancy is found",
-  "$id": "/rdf-streaming-updater/reconcile/1.0.0",
+  "$id": "/rdf_streaming_updater/reconcile/1.0.0",
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "additionalProperties": false,
@@ -15,7 +15,7 @@
   ],
   "examples": [
     {
-      "$schema": "/rdf-streaming-updater/reconcile/1.0.0",
+      "$schema": "/rdf_streaming_updater/reconcile/1.0.0",
       "meta": {
         "dt": "2021-11-19T19:02:04Z",
         "domain": "test.wikidata.org",
@@ -27,7 +27,7 @@
       "reconciliation_source": "rdf-spark-tools@eqiad",
       "reconciliation_action": "CREATION",
       "original_event_info": {
-        "$schema": "/rdf-streaming-updater/reconcile/1.0.0",
+        "$schema": "/rdf_streaming_updater/reconcile/1.0.0",
         "meta": {
           "dt": "2021-11-17T17:02:04Z",
           "domain": "test.wikidata.org",
