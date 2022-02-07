@@ -35,7 +35,7 @@ allOf:
           - The user clicked on the link target in the recommendedlinktoolbar_dialog
         enum:
           - impression # Used to indicate that an interface is seen. Used with all active_interface items.
-          - skip_all # Button for skipping all screens in onboarding_step_1_dialog
+          - skip_all # Button for skipping all screens in onboarding_step_{1/2}_dialog
           - get_started # Final button on the onboarding_step_3_dialog
           - back # Used in onboarding_step_{2/3}_dialog and in recommendedlinktoolbar_dialog
           - next # Used in onboarding_step_{1/2}_dialog and in recommendedlinktoolbar_dialog
