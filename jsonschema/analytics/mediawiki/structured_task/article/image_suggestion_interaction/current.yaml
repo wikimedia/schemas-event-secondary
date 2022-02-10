@@ -1,6 +1,6 @@
 title: analytics/mediawiki/structured_task/article/image_suggestion_interaction
 description: Analytics events for interactions with image suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.1.2
+$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.1.3
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -102,6 +102,8 @@ allOf:
          For active_interface=editsummary_dialog:
           - acceptance_state The acceptance state of the suggestion. One of "accepted" or "rejected"
           - caption_length The number of characters in the caption (when acceptance_state is "accepted")
+         For actions back, next on onboarding_step_{1/2/3/4}_dialog:
+          - navigation_type is swipe or click
 
 examples:
   - $schema:
