@@ -2,7 +2,7 @@ title: analytics/mediawiki/talk_page_edit
 description: >
   Tracks published edits on all talk page namespaces including new topics, comments, and responses
   made using either standard page editing methods or the Reply Tool and New Discussion Tool.
-$id: /analytics/mediawiki/talk_page_edit/1.0.0
+$id: /analytics/mediawiki/talk_page_edit/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -14,6 +14,7 @@ properties:
     enum:
       - comment
       - response
+      - topic
   topic_id:
     type: string
     description: >
