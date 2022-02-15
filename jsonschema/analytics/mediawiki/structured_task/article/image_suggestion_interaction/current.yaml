@@ -1,6 +1,6 @@
 title: analytics/mediawiki/structured_task/article/image_suggestion_interaction
 description: Analytics events for interactions with image suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.1.3
+$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.2.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -30,6 +30,7 @@ allOf:
           - imageviewer_dialog
           - qualitygate_dialog
           - caption_entry
+          - abandonedit_dialog
       action:
         type: string
         description: >-
@@ -63,6 +64,8 @@ allOf:
           - collapse # Used with recommendedimagetoolbar_dialog
           - focus # Used with caption_entry, when the user clicks on the caption box
           - validate # Used with caption_entry, when validation is triggerd
+          - keep # The user pressed "Continue editing" button in the abandonedit_dialog
+          - discard # The user pressed "Discard edits" in the abandonedit_dialog
       action_data:
         type: string
         description: >-

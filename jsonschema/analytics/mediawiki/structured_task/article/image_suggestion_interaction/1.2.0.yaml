@@ -1,0 +1,232 @@
+title: analytics/mediawiki/structured_task/article/image_suggestion_interaction
+description: Analytics events for interactions with image suggestion structured task
+$id: >-
+  /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.2.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - action
+  - action_data
+  - active_interface
+  - homepage_pageview_token
+  - is_mobile
+  - meta
+  - newcomer_task_token
+  - page_id
+  - page_title
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  action:
+    description: |-
+      Action the user took link_click:
+       - The user clicked on the "Learn more" link in onboarding_step_1_dialog
+       - The user clicked on the link target in the recommendedimagetoolbar_dialog
+    type: string
+    enum:
+      - impression
+      - skip_all
+      - get_started
+      - back
+      - next
+      - link_click
+      - close
+      - view_help
+      - suggestion_accept
+      - suggestion_reject
+      - suggestion_skip
+      - editsummary_review
+      - editsummary_approve
+      - editsummary_report
+      - editsummary_save
+      - editmode_click
+      - editmode_select
+      - editmode_confirm_switch
+      - editmode_cancel_switch
+      - reopen_dialog_click
+      - confirm_skip_suggestion
+      - expand
+      - collapse
+      - focus
+      - validate
+      - keep
+      - discard
+  action_data:
+    description: >-
+      Additional data for certain actions For action=skip_all:
+       - dont_show_again is true or false
+      For action=get_started:
+       - dont_show_again is true or false
+      For action=next in onboarding_step_{1/2/3/4}_dialog:
+       - dont_show_again is true or false
+      For action=back in onboarding_step_{1/2/3/4}_dialog:
+       - dont_show_again is true or false
+      For action=link_click in the onboarding_step_1_dialog:
+       - dont_show_again checkbox is true or false
+      For action=link_click in the imagedetails_dialog:
+       - source The interface the details dialog was opened from
+      For action=close on rejection_dialog:
+       - rejection_reasons A list of strings for the IDs of the reason for rejecting the recommendation.
+      For actions suggestion_accept, suggestion_reject, suggestion_skip,
+      link_click, view_help, expand, collapse on recommendedimagetoolbar_dialog:
+       - filename The name of the suggested image
+       - recommendation_source One of 'wikidata', 'wikipedia', 'commons'
+       - recommendation_source_projects A list of wiki IDs. Only when recommendation_source is 'wikipedia'.
+       - rejection_reasons The rejection reason, if any
+       - acceptance_state The acceptance state of the suggestion. One of "accepted", "rejected" or "undecided"
+       - series_number Which suggestion in the series the user is on
+       - total_suggestions The number of suggestion in the series
+      For actions editmode_select and editmode_confirm_switch:
+       - selected_mode is one of "visual", "machinesuggestions" or "source"
+      For actions impression and close with "captioninfo_dialog"
+      active_interface:
+       - dialog_context is one of "onboarding" or "help"
+      For action=close with "captioninfo_dialog" active_interface:
+       - dont_show_again, when dialog_context is "onboarding", is true or false
+      For action=validate with "caption_entry" active_interface:
+       - validation_rules A list of validation rules triggered
+      For action=impression with "qualitygate_dialog" active_interface:
+       - quality_gates A list of quality gates triggered
+      For active_interface=editsummary_dialog:
+       - acceptance_state The acceptance state of the suggestion. One of "accepted" or "rejected"
+       - caption_length The number of characters in the caption (when acceptance_state is "accepted")
+      For actions back, next on onboarding_step_{1/2/3/4}_dialog:
+       - navigation_type is swipe or click
+    type: string
+  active_interface:
+    description: Name of the currently open interface
+    type: string
+    enum:
+      - onboarding_step_1_dialog
+      - onboarding_step_2_dialog
+      - onboarding_step_3_dialog
+      - onboarding_step_4_dialog
+      - nosuggestions_dialog
+      - rejection_dialog
+      - editsummary_dialog
+      - recommendedimagetoolbar_dialog
+      - machinesuggestions_mode
+      - editmode_confirmation_dialog
+      - skip_dialog
+      - captioninfo_dialog
+      - imagedetails_dialog
+      - imageviewer_dialog
+      - qualitygate_dialog
+      - caption_entry
+      - abandonedit_dialog
+  dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  homepage_pageview_token:
+    description: >-
+      One-time token per page load generated on Special:Homepage. This is a
+      random user session ID that will be exported to the client-side, so that
+      this schema's events can be associated with HomepageModule and
+      HomepageVisit schema events
+    type: string
+  http:
+    type: object
+    properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  is_mobile:
+    description: Whether the mobile site is being used.
+    type: boolean
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  newcomer_task_token:
+    description: a value by which to join with the NewcomerTask event
+    type: string
+  page_id:
+    description: ID of the page the user is attempting to edit.
+    type: integer
+    maximum: 9007199254740991
+    minimum: 0
+  page_title:
+    description: 'Title of the article used for the task (in text form, with page prefix).'
+    type: string
+examples:
+  - $schema: >-
+      /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.2.0
+    action: skip_all
+    action_data: dont_show_again=true
+    active_interface: onboarding_step_1_dialog
+    dt: '2020-12-12T00:20:00.649Z'
+    homepage_pageview_token: example
+    is_mobile: false
+    meta:
+      domain: es.wikipedia.org
+      dt: '2020-12-12T00:20:00.649Z'
+      stream: mediawiki.structured_task.article.image_suggestion_interaction
+    newcomer_task_token: example
+    page_id: 0
+    page_title: example
