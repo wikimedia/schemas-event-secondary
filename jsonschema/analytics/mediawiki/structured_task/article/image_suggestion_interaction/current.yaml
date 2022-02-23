@@ -1,6 +1,6 @@
 title: analytics/mediawiki/structured_task/article/image_suggestion_interaction
 description: Analytics events for interactions with image suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.2.0
+$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.3.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -66,6 +66,7 @@ allOf:
           - validate # Used with caption_entry, when validation is triggerd
           - keep # The user pressed "Continue editing" button in the abandonedit_dialog
           - discard # The user pressed "Discard edits" in the abandonedit_dialog
+          - confirm_reject_suggestion # Used with rejection_dialog, when the user submitted the rejection reason
       action_data:
         type: string
         description: >-
@@ -82,7 +83,7 @@ allOf:
           - dont_show_again checkbox is true or false
          For action=link_click in the imagedetails_dialog:
           - source The interface the details dialog was opened from
-         For action=close on rejection_dialog:
+         For actions close and confirm_reject_suggestion on rejection_dialog:
           - rejection_reasons A list of strings for the IDs of the reason for rejecting the recommendation.
          For actions suggestion_accept, suggestion_reject, suggestion_skip, link_click, view_help, expand, collapse on recommendedimagetoolbar_dialog:
           - filename The name of the suggested image
