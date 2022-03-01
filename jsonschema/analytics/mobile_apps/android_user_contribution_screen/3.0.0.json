@@ -1,0 +1,159 @@
+{
+  "title": "analytics/mobile_apps/android_user_contribution_screen",
+  "description": "Track user actions when using the Enhanced User Contribution Screen.\nThis schema was migrated from legacy MobileWikiAppUserContribution.\n",
+  "$id": "/analytics/mobile_apps/android_user_contribution_screen/3.0.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "$schema",
+    "action",
+    "app_install_id",
+    "app_session_id",
+    "dt",
+    "is_anon",
+    "meta"
+  ],
+  "examples": [
+    {
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "stream": "android.user_contribution_screen"
+      },
+      "dt": "2020-04-02T19:11:20.942Z",
+      "app_install_id": "00AB59AC-77A1-4484-B49D-A047A036C77B",
+      "app_session_id": "dd21852b02db926a1b81",
+      "action": "filt_caption",
+      "is_anon": true,
+      "$schema": "/analytics/mobile_apps/android_user_contribution_screen/3.0.0"
+    }
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "app_install_id": {
+      "description": "Identifies an install of the app and persists across all sessions. When the user uninstalls the app and re-installs it, a new app install ID is randomly generated.\nThis UUIDv4 identifier is assigned automatically by the EPC library in the the Wikipedia app for Android and iOS.\n",
+      "type": "string",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "app_session_id": {
+      "description": "Identifies an app session: a cluster of actions taken by the user in the app within a limited period of time. A session ID is generated the first time it is requested by the instrumentation code, which will usually be soon after the user launches the app. A new session ID is generated anytime the app has been inactive (that is, in the background state) for at least 15 minutes or has been forcibly stopped by the OS or the user.\nThis identifier is managed and assigned automatically by the EPC library in the Wikipedia app for Android and iOS.\n",
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 20,
+      "pattern": "^[0-9a-z]{20}$"
+    },
+    "dt": {
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991
+        }
+      }
+    },
+    "is_anon": {
+      "description": "Information about app user: is true if the user is not logged in the app, false if the user is logged in. This is automatically saved as a boolean in the app, and is sent by the app with every event.\n",
+      "type": "boolean"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "dt": {
+          "description": "UTC event datetime, in ISO-8601 format",
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "description": "Unique URI identifying the event or entity",
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192
+        }
+      }
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "open_hist",
+        "filt_caption",
+        "filt_desc",
+        "filt_tag",
+        "filt_all",
+        "caption_view",
+        "desc_view",
+        "tag_view",
+        "misc_view",
+        "caption_view2",
+        "desc_view2",
+        "tag_view2",
+        "misc_view2",
+        "disabled",
+        "paused",
+        "ip_block"
+      ],
+      "description": "Enhanced User Contribution Screen actions.\nopen_hist:\n  User opened the Enhanced User Contribution Screen.\nfilt_caption:\n  User filtered contributions shown to image caption additions.\nfilt_desc:\n  User filtered contributions shown to description additions.\nfilt_tag:\n  User filtered contributions shown to image tag additions.\nfilt_all:\n  User removed filtering to show all contributions.\ncaption_view:\n  The user viewed an image caption addition summary.\ndesc_view:\n  The user viewed a description addition summary.\ntag_view:\n  The user viewed an image tag addition summary.\nmisc_view:\n  The user viewed a miscellaneous contribution summary.\ncaption_view2:\n  The user viewed an image caption addition detail.\ndesc_view2:\n  The user viewed a description addition detail.\ntag_view2:\n  The user viewed an image tag addition detail.\nmisc_view2:\n  The user viewed a miscellaneous contribution detail.\ndisabled:\n  The Suggested Edits feature was disabled.\npaused:\n  The Suggested Edits feature was paused.\nip_block:\n  The user's IP address was blocked.\n"
+    }
+  }
+}
