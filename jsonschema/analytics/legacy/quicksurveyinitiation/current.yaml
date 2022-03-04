@@ -1,6 +1,6 @@
 title: analytics/legacy/quicksurveyinitiation
 description: Logs impression of QuickSurveys
-$id: /analytics/legacy/quicksurveyinitiation/1.0.0
+$id: /analytics/legacy/quicksurveyinitiation/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -39,6 +39,19 @@ allOf:
           performanceNow:
             description: Value of performance.now() at the time of the event
             type: integer
+          editCountBucket:
+            description: >
+              The number of edits that the user has performed placed into one
+              five low-granularity buckets.
+
+              Only sent when the user is logged in.
+            type: string
+            enum:
+              - 0 edits
+              - 1-4 edits
+              - 5-99 edits
+              - 100-999 edits
+              - 1000+ edits
 examples:
   - event:
       surveyCodeName: perceived-performance-survey
