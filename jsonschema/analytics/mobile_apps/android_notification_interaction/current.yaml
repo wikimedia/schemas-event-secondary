@@ -3,12 +3,11 @@ description: >
   Track user interactions with Echo notifications.
 
   This schema was migrated from legacy :MobileWikiAppNotificationInteraction.
-$id: /analytics/mobile_apps/android_notification_interaction/1.0.0
+$id: /analytics/mobile_apps/android_notification_interaction/2.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/common/2.0.0#
-  - $ref: /fragment/analytics/app_identifiers/1.0.0#
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0#
 properties:
   notification_id:
     type: integer
@@ -60,6 +59,7 @@ required:
   - notification_id
   - notification_wiki
   - notification_type
+  - is_anon
 
 examples:
   - meta:
@@ -75,6 +75,7 @@ examples:
     selection_token: token
     incoming_only: true
     device_level_enabled: true
+    is_anon: true
     $schema:
       $ref: '#/$id'
   - meta:
@@ -89,5 +90,6 @@ examples:
     action_icon: ''
     incoming_only: true
     device_level_enabled: true
+    is_anon: true
     $schema:
       $ref: '#/$id'

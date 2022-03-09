@@ -3,19 +3,15 @@ description: >
   Track general user activity once a day.
 
   This schema was migrated from legacy MobileWikiAppDailyStats.
-$id: /analytics/mobile_apps/android_daily_stats/1.0.0
+$id: /analytics/mobile_apps/android_daily_stats/2.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/common/2.0.0#
-  - $ref: /fragment/analytics/app_identifiers/1.0.0#
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0#
 properties:
   app_install_age_in_days:
     type: integer
     description: The number of days since the app was first installed
-  is_anon:
-    type: boolean
-    description: Whether a user is logged in
   languages:
     type: array
     items:
@@ -28,6 +24,7 @@ required:
   - app_install_id
   - app_session_id
   - dt
+  - is_anon
 
 examples:
   - meta:
