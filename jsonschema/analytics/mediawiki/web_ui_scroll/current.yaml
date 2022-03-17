@@ -1,7 +1,7 @@
 title: analytics/mediawiki/web_ui_scroll
 description: >-
   Tracks scroll events by a user
-$id: /analytics/mediawiki/web_ui_scroll/1.0.0
+$id: /analytics/mediawiki/web_ui_scroll/1.0.1
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -21,6 +21,7 @@ properties:
       - init
       - scroll
       - scroll-to-top
+      - scroll-to-toc
   scroll_direction:
     description: >-
       The scroll direction
