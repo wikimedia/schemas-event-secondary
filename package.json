@@ -10,7 +10,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/jsonschema",
-    "build-modified": "jsonschema-tools materialize-modified -G",
+    "build-modified": "jsonschema-tools materialize-modified --no-git-add",
     "build-new": "jsonschema-tools materialize"
   },
   "keywords": [
