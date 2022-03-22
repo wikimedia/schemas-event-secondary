@@ -2,7 +2,7 @@ title: analytics/legacy/helppanel
 description: >-
   Logs interactions with the help panel or the post-edit panel displayed to new
   editors by the GrowthExperiments extension
-$id: /analytics/legacy/helppanel/1.1.0
+$id: /analytics/legacy/helppanel/1.2.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -56,6 +56,10 @@ allOf:
               - postedit-link-click
               - postedit-task-click
               - postedit-task-refresh
+              - postedit-toast-message-impression
+              - postedit-expand
+              - postedit-collapse
+              - postedit-task-navigation
             description: >-
               Action the user took:
 
@@ -143,6 +147,14 @@ allOf:
               clicked by the user
 
               - postedit-task-refresh: the refresh button in the postedit panel is clicked by the user
+
+              - postedit-toast-message-impression: the toast message is shown to the user (before the postedit panel is shown)
+
+              - postedit-expand: the user expands the postedit dialog
+
+              - postedit-collapse: the user collases the postedit dialog
+
+              - postedit-task-navigation: the user navigates through the task feed in the postedit dialog
 
           action_data:
             description: >-
@@ -250,6 +262,14 @@ allOf:
               - homepage: return to homepage button
 
               - edit: edit again button
+
+              - suggested-edits: return to suggested edits feed
+
+              For action=postedit-task-navigation:
+
+              - dir: next or prev
+
+              - navigation_type: swipe or click
             type: string
           user_id:
             description: The user id.
