@@ -1,0 +1,150 @@
+title: analytics/mediawiki/wikistories_contribution_event
+description: >
+  An event related to the creation or editing of story content from
+  Extension:Wikistories. A "story" is essentially a slideshow of images with
+  superimposed text; a "frame" is one of the individual slides.
+$id: /analytics/mediawiki/wikistories_consumption_event/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+required:
+  - $schema
+  - access_method
+  - event_type
+  - meta
+  - story_already_exists
+  - user_is_anonymous
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  access_method:
+    description: >
+      Which interface the user is using to access the wiki. Note that "mobile
+      web" uses a space rather than an underscore.
+    type: string
+    enum:
+      - desktop
+      - mobile web
+  context_page_title:
+    description: >
+      The name of the page where the user followed the link to the story
+      builder. Null if the user accessed the story builder directly, without
+      passing through a context page.
+    type: string
+  event_type:
+    description: >
+      The type of event that occured:
+
+      * story_builder_open: The user opens the story editing interface.
+
+      * add_frame: The user adds a new frame to the story. Currently, this
+      happens when the user adds an image to the story, which becomes a new
+      frame. Multiple images can be added at once, but this should only result
+      in a single event.
+
+      * remove_frame: The user deletes a frame from the story.
+
+      * replace_image: The user replaces an image already used in the story.
+
+      * import_text: The user imports text from an article into a frame.
+
+      * edit_text: The user edits the text in a frame. Logged when the user
+      leaves a text box having made/saved a change.
+
+      * publish_failure: The user's publish attempt fails due to an invalid
+      title, AbuseFilter or other publication limit.
+
+      * publish_success: The user's publish attempt succeeds and the story is
+      published.
+    type: string
+    enum:
+      - story_builder_open
+      - add_frame
+      - remove_frame
+      - replace_image
+      - import_text
+      - edit_text
+      - publish_failure
+      - publish_success
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  publish_failure_message:
+    description: >
+      The content of the explanatory message shown to the user after a publish
+      attempt fails. Applies only to publish_failure events.
+    type: string
+  story_already_exists:
+    description: >
+      Whether the user is editing a story that already exists. If false, the
+      user is attempting to create a new story.
+    type: boolean
+  story_title:
+    description: >
+      The name of the current story. Since the name is only chosen at the end of
+      the creation process, this will only applied to publish_success events or
+      if editing an existing story.
+    type: string
+  user_edit_count_bucket:
+    description: >
+      The range in which the user's edit count on the wiki falls. Null if the
+      user is anonymous. Avaiable in the `wgUserEditCountBucket` config
+      variable.
+    type: string
+    enum:
+      - '0'
+      - 1-4
+      - 5-99
+      - 10-99
+      - 100-999
+      - 1000+
+  user_is_anonymous:
+    description: Whether the user is anonymous (unregistered) or registered.
+    type: boolean
+  user_name:
+    description: |
+      The name of the user. Null for anonymous users.
+    type: string
+examples:
+  - $schema: /analytics/mediawiki/wikistories_consumption_event/1.0.0
+    access_method: mobile web
+    context_page_title: Istanbul
+    event_type: publish_success
+    meta:
+      domain: id.m.wikipedia.org
+      dt: '2022-10-03T03:22:01.187Z'
+      stream: mediawiki.wikistories_contribution_event
+    story_already_exists: false
+    story_title: Kucing_Istanbul
+    user_edit_count_bucket: 100-999
+    user_is_anonymous: false
+    user_name: PecintaKucing38
