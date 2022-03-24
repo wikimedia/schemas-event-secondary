@@ -1,0 +1,216 @@
+{
+  "title": "analytics/legacy/quicksurveyinitiation",
+  "description": "Logs impression of QuickSurveys",
+  "$id": "/analytics/legacy/quicksurveyinitiation/1.1.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "examples": [
+    {
+      "event": {
+        "surveyCodeName": "perceived-performance-survey"
+      },
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "id": "b0caf18d-6c7f-4403-947d-2712bbe28610",
+        "stream": "eventlogging_QuickSurveyInitiation"
+      },
+      "dt": "2020-04-02T19:11:20.942Z",
+      "client_dt": "2020-04-02T19:11:20.942Z",
+      "$schema": "/analytics/legacy/quicksurveyinitiation/1.1.0",
+      "schema": "QuickSurveyInitiation"
+    }
+  ],
+  "required": [
+    "$schema",
+    "event",
+    "meta"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "client_dt": {
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "dt": {
+      "description": "UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991
+        },
+        "client_ip": {
+          "description": "The http client's IP address, usually set from the X-Client-IP header, the value of which is extracted from X-Forwarded-For.",
+          "type": "string"
+        }
+      }
+    },
+    "ip": {
+      "description": "Client IP address that sent this event, usually best guess parsed out of from X-Client-IP header which is set by varnish from X-Forwarded-For. Deprecated, use http.client_ip.\n",
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "dt": {
+          "description": "UTC event datetime, in ISO-8601 format",
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "description": "Unique URI identifying the event or entity",
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192
+        }
+      }
+    },
+    "recvFrom": {
+      "description": "Hostname of server emitting the log line.  Deprecated.",
+      "type": "string"
+    },
+    "revision": {
+      "description": "Revision ID of event schema.  Deprecated.",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "schema": {
+      "description": "Title of event schema.  Deprecated.",
+      "type": "string"
+    },
+    "seqId": {
+      "description": "Udp2log sequence ID.  Deprecated.",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "topic": {
+      "description": "The queue topic name this event belongs in.  Deprecated.",
+      "type": "string"
+    },
+    "uuid": {
+      "description": "Unique event identifier.  Deprecated, use meta.id.",
+      "type": "string",
+      "maxLength": 128
+    },
+    "webHost": {
+      "description": "Request host. 'window.location.hostname' on client-side events; $_SERVER['HTTP_HOST'] on server.",
+      "type": "string"
+    },
+    "wiki": {
+      "description": "$wgDBName e.g. enwiki",
+      "type": "string"
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "surveyCodeName"
+      ],
+      "properties": {
+        "beaconCapable": {
+          "description": "Whether the browser supports sendBeacon. Sent with the `eligible` event.",
+          "type": "boolean"
+        },
+        "surveySessionToken": {
+          "description": "Session token that survives pages and in the rarest cases, tabs.",
+          "type": "string"
+        },
+        "pageviewToken": {
+          "description": "Token unique to current page's JS execution context.",
+          "type": "string"
+        },
+        "surveyCodeName": {
+          "type": "string"
+        },
+        "eventName": {
+          "type": "string",
+          "enum": [
+            "eligible",
+            "impression"
+          ],
+          "description": "`eligible` - whether the user is eligible to see the survey, `impression` - whether the user has seen half of the survey widget."
+        },
+        "performanceNow": {
+          "description": "Value of performance.now() at the time of the event",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "editCountBucket": {
+          "description": "The number of edits that the user has performed placed into one five low-granularity buckets.\nOnly sent when the user is logged in.\n",
+          "type": "string",
+          "enum": [
+            "0 edits",
+            "1-4 edits",
+            "5-99 edits",
+            "100-999 edits",
+            "1000+ edits"
+          ]
+        }
+      }
+    }
+  }
+}
