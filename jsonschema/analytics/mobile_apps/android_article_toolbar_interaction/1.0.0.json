@@ -1,0 +1,160 @@
+{
+  "title": "analytics/mobile_apps/android_article_toolbar_interaction",
+  "description": "Track user interaction events on article screen of the wikipedia android app.",
+  "$id": "/analytics/mobile_apps/android_article_toolbar_interaction/1.0.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "description": "Click action on a menu/toolbar item on article screen recorded as a string as save_click, share_click, etc"
+    },
+    "wiki_db": {
+      "type": "string",
+      "description": "The database column name of the wiki that the article belongs to"
+    },
+    "page_id": {
+      "type": "integer",
+      "description": "Unique identifier for an article in a particular wiki",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "time_spent_ms": {
+      "type": "integer",
+      "description": "Amount of time, in milliseconds, that the user spent before tapping on the action buttons. Timer starts when the article gets fully loaded.",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "$schema": {
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "app_install_id": {
+      "description": "Identifies an install of the app and persists across all sessions. When the user uninstalls the app and re-installs it, a new app install ID is randomly generated.\nThis UUIDv4 identifier is assigned automatically by the EPC library in the the Wikipedia app for Android and iOS.\n",
+      "type": "string",
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "app_session_id": {
+      "description": "Identifies an app session: a cluster of actions taken by the user in the app within a limited period of time. A session ID is generated the first time it is requested by the instrumentation code, which will usually be soon after the user launches the app. A new session ID is generated anytime the app has been inactive (that is, in the background state) for at least 15 minutes or has been forcibly stopped by the OS or the user.\nThis identifier is managed and assigned automatically by the EPC library in the Wikipedia app for Android and iOS.\n",
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 20,
+      "pattern": "^[0-9a-z]{20}$"
+    },
+    "dt": {
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
+    },
+    "http": {
+      "type": "object",
+      "properties": {
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
+        },
+        "method": {
+          "description": "The HTTP request method (GET, POST, etc.)",
+          "type": "string"
+        },
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
+        },
+        "request_headers": {
+          "description": "Request headers sent by the client.  E.g. user-agent, etc.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "response_headers": {
+          "description": "Response headers sent back to the client (when known).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991
+        }
+      }
+    },
+    "is_anon": {
+      "description": "Information about app user: is true if the user is not logged in the app, false if the user is logged in. This is automatically saved as a boolean in the app, and is sent by the app with every event.\n",
+      "type": "boolean"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "dt": {
+          "description": "UTC event datetime, in ISO-8601 format",
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "description": "Unique URI identifying the event or entity",
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192
+        }
+      }
+    }
+  },
+  "required": [
+    "$schema",
+    "action",
+    "app_install_id",
+    "app_session_id",
+    "dt",
+    "is_anon",
+    "meta"
+  ],
+  "examples": [
+    {
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "stream": "android.customize_toolbar_interaction"
+      },
+      "dt": "2020-04-02T19:11:20.942Z",
+      "action": "save_click",
+      "app_install_id": "00AB59AC-77A1-4484-B49D-A047A036C77B",
+      "app_session_id": "dd21852b02db926a1b81",
+      "is_anon": true,
+      "time_spent_ms": 60,
+      "wiki_db": "enwiki",
+      "page_id": 19021953,
+      "$schema": "/analytics/mobile_apps/android_article_toolbar_interaction/1.0.0"
+    }
+  ],
+  "additionalProperties": false
+}
