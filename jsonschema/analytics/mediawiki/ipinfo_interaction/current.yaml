@@ -1,7 +1,7 @@
 title: analytics/mediawiki/ipinfo_interaction
 description: Measures click events of IPInfo features on the Special:Log and
   Special:Contribution/$ip page
-$id: "/analytics/mediawiki/ipinfo_interaction/1.0.0"
+$id: "/analytics/mediawiki/ipinfo_interaction/1.1.0"
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -30,6 +30,9 @@ properties:
       - uncheck_iagree
       - copy
       - click_help
+      - click_help_connection_method
+      - click_help_connection_owner
+      - click_help_proxy
   event_context:
     type: string
     description: Identifies the IPInfo feature being clicked
@@ -61,7 +64,7 @@ properties:
     description: User group
 examples:
   - $schema:
-      '/analytics/mediawiki/ipinfo_interaction/1.0.0'
+      '/analytics/mediawiki/ipinfo_interaction/1.1.0'
     meta:
       stream: mediawiki.ipinfo_interaction
       dt: '2021-11-15T18:10:08.108Z'
