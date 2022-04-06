@@ -1,7 +1,7 @@
 title: analytics/mediawiki/ipinfo_interaction
 description: Measures click events of IPInfo features on the Special:Log and
   Special:Contribution/$ip page
-$id: "/analytics/mediawiki/ipinfo_interaction/1.1.0"
+$id: "/analytics/mediawiki/ipinfo_interaction/1.2.0"
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -50,6 +50,12 @@ properties:
       - special_recentchanges
       - special_contributions
       - special_preferences
+  event_ipinfo_version:
+    type: string
+    description: Identifies the level of information accessed
+    enum:
+      - basic
+      - full
   user_edit_bucket:
     type: string
     description: User bucket count
@@ -64,7 +70,7 @@ properties:
     description: User group
 examples:
   - $schema:
-      '/analytics/mediawiki/ipinfo_interaction/1.1.0'
+      '/analytics/mediawiki/ipinfo_interaction/1.2.0'
     meta:
       stream: mediawiki.ipinfo_interaction
       dt: '2021-11-15T18:10:08.108Z'
