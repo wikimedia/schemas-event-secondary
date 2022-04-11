@@ -66,7 +66,7 @@ allOf:
             description: Users screen resolution in CSS pixels.
             type: string
             enum:
-              - '>320px'
+              - '<320px'
               - 320px-719px
               - 720px-999px
               - 1000px-1199px
