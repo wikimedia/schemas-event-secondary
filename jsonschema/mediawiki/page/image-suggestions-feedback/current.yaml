@@ -1,0 +1,66 @@
+title: mediawiki/page/image-suggestions-feedback
+description: >
+  Represents feedback on an Image Suggestion
+$id: /mediawiki/page/image-suggestions-feedback/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+
+allOf:
+  - $ref: "/fragment/common/1.1.0"
+
+required:
+  - $schema
+  - wiki
+  - page_id
+  - filename
+  - user_id
+  - is_accepted
+  - is_rejected
+  - dt
+properties:
+  wiki:
+    description: The Wikipedia project that the image suggestion belongs to (eg. enwiki)
+    type: string
+  page_id:
+    description: The page ID of the page that the suggestion belongs to
+    type: integer
+  filename:
+    description: Link to the suggested image
+    type: string
+  origin_wiki:
+    description: Where the recommended image resides
+    type: string
+  user_id:
+    description: User who submitted feedback
+    type: integer
+  is_accepted:
+    description: True if feedback indicates acceptance
+    type: boolean
+  is_rejected:
+    description: True if feedback indicates rejection
+    type: boolean
+  rejection_reason:
+    description: User-selected reason for a rejection
+    type: string
+  dt:
+    description: 'UTC event datetime, in ISO-8601 format'
+    type: string
+    format: date-time
+    maxLength: 128
+examples:
+  - $schema: /mediawiki/page/image-suggestions-feedback/1.0.0
+    wiki: enwiki
+    page_id: 1234
+    filename: https://commons.wikimedia.org/wiki/File:example.JPEG
+    origin_wiki: commons
+    user_id: 1234
+    is_accepted: false
+    is_rejected: true
+    rejection_reason: Incorrect Image
+    dt: '2022-04-13T14:12:16.372Z'
+    meta:
+      dt: '2022-04-13T14:12:16.372Z'
+      stream: /mediawiki/page/image-suggestions-feedback
+
+
