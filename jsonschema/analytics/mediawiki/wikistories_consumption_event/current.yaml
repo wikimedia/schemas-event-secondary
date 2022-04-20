@@ -154,7 +154,6 @@ required:
     - access_method
     - page_title
     - page_story_count
-    - story_open_time
 examples:
     -
         $schema:

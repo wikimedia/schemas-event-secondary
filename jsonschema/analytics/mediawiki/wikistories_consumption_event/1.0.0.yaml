@@ -15,7 +15,6 @@ required:
   - page_story_count
   - page_title
   - pageview_id
-  - story_open_time
 properties:
   $schema:
     description: >

@@ -174,8 +174,7 @@
     "meta",
     "page_story_count",
     "page_title",
-    "pageview_id",
-    "story_open_time"
+    "pageview_id"
   ],
   "examples": [
     {
