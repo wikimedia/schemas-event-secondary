@@ -1,7 +1,7 @@
 title: analytics/mediawiki/wikistories_contribution_event
 description: >
         An event related to the creation or editing of story content from Extension:Wikistories. A "story" is essentially a slideshow of images with superimposed text; a "frame" is one of the individual slides.
-$id: /analytics/mediawiki/wikistories_consumption_event/1.0.0
+$id: /analytics/mediawiki/wikistories_contribution_event/1.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
