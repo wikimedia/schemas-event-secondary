@@ -2,13 +2,16 @@ title: analytics/mobile_apps/ios_notification_interaction
 description: >
   Track user interactions with Echo notifications.
 
-$id: /analytics/mobile_apps/ios_notification_interaction/1.0.0
+$id: /analytics/mobile_apps/ios_notification_interaction/2.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
   - $ref: /fragment/analytics/common/2.0.0#
   - $ref: /fragment/analytics/app_identifiers/1.0.0#
 properties:
+  device_level_enabled:
+    type: string
+    description: Device push notifications permissions status
   notification_id:
     type: integer
     description: Unique identifier of the Echo event triggering the notification
@@ -18,34 +21,33 @@ properties:
   notification_type:
     type: string
     description: Type of notification interacted with, for example, welcome, edit-thank, and thank-you-edit (milestone)
-  action_rank:
-    type: integer
-    description: >
-      0 - Mark as read and archive
-
-      1 - Primary action (as specified by Echo API)
-
-      2 - Secondary action (as specified by Echo API)
-
-      3 - Link clicked (as specified by Echo API)
   selection_token:
     type: string
     description: >
       In cases where user has selected multiple notifications and has marked all as read (and archived),
       a unique identifier is generated for the set and included with the event sent for each of the notifications.
       This enables us to analyze usage of the multi-select feature
+  action:
+    type: string
+    description: String description of notification action taken by the user.
   is_anon:
     type: boolean
     description: Is user anon (true) or logged in (false)
-
+  primary_language:
+    type: string
+    description: User's primary language.
 
 required:
   - dt
   - app_install_id
+  - app_session_id
+  - device_level_enabled
   - notification_id
   - notification_wiki
   - notification_type
+  - action
   - is_anon
+  - primary_language
 
 examples:
   - meta:
@@ -53,12 +55,15 @@ examples:
       stream: 'ios.notification_interaction'
     dt: '2021-12-02T19:11:20.942Z'
     app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    device_level_enabled: authorized
     notification_id: 562648
     notification_wiki: ndswiki
     notification_type: edit-user-talk
-    action_rank: 0
     selection_token: token
-    is_anon: true
+    action: mark_read
+    is_anon: false
+    primary_language: en
     $schema:
       $ref: '#/$id'
   - meta:
@@ -66,11 +71,13 @@ examples:
       stream: 'ios.notification_interaction'
     dt: '2020-04-02T19:11:20.942Z'
     app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    device_level_enabled: denied
     notification_id: 578768
     notification_wiki: hiwiki
     notification_type: mention-summary
-    action_rank: 0
-    selection_token: token
+    action: sender_page
     is_anon: false
+    primary_language: en
     $schema:
       $ref: '#/$id'
