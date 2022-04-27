@@ -1,0 +1,47 @@
+title: analytics/mobile_apps/android_find_in_page_interaction
+description: Measure user interactions with find-in-page on article screen
+$id: /analytics/mobile_apps/android_find_in_page_interaction/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0#
+properties:
+  find_text:
+    type: string
+    description: Text that the user typed into the 'Find' box
+  find_next_clicks_count:
+    type: integer
+    description: Number of times that the 'Find Next' button was clicked
+  find_prev_clicks_count:
+    type: integer
+    description: Number of times that the 'Find Previous' button was clicked
+  page_height:
+    type: integer
+    description: The total height of the page, in device-independent pixels
+  page_id:
+    type: integer
+    description: Unique identifier for an article in a particular wiki
+  time_spent_ms:
+    type: integer
+    description: Amount of time, in milliseconds, that the user spent before tapping on the find in page actions. Timer starts when the article gets fully loaded.
+required:
+  - app_install_id
+  - app_session_id
+  - dt
+  - is_anon
+examples:
+  - meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      stream: 'android.customize_toolbar_interaction'
+    dt: '2020-04-02T19:11:20.942Z'
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    is_anon: true
+    find_text: earth
+    find_next_clicks_count: 2
+    find_prev_clicks_count: 1
+    page_height: 140
+    page_id: 19021953
+    time_spent_ms: 60
+    $schema:
+      $ref: '#/$id'

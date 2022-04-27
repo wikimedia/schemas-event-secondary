@@ -1,0 +1,39 @@
+title: analytics/mobile_apps/android_app_appearance_settings_interaction
+description: Measure user interactions with theme and appearance options
+$id: /analytics/mobile_apps/android_app_appearance_settings_interaction/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0#
+properties:
+  action:
+    type: string
+    description: Which action in the funnel this is representing. Like fontSizeChange, themeChange, fontThemeChange, readingFocusMode, etc
+  current_value:
+    type: string
+    description: The current value of the appearance setting being changed
+  new_value:
+    type: string
+    description: The new value of the appearance setting that's been changed
+  source:
+      type: string
+      description: Source screen from which the user accessed the appearance settings dialog. e.g. "pageActivity", "settings"
+required:
+  - app_install_id
+  - app_session_id
+  - dt
+  - is_anon
+examples:
+  - meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      stream: 'android.customize_toolbar_interaction'
+    dt: '2020-04-02T19:11:20.942Z'
+    action: themeChange
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    is_anon: true
+    current_value: light
+    new_value: sepia
+    source: pageActionTab
+    $schema:
+      $ref: '#/$id'

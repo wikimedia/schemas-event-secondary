@@ -1,0 +1,55 @@
+title: analytics/mobile_apps/android_article_page_scroll_interaction
+description: Measure how much of the page the user scrolls through
+$id: /analytics/mobile_apps/android_article_page_scroll_interaction/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0#
+properties:
+  action:
+    type: string
+    description: Click action on a menu/toolbar item on article screen recorded as a string as save_click, share_click, etc
+  wiki_db:
+    type: string
+    description: The database code for the wiki which the user is currently interacting with
+  page_id:
+    type: integer
+    description: Unique identifier for an article in a particular wiki
+  page_height:
+    type: integer
+    description: The total height of the page, in device-independent pixels
+  scroll_flux_down:
+    type: integer
+    description: The total amount in device-independent pixels that the user scrolled down manually (i.e. not using the ToC to jump to a section)
+  scroll_flux_up:
+    type: integer
+    description: The total amount in device-independent pixels that the user scrolled up manually (i.e. not using the ToC to jump to a section)
+  max_percent_viewed:
+    type: integer
+    description: The total percent of the page height that was reached
+  time_spent_ms:
+    type: integer
+    description: Amount of time, in milliseconds, that the user spent before tapping on the action buttons. Timer starts when the article gets fully loaded.
+required:
+  - app_install_id
+  - app_session_id
+  - dt
+  - is_anon
+  - action
+  - page_id
+  - wiki_db
+examples:
+  - meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      stream: 'android.article_page_scroll_interaction'
+    dt: '2020-04-02T19:11:20.942Z'
+    action: save_click
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    is_anon: true
+    time_spent_ms: 60
+    page_height: 140
+    wiki_db: enwiki
+    page_id: 19021953
+    $schema:
+      $ref: '#/$id'
