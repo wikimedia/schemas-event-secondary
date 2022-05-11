@@ -81,9 +81,10 @@ properties:
           `data-event-name` as `name`.
         type: string
       pageNamespace:
-        description: >-
-          The namespace ID of the page with which the user was interacting.
+        description: The namespace ID of the page with which the user was interacting.
         type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
       token:
         description: >-
           Session token that survives across pages (mw.user.sessionId()), but
