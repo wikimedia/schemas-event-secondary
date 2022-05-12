@@ -4,12 +4,32 @@
   "$id": "/analytics/legacy/mobilewebuiactionstracking/1.2.0",
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
-  "additionalProperties": false,
+  "examples": [
+    {
+      "event": {
+        "action": "show",
+        "name": "example_name",
+        "modes": "example_modes",
+        "token": "example_token",
+        "isAnon": true
+      },
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "id": "b0caf18d-6c7f-4403-947d-2712bbe28610",
+        "stream": "eventlogging_MobileWebUIActionsTracking"
+      },
+      "dt": "2020-04-02T19:11:20.942Z",
+      "client_dt": "2020-04-02T19:11:20.942Z",
+      "$schema": "/analytics/legacy/mobilewebuiactionstracking/1.2.0",
+      "schema": "MobileWebUIActionsTracking"
+    }
+  ],
   "required": [
     "$schema",
     "event",
     "meta"
   ],
+  "additionalProperties": false,
   "properties": {
     "$schema": {
       "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
@@ -26,64 +46,6 @@
       "type": "string",
       "format": "date-time",
       "maxLength": 128
-    },
-    "event": {
-      "type": "object",
-      "required": [
-        "action",
-        "name",
-        "modes",
-        "token",
-        "isAnon"
-      ],
-      "properties": {
-        "action": {
-          "description": "Type of interaction. `Shown` is special interaction, not triggered by user. It can be sent to mark that given dynamic UI element got presented to the user",
-          "type": "string",
-          "enum": [
-            "init",
-            "show",
-            "click"
-          ]
-        },
-        "destination": {
-          "description": "URL that the link points to. If undefined it was not a link.",
-          "type": "string"
-        },
-        "editCountBucket": {
-          "description": "Number of edits by user. Set only if user is logged in.",
-          "type": "string",
-          "enum": [
-            "0 edits",
-            "1-4 edits",
-            "5-99 edits",
-            "100-999 edits",
-            "1000+ edits"
-          ]
-        },
-        "isAnon": {
-          "description": "Is the user viewing anonymously?",
-          "type": "boolean"
-        },
-        "modes": {
-          "description": "Comma separated list of modes. Whether the user is seeing the stable (non-beta), amc, beta version of the mobile site or the desktop version of Minerva. Note: Desktop mode includes the AMC mode. When `desktop` mode is selected, do not send the `amc` mode.",
-          "type": "string"
-        },
-        "name": {
-          "description": "Uniquely describes the thing that was interacted. Clicks on element with `data-event-name` attribute will be automatically tracked, using `data-event-name` as `name`.",
-          "type": "string"
-        },
-        "pageNamespace": {
-          "description": "The namespace ID of the page with which the user was interacting.",
-          "type": "integer",
-          "minimum": -9007199254740991,
-          "maximum": 9007199254740991
-        },
-        "token": {
-          "description": "Session token that survives across pages (mw.user.sessionId()), but not when browser restarts.",
-          "type": "string"
-        }
-      }
     },
     "http": {
       "type": "object",
@@ -201,26 +163,64 @@
     "wiki": {
       "description": "$wgDBName e.g. enwiki",
       "type": "string"
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "action",
+        "name",
+        "modes",
+        "token",
+        "isAnon"
+      ],
+      "properties": {
+        "action": {
+          "description": "Type of interaction. `Shown` is special interaction, not triggered by user. It can be sent to mark that given dynamic UI element got presented to the user",
+          "type": "string",
+          "enum": [
+            "init",
+            "show",
+            "click"
+          ]
+        },
+        "name": {
+          "description": "Uniquely describes the thing that was interacted. Clicks on element with `data-event-name` attribute will be automatically tracked, using `data-event-name` as `name`.",
+          "type": "string"
+        },
+        "destination": {
+          "description": "URL that the link points to. If undefined it was not a link.",
+          "type": "string"
+        },
+        "modes": {
+          "description": "Comma separated list of modes. Whether the user is seeing the stable (non-beta), amc, beta version of the mobile site or the desktop version of Minerva. Note: Desktop mode includes the AMC mode. When `desktop` mode is selected, do not send the `amc` mode.",
+          "type": "string"
+        },
+        "pageNamespace": {
+          "description": "The namespace ID of the page with which the user was interacting.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "token": {
+          "description": "Session token that survives across pages (mw.user.sessionId()), but not when browser restarts.",
+          "type": "string"
+        },
+        "isAnon": {
+          "description": "Is the user viewing anonymously?",
+          "type": "boolean"
+        },
+        "editCountBucket": {
+          "description": "Number of edits by user. Set only if user is logged in.",
+          "type": "string",
+          "enum": [
+            "0 edits",
+            "1-4 edits",
+            "5-99 edits",
+            "100-999 edits",
+            "1000+ edits"
+          ]
+        }
+      }
     }
-  },
-  "examples": [
-    {
-      "$schema": "/analytics/legacy/mobilewebuiactionstracking/1.2.0",
-      "client_dt": "2020-04-02T19:11:20.942Z",
-      "dt": "2020-04-02T19:11:20.942Z",
-      "event": {
-        "action": "show",
-        "isAnon": true,
-        "modes": "example_modes",
-        "name": "example_name",
-        "token": "example_token"
-      },
-      "meta": {
-        "dt": "2020-04-02T19:11:20.942Z",
-        "id": "b0caf18d-6c7f-4403-947d-2712bbe28610",
-        "stream": "eventlogging_MobileWebUIActionsTracking"
-      },
-      "schema": "MobileWebUIActionsTracking"
-    }
-  ]
+  }
 }
