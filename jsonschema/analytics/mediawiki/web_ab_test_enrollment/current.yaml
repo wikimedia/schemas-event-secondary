@@ -1,7 +1,7 @@
 title: analytics/mediawiki/web_ab_test_enrollment
 description: >-
   Tracks bucketing of users for an A/B test
-$id: /analytics/mediawiki/web_ab_test_enrollment/1.0.0
+$id: /analytics/mediawiki/web_ab_test_enrollment/1.0.1
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -24,6 +24,12 @@ properties:
     description: >-
       The experiment project name.
     type: string
+  is_anon:
+    description: Is the user viewing anonymously?
+    type: boolean
+  is_bot:
+    description: Is the user a bot?
+    type: boolean
 examples:
   - $schema:
       $ref: '#/$id'
@@ -33,3 +39,5 @@ examples:
     wiki: enwiki
     group: withStickyHeader
     experiment_name: sticky_header_2021_10
+    is_anon: false
+    is_bot: false
