@@ -2,7 +2,7 @@ title: analytics/legacy/homepagemodule
 description: >-
   Logs interactions with the homepage modules on the Special:Homepage provided
   by the GrowthExperiments extension
-$id: /analytics/legacy/homepagemodule/1.5.0
+$id: /analytics/legacy/homepagemodule/1.5.1
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -310,6 +310,7 @@ allOf:
               - suggested-edits
               - startemail
               - banner
+              - mentorship-optin
             description: >-
               The module the user is interacting with. 'generic' can be used for
               events which don't belong to any module.
