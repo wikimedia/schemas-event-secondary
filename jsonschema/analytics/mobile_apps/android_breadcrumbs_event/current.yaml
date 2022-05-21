@@ -1,0 +1,41 @@
+title: analytics/mobile_apps/android_breadcrumbs_event
+description: >
+  Track general user activity on android app screens.
+$id: /analytics/mobile_apps/android_breadcrumbs_event/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0#
+properties:
+  screen_name:
+    type: string
+    description: name of the screen currently being used by the user on the app
+  action:
+    type: string
+    description: action taken by user on the screen. Eg. "save_button_click", "back_button_click", "add_to_list_dialog_seen", etc
+  app_primary_language_code:
+    type: string
+    description: langugae code for the primary language chosen by the user on the android app
+
+required:
+  - screen_name
+  - action
+  - app_primary_language_code
+  - app_install_id
+  - app_session_id
+  - dt
+  - is_anon
+
+examples:
+  - meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      stream: 'android.breadcrumbs_event'
+    dt: '2020-04-02T19:11:20.942Z'
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    is_anon: true
+    screen_name: MainActivity
+    action: view_featured_article_card_content_container click
+    app_primary_language_code: kn
+    $schema:
+      $ref: '#/$id'
