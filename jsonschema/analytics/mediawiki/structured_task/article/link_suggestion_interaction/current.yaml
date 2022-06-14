@@ -1,6 +1,6 @@
 title: analytics/mediawiki/structured_task/article/link_suggestion_interaction
 description: Analytics events for interactions with link suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.6.0
+$id: /analytics/mediawiki/structured_task/article/link_suggestion_interaction/1.7.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -105,6 +105,8 @@ allOf:
             - navigation_type is swipe or click
          For action=impression on qualitygate_dialog:
           - dailyLimit
+         For actions impression and close on rejection_dialog
+          - other_reason Text value the user entered when 'other' rejection reason is selected
 
 examples:
   - $schema:

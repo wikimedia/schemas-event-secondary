@@ -1,6 +1,6 @@
 title: analytics/mediawiki/structured_task/article/image_suggestion_interaction
 description: Analytics events for interactions with image suggestion structured task
-$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.3.0
+$id: /analytics/mediawiki/structured_task/article/image_suggestion_interaction/1.4.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -85,6 +85,7 @@ allOf:
           - source The interface the details dialog was opened from
          For actions close and confirm_reject_suggestion on rejection_dialog:
           - rejection_reasons A list of strings for the IDs of the reason for rejecting the recommendation.
+          - other_reason Text value the user entered when 'other' rejection reason is selected
          For actions suggestion_accept, suggestion_reject, suggestion_skip, link_click, view_help, expand, collapse on recommendedimagetoolbar_dialog:
           - filename The name of the suggested image
           - recommendation_source One of 'wikidata', 'wikipedia', 'commons'
