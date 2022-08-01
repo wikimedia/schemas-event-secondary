@@ -417,16 +417,18 @@ allOf:
           pattern: ^[$a-z]+[a-z0-9_]*$ # "[P]roperties must be snake_case"
           minLength: 1
           maxLength: 255
-        properties:
-          data_type:
-            type: string
-            enum:
-              - number
-              - string
-              - boolean
-              - null
-          value:
-            type: string
+        additionalProperties:
+          type: object
+          properties:
+            data_type:
+              type: string
+              enum:
+                - number
+                - string
+                - boolean
+                - null
+            value:
+              type: string
 
 examples:
   - $schema:

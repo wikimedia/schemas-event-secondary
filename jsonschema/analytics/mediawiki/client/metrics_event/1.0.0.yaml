@@ -68,16 +68,18 @@ properties:
           - app
   custom_data:
     type: object
-    properties:
-      data_type:
-        type: string
-        enum:
-          - number
-          - string
-          - boolean
-          - null
-      value:
-        type: string
+    additionalProperties:
+      type: object
+      properties:
+        data_type:
+          type: string
+          enum:
+            - number
+            - string
+            - boolean
+            - null
+        value:
+          type: string
     propertyNames:
       maxLength: 255
       minLength: 1
