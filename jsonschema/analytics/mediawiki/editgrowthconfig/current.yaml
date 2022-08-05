@@ -1,6 +1,6 @@
 title: analytics/mediawiki/editgrowthconfig
 description: Represents an interaction with Special:EditGrowthConfig (provided by Extension:GrowthExperiments)
-$id: /analytics/mediawiki/editgrowthconfig/1.0.1
+$id: /analytics/mediawiki/editgrowthconfig/1.0.2
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -27,6 +27,9 @@ allOf:
           - save
       is_privileged_user:
         description: Can the user change Growth configuration? Is equal to "has editinterface permission".
+        type: boolean
+      is_registered_user:
+        description: Is the user registered?
         type: boolean
 
 examples:
