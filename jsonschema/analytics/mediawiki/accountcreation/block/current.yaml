@@ -1,0 +1,91 @@
+title: analytics/mediawiki/accountcreation/block
+description: >-
+  Represents an event where the user is blocked from creating an
+  account via Special:CreateAccount or the createaccount API.
+$id: /analytics/mediawiki/accountcreation/block/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+allOf:
+  - $ref: /fragment/analytics/common/2.0.0
+  - $ref: /fragment/mediawiki/common/2.0.0 # from schemas/event/primary
+  - $ref: /fragment/http/client_ip/1.0.0 # from schemas/event/primary
+  - required:
+    - block_type
+    - block_scope
+    - block_expiry
+    - error_message_keys
+    - error_messages
+    - user_ip
+    - is_api
+    - database # from fragment/mediawiki/common
+    - performer # from fragment/mediawiki/common
+  - properties:
+      block_id:
+        type: string
+        description: >-
+          The identifier of the block (as in Block::getIdentifier()) as a JSON string.
+          For most blocks, this the block ID (ipb_id or gb_id DB field).
+          For system blocks, it's a keyword describing the type of block.
+          For composite blocks, it's an array of the identifiers of each composing block.
+          See https://www.mediawiki.org/wiki/Manual:Block_abstraction_layer for more information
+          on these.
+      block_type:
+        type: string
+        enum:
+          - user
+          - ip
+          - range
+          - auto
+          - id
+          - other
+        description: How the block is targeted (matches Block::getType()). 'id' is a legacy value.
+      block_expiry:
+        type: string
+        description: >-
+          The ISO timestamp of when the block will be released, or the string 'infinity' for
+          indefinite blocks.
+      block_scope:
+        type: string
+        enum:
+          - local
+          - global
+      error_message_keys:
+        type: array
+        items:
+          type: string
+        description: List of the error keys thrown during account creation.
+      error_messages:
+        type: array
+        items:
+          type: string
+        description: List of the error messages thrown during account creation.
+      user_ip:
+        type: string
+        description: The IP of the blocked user.
+      is_api:
+        type: boolean
+        description: Whereas the create account request was made via the MW API or web interface.
+
+examples:
+  - $schema:
+      $ref: '#/$id'
+    meta:
+      stream: mediawiki.accountcreation_block
+      domain: cs.wikipedia.org
+      dt: '2021-10-12T00:20:00.649Z'
+    database: 'abwiki'
+    performer:
+      user_id: 1
+      user_edit_count: 100
+    http:
+      client_ip: 10.0.2.2
+      request_headers:
+        user-agent: curl/7.64.1
+    block_id: '1'
+    block_type: 'ip'
+    block_expiry: 'infinity'
+    block_scope: 'local'
+    error_message_keys: ['globalblocking-ipblocked']
+    error_messages: ['Your IP address has been blocked on all wikis...']
+    user_ip: '2.145.65.78'
+    is_api: true
