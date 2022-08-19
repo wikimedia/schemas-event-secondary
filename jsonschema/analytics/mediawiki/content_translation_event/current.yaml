@@ -6,7 +6,7 @@ description: >
   (like warning the user about using too much unmodified machine translation).
 
   For further details, see the readme in the schema repository.
-$id: /analytics/mediawiki/content_translation_event/1.0.0
+$id: /analytics/mediawiki/content_translation_event/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -105,16 +105,20 @@ allOf:
         type: string
         enum:
           # Sources for `dashboard_open`
+          - content_language_selector
           - contributions_menu
           - contributions_page
           - direct
           - direct_preselect
           - editor_close
+          - frequent_languages
           - invite_new_article_creation
           - invite_translate_another_section
           - notification_deletion
           - notification_milestone
           - notification_new_recommendations
+          - recent_edit
+          - recent_translation
           # Sources for `dashboard_translation_start`
           - continue_published
           # - direct_preselect (already included)
@@ -127,9 +131,9 @@ allOf:
           - suggestion_topic_area
           - search_result
           # Sources for `editor_open`
-          - content_language_selector
           - dashboard_translation_continue
           - dashboard_translation_start
+          # - - content_language_selector (already included)
           # - direct (already included)
           # - notification_deletion (already included)
 
@@ -301,7 +305,7 @@ allOf:
           to reidentify the user. Not applicable to anonymous users.
 
           The values are the ones returned by EventLogging's `getUserEditCountBucket` function,
-          which can be used to populate this field.
+          which can be used to populate this field. 
         type: string
         enum:
           - '0 edits'
