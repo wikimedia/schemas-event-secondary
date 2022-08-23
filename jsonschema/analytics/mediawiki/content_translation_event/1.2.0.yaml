@@ -7,7 +7,7 @@ description: >
   about using too much unmodified machine translation).
 
   For further details, see the readme in the schema repository.
-$id: /analytics/mediawiki/content_translation_event/1.1.0
+$id: /analytics/mediawiki/content_translation_event/1.2.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 additionalProperties: false
@@ -437,7 +437,7 @@ properties:
       to the user.
     type: string
 examples:
-  - $schema: /analytics/mediawiki/content_translation_event/1.1.0
+  - $schema: /analytics/mediawiki/content_translation_event/1.2.0
     access_method: mobile web
     content_translation_session_id: cb7716f5ec946f2dec88
     content_translation_session_position: 1
@@ -458,7 +458,7 @@ examples:
     web_pageview_id: d258b68fcb966aa2218d
     web_session_id: d6ad7a70aaa03c225a6f
     wiki_db: cawiki
-  - $schema: /analytics/mediawiki/content_translation_event/1.1.0
+  - $schema: /analytics/mediawiki/content_translation_event/1.2.0
     access_method: desktop
     content_translation_session_id: 796fee08fc0e594c3895
     content_translation_session_position: 603

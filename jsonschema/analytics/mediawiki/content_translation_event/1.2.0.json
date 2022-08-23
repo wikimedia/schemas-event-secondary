@@ -1,7 +1,7 @@
 {
   "title": "analytics/mediawiki/content_translation_event",
   "description": "Tracks events related to use of Extension:ContentTranslation, which is maintained by the Wikimedia Foundation's Language Engineering team. Some tracked events are user-initiated (like opening the dashboard and starting a new translation), while others are system-intitiated (like warning the user about using too much unmodified machine translation).\nFor further details, see the readme in the schema repository.\n",
-  "$id": "/analytics/mediawiki/content_translation_event/1.0.0",
+  "$id": "/analytics/mediawiki/content_translation_event/1.2.0",
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "required": [
@@ -16,7 +16,7 @@
   ],
   "examples": [
     {
-      "$schema": "/analytics/mediawiki/content_translation_event/1.0.0",
+      "$schema": "/analytics/mediawiki/content_translation_event/1.2.0",
       "meta": {
         "stream": "mediawiki.content_translation_event",
         "domain": "ca.m.wikipedia.org",
@@ -40,7 +40,7 @@
       "utm_campaign": "asianmonth2020"
     },
     {
-      "$schema": "/analytics/mediawiki/content_translation_event/1.0.0",
+      "$schema": "/analytics/mediawiki/content_translation_event/1.2.0",
       "meta": {
         "stream": "mediawiki.content_translation_event",
         "domain": "ar.wikipedia.org",
@@ -78,65 +78,26 @@
       "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
       "type": "string"
     },
-    "meta": {
-      "type": "object",
-      "required": [
-        "dt",
-        "stream"
-      ],
-      "properties": {
-        "uri": {
-          "type": "string",
-          "format": "uri-reference",
-          "maxLength": 8192,
-          "description": "Unique URI identifying the event or entity"
-        },
-        "request_id": {
-          "description": "Unique ID of the request that caused the event",
-          "type": "string"
-        },
-        "id": {
-          "description": "Unique ID of this event",
-          "type": "string"
-        },
-        "dt": {
-          "type": "string",
-          "format": "date-time",
-          "maxLength": 128,
-          "description": "UTC event datetime, in ISO-8601 format"
-        },
-        "domain": {
-          "description": "Domain the event or entity pertains to",
-          "type": "string",
-          "minLength": 1
-        },
-        "stream": {
-          "description": "Name of the stream/queue/dataset that this event belongs in",
-          "type": "string",
-          "minLength": 1
-        }
-      }
+    "dt": {
+      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n",
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 128
     },
     "http": {
       "type": "object",
       "properties": {
-        "protocol": {
-          "description": "The protocol used for the request (HTTP or HTTPS)",
-          "type": "string"
+        "has_cookies": {
+          "description": "True if the http request has any cookies set",
+          "type": "boolean"
         },
         "method": {
           "description": "The HTTP request method (GET, POST, etc.)",
           "type": "string"
         },
-        "status_code": {
-          "description": "The HTTP status code returned for this request (when known)",
-          "type": "integer",
-          "minimum": -9007199254740991,
-          "maximum": 9007199254740991
-        },
-        "has_cookies": {
-          "description": "True if the http request has any cookies set",
-          "type": "boolean"
+        "protocol": {
+          "description": "The protocol used for the request (HTTP or HTTPS)",
+          "type": "string"
         },
         "request_headers": {
           "description": "Request headers sent by the client.  E.g. user-agent, etc.",
@@ -151,28 +112,67 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "status_code": {
+          "description": "The HTTP status code returned for this request (when known)",
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991
         }
       }
     },
-    "dt": {
-      "type": "string",
-      "format": "date-time",
-      "maxLength": 128,
-      "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n"
-    },
-    "web_session_id": {
-      "type": "string",
-      "minLength": 20,
-      "maxLength": 20,
-      "pattern": "^[0-9a-z]{20}$",
-      "description": "Identifies a web session: a cluster of actions taken by the user on a website within a limited period of time. A session ID is generated the first time it is requested by the instrumentation code, which is usually the first time the user visits the website.\nIn the current implementation, this ID is shared across windows, tabs, and page views in the same browser. The ID is normally regenerated after the browser is shut down; however, if the browser's \"restore previous session\" feature is used when it restarts, the previous ID is retained.\nInteractions across multiple pages in the same web session may be linked together via this identifier.\nInstrumentation code should assign this with mw.user.sessionId()\n"
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "domain": {
+          "description": "Domain the event or entity pertains to",
+          "type": "string",
+          "minLength": 1
+        },
+        "dt": {
+          "description": "UTC event datetime, in ISO-8601 format",
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128
+        },
+        "id": {
+          "description": "Unique ID of this event",
+          "type": "string"
+        },
+        "request_id": {
+          "description": "Unique ID of the request that caused the event",
+          "type": "string"
+        },
+        "stream": {
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "description": "Unique URI identifying the event or entity",
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192
+        }
+      }
     },
     "web_pageview_id": {
+      "description": "Identifies a single web page view (visit). This identifier is randomly generated the first time it is requested by the instrumentation code on any page view and persists for the lifetime of the page. When the user navigates to another page or refreshes/reloads the page, this identifier disappears and a new one is regenerated (when needed). Different visits to the same page will yield different pageview IDs (also called tokens).\nInteractions with multiple features (instrumented separately) on the same web page may be linked together via this identifier.\nInstrumentation code should assign this with mw.user.getPageviewToken()\n",
       "type": "string",
-      "minLength": 20,
       "maxLength": 20,
-      "pattern": "^[0-9a-z]{20}$",
-      "description": "Identifies a single web page view (visit). This identifier is randomly generated the first time it is requested by the instrumentation code on any page view and persists for the lifetime of the page. When the user navigates to another page or refreshes/reloads the page, this identifier disappears and a new one is regenerated (when needed). Different visits to the same page will yield different pageview IDs (also called tokens).\nInteractions with multiple features (instrumented separately) on the same web page may be linked together via this identifier.\nInstrumentation code should assign this with mw.user.getPageviewToken()\n"
+      "minLength": 20,
+      "pattern": "^[0-9a-z]{20}$"
+    },
+    "web_session_id": {
+      "description": "Identifies a web session: a cluster of actions taken by the user on a website within a limited period of time. A session ID is generated the first time it is requested by the instrumentation code, which is usually the first time the user visits the website.\nIn the current implementation, this ID is shared across windows, tabs, and page views in the same browser. The ID is normally regenerated after the browser is shut down; however, if the browser's \"restore previous session\" feature is used when it restarts, the previous ID is retained.\nInteractions across multiple pages in the same web session may be linked together via this identifier.\nInstrumentation code should assign this with mw.user.sessionId()\n",
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 20,
+      "pattern": "^[0-9a-z]{20}$"
     },
     "wiki_db": {
       "description": "The database code for the wiki which the user is currently interacting with (and which is shown in the current URL). This is less meaningful than usual because Content Translation presents a single, cross-wiki interface to the user.\n",
@@ -251,16 +251,20 @@
       "description": "The source of the Content Translation event that occured. Not all events have a source. For detailed definitions, see the readme in the schema repository.\n",
       "type": "string",
       "enum": [
+        "content_language_selector",
         "contributions_menu",
         "contributions_page",
         "direct",
         "direct_preselect",
         "editor_close",
+        "frequent_languages",
         "invite_new_article_creation",
         "invite_translate_another_section",
         "notification_deletion",
         "notification_milestone",
         "notification_new_recommendations",
+        "recent_edit",
+        "recent_translation",
         "continue_published",
         "for_later",
         "suggestion_featured",
@@ -269,7 +273,6 @@
         "suggestion_recent_edit",
         "suggestion_topic_area",
         "search_result",
-        "content_language_selector",
         "dashboard_translation_continue",
         "dashboard_translation_start"
       ]

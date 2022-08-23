@@ -414,7 +414,7 @@ properties:
     type: string
     enum:
       - 0 edits
-      - '1-4 edits '
+      - 1-4 edits
       - 5-99 edits
       - 100-999 edits
       - 1000+ edits
