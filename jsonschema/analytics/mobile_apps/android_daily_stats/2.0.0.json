@@ -4,23 +4,27 @@
   "$id": "/analytics/mobile_apps/android_daily_stats/2.0.0",
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "app_install_age_in_days",
+    "app_install_id",
+    "app_session_id",
+    "dt",
+    "is_anon",
+    "languages",
+    "meta"
+  ],
   "properties": {
-    "app_install_age_in_days": {
-      "type": "integer",
-      "description": "The number of days since the app was first installed",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "languages": {
-      "type": "array",
-      "description": "Array of the languages selected by the user in the app",
-      "items": {
-        "type": "string"
-      }
-    },
     "$schema": {
       "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
       "type": "string"
+    },
+    "app_install_age_in_days": {
+      "description": "The number of days since the app was first installed",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
     },
     "app_install_id": {
       "description": "Identifies an install of the app and persists across all sessions. When the user uninstalls the app and re-installs it, a new app install ID is randomly generated.\nThis UUIDv4 identifier is assigned automatically by the EPC library in the the Wikipedia app for Android and iOS.\n",
@@ -45,6 +49,10 @@
     "http": {
       "type": "object",
       "properties": {
+        "client_ip": {
+          "description": "The http client's IP address, usually set from the X-Client-IP header, the value of which is extracted from X-Forwarded-For.",
+          "type": "string"
+        },
         "has_cookies": {
           "description": "True if the http request has any cookies set",
           "type": "boolean"
@@ -82,6 +90,13 @@
     "is_anon": {
       "description": "Information about app user: is true if the user is not logged in the app, false if the user is logged in. This is automatically saved as a boolean in the app, and is sent by the app with every event.\n",
       "type": "boolean"
+    },
+    "languages": {
+      "description": "Array of the languages selected by the user in the app",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "meta": {
       "type": "object",
@@ -123,33 +138,22 @@
       }
     }
   },
-  "required": [
-    "$schema",
-    "app_install_age_in_days",
-    "app_install_id",
-    "app_session_id",
-    "dt",
-    "is_anon",
-    "languages",
-    "meta"
-  ],
   "examples": [
     {
-      "meta": {
-        "dt": "2020-04-02T19:11:20.942Z",
-        "stream": "android.daily_stats"
-      },
-      "dt": "2020-04-02T19:11:20.942Z",
+      "$schema": "/analytics/mobile_apps/android_daily_stats/2.0.0",
+      "app_install_age_in_days": 20,
       "app_install_id": "00AB59AC-77A1-4484-B49D-A047A036C77B",
       "app_session_id": "dd21852b02db926a1b81",
-      "app_install_age_in_days": 20,
+      "dt": "2020-04-02T19:11:20.942Z",
+      "is_anon": true,
       "languages": [
         "en",
         "kn"
       ],
-      "is_anon": true,
-      "$schema": "/analytics/mobile_apps/android_daily_stats/2.0.0"
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "stream": "android.daily_stats"
+      }
     }
-  ],
-  "additionalProperties": false
+  ]
 }

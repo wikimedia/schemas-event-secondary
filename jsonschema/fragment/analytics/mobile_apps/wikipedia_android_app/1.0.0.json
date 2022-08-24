@@ -53,6 +53,10 @@
           "type": "integer",
           "maximum": 9007199254740991,
           "minimum": -9007199254740991
+        },
+        "client_ip": {
+          "description": "The http client's IP address, usually set from the X-Client-IP header, the value of which is extracted from X-Forwarded-For.",
+          "type": "string"
         }
       }
     },
@@ -128,7 +132,7 @@
       },
       "dt": "2021-01-01T00:00:00.0Z",
       "http": {
-        "method": "dolor",
+        "client_ip": "dolor",
         "protocol": "dolor",
         "request_headers": {
           "dolorb": "dolor"
@@ -137,7 +141,8 @@
           "dolorb": "dolor"
         },
         "status_code": -6305039478318694,
-        "has_cookies": false
+        "has_cookies": false,
+        "method": "dolor"
       },
       "app_install_id": "33333333-3333-3333-3333-333333333333",
       "app_session_id": "55555555555555555555",

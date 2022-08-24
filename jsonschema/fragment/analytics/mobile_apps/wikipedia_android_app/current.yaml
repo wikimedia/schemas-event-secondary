@@ -8,6 +8,7 @@ type: object
 allOf:
   - $ref: /fragment/analytics/common/2.0.0#
   - $ref: /fragment/analytics/app_identifiers/1.0.0#
+  - $ref: /fragment/http/client_ip/1.0.0#
 properties:
   is_anon:
     type: boolean

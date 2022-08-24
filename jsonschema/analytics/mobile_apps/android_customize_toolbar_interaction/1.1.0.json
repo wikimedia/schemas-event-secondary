@@ -4,39 +4,16 @@
   "$id": "/analytics/mobile_apps/android_customize_toolbar_interaction/1.1.0",
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "app_install_id",
+    "app_session_id",
+    "dt",
+    "is_anon",
+    "meta"
+  ],
   "properties": {
-    "source": {
-      "type": "string",
-      "description": "Source from which the user entered the Toolbar configuration screen"
-    },
-    "favorites_order": {
-      "type": "array",
-      "description": "Array representing the order of the items in favorites quick access menu (e.g. [0,1,2,3,4,5,6])",
-      "items": {
-        "type": "integer",
-        "minimum": -9007199254740991,
-        "maximum": 9007199254740991
-      }
-    },
-    "menu_order": {
-      "type": "array",
-      "description": "Array representing the order of the items in the overflow menu (e.g. [0,1,2,3,4,5,6])",
-      "items": {
-        "type": "integer",
-        "minimum": -9007199254740991,
-        "maximum": 9007199254740991
-      }
-    },
-    "is_rfm_enabled": {
-      "type": "boolean",
-      "description": "Whether a user has turned on the reading focus mode"
-    },
-    "time_spent_ms": {
-      "type": "integer",
-      "description": "Amount of time, in milliseconds, that the user spent on the toolbar customization screen",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
     "$schema": {
       "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
       "type": "string"
@@ -61,9 +38,22 @@
       "format": "date-time",
       "maxLength": 128
     },
+    "favorites_order": {
+      "description": "Array representing the order of the items in favorites quick access menu (e.g. [0,1,2,3,4,5,6])",
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991
+      }
+    },
     "http": {
       "type": "object",
       "properties": {
+        "client_ip": {
+          "description": "The http client's IP address, usually set from the X-Client-IP header, the value of which is extracted from X-Forwarded-For.",
+          "type": "string"
+        },
         "has_cookies": {
           "description": "True if the http request has any cookies set",
           "type": "boolean"
@@ -101,6 +91,19 @@
     "is_anon": {
       "description": "Information about app user: is true if the user is not logged in the app, false if the user is logged in. This is automatically saved as a boolean in the app, and is sent by the app with every event.\n",
       "type": "boolean"
+    },
+    "is_rfm_enabled": {
+      "description": "Whether a user has turned on the reading focus mode",
+      "type": "boolean"
+    },
+    "menu_order": {
+      "description": "Array representing the order of the items in the overflow menu (e.g. [0,1,2,3,4,5,6])",
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991
+      }
     },
     "meta": {
       "type": "object",
@@ -140,28 +143,24 @@
           "maxLength": 8192
         }
       }
+    },
+    "source": {
+      "description": "Source from which the user entered the Toolbar configuration screen",
+      "type": "string"
+    },
+    "time_spent_ms": {
+      "description": "Amount of time, in milliseconds, that the user spent on the toolbar customization screen",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
     }
   },
-  "required": [
-    "$schema",
-    "app_install_id",
-    "app_session_id",
-    "dt",
-    "is_anon",
-    "meta"
-  ],
   "examples": [
     {
-      "meta": {
-        "dt": "2020-04-02T19:11:20.942Z",
-        "stream": "android.customize_toolbar_interaction"
-      },
-      "dt": "2020-04-02T19:11:20.942Z",
-      "source": "article",
+      "$schema": "/analytics/mobile_apps/android_customize_toolbar_interaction/1.1.0",
       "app_install_id": "00AB59AC-77A1-4484-B49D-A047A036C77B",
       "app_session_id": "dd21852b02db926a1b81",
-      "is_anon": true,
-      "is_rfm_enabled": true,
+      "dt": "2020-04-02T19:11:20.942Z",
       "favorites_order": [
         0,
         1,
@@ -169,6 +168,8 @@
         3,
         4
       ],
+      "is_anon": true,
+      "is_rfm_enabled": true,
       "menu_order": [
         0,
         1,
@@ -176,9 +177,12 @@
         3,
         4
       ],
-      "time_spent_ms": 60,
-      "$schema": "/analytics/mobile_apps/android_customize_toolbar_interaction/1.1.0"
+      "meta": {
+        "dt": "2020-04-02T19:11:20.942Z",
+        "stream": "android.customize_toolbar_interaction"
+      },
+      "source": "article",
+      "time_spent_ms": 60
     }
-  ],
-  "additionalProperties": false
+  ]
 }

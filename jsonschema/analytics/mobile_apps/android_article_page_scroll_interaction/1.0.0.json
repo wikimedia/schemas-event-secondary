@@ -4,53 +4,25 @@
   "$id": "/analytics/mobile_apps/android_article_page_scroll_interaction/1.0.0",
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "action",
+    "app_install_id",
+    "app_session_id",
+    "dt",
+    "is_anon",
+    "meta",
+    "page_id",
+    "wiki_db"
+  ],
   "properties": {
-    "action": {
-      "type": "string",
-      "description": "Click action on a menu/toolbar item on article screen recorded as a string as save_click, share_click, etc"
-    },
-    "wiki_db": {
-      "type": "string",
-      "description": "The database code for the wiki which the user is currently interacting with"
-    },
-    "page_id": {
-      "type": "integer",
-      "description": "Unique identifier for an article in a particular wiki",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "page_height": {
-      "type": "integer",
-      "description": "The total height of the page, in device-independent pixels",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "scroll_flux_down": {
-      "type": "integer",
-      "description": "The total amount in device-independent pixels that the user scrolled down manually (i.e. not using the ToC to jump to a section)",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "scroll_flux_up": {
-      "type": "integer",
-      "description": "The total amount in device-independent pixels that the user scrolled up manually (i.e. not using the ToC to jump to a section)",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "max_percent_viewed": {
-      "type": "integer",
-      "description": "The total percent of the page height that was reached",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "time_spent_ms": {
-      "type": "integer",
-      "description": "Amount of time, in milliseconds, that the user spent before tapping on the action buttons. Timer starts when the article gets fully loaded.",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
     "$schema": {
       "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "action": {
+      "description": "Click action on a menu/toolbar item on article screen recorded as a string as save_click, share_click, etc",
       "type": "string"
     },
     "app_install_id": {
@@ -76,6 +48,10 @@
     "http": {
       "type": "object",
       "properties": {
+        "client_ip": {
+          "description": "The http client's IP address, usually set from the X-Client-IP header, the value of which is extracted from X-Forwarded-For.",
+          "type": "string"
+        },
         "has_cookies": {
           "description": "True if the http request has any cookies set",
           "type": "boolean"
@@ -113,6 +89,12 @@
     "is_anon": {
       "description": "Information about app user: is true if the user is not logged in the app, false if the user is logged in. This is automatically saved as a boolean in the app, and is sent by the app with every event.\n",
       "type": "boolean"
+    },
+    "max_percent_viewed": {
+      "description": "The total percent of the page height that was reached",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
     },
     "meta": {
       "type": "object",
@@ -152,36 +134,58 @@
           "maxLength": 8192
         }
       }
+    },
+    "page_height": {
+      "description": "The total height of the page, in device-independent pixels",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "page_id": {
+      "description": "Unique identifier for an article in a particular wiki",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "scroll_flux_down": {
+      "description": "The total amount in device-independent pixels that the user scrolled down manually (i.e. not using the ToC to jump to a section)",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "scroll_flux_up": {
+      "description": "The total amount in device-independent pixels that the user scrolled up manually (i.e. not using the ToC to jump to a section)",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "time_spent_ms": {
+      "description": "Amount of time, in milliseconds, that the user spent before tapping on the action buttons. Timer starts when the article gets fully loaded.",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "wiki_db": {
+      "description": "The database code for the wiki which the user is currently interacting with",
+      "type": "string"
     }
   },
-  "required": [
-    "$schema",
-    "action",
-    "app_install_id",
-    "app_session_id",
-    "dt",
-    "is_anon",
-    "meta",
-    "page_id",
-    "wiki_db"
-  ],
   "examples": [
     {
+      "$schema": "/analytics/mobile_apps/android_article_page_scroll_interaction/1.0.0",
+      "action": "save_click",
+      "app_install_id": "00AB59AC-77A1-4484-B49D-A047A036C77B",
+      "app_session_id": "dd21852b02db926a1b81",
+      "dt": "2020-04-02T19:11:20.942Z",
+      "is_anon": true,
       "meta": {
         "dt": "2020-04-02T19:11:20.942Z",
         "stream": "android.article_page_scroll_interaction"
       },
-      "dt": "2020-04-02T19:11:20.942Z",
-      "action": "save_click",
-      "app_install_id": "00AB59AC-77A1-4484-B49D-A047A036C77B",
-      "app_session_id": "dd21852b02db926a1b81",
-      "is_anon": true,
-      "time_spent_ms": 60,
       "page_height": 140,
-      "wiki_db": "enwiki",
       "page_id": 19021953,
-      "$schema": "/analytics/mobile_apps/android_article_page_scroll_interaction/1.0.0"
+      "time_spent_ms": 60,
+      "wiki_db": "enwiki"
     }
-  ],
-  "additionalProperties": false
+  ]
 }

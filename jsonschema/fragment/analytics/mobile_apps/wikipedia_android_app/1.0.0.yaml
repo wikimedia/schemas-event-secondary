@@ -59,6 +59,11 @@ properties:
   http:
     type: object
     properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
       has_cookies:
         description: True if the http request has any cookies set
         type: boolean
@@ -125,6 +130,7 @@ examples:
     app_session_id: '55555555555555555555'
     dt: '2021-01-01T00:00:00.0Z'
     http:
+      client_ip: dolor
       has_cookies: false
       method: dolor
       protocol: dolor

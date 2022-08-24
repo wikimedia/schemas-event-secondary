@@ -4,53 +4,18 @@
   "$id": "/analytics/mobile_apps/android_article_toc_interaction/1.0.0",
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "app_install_id",
+    "app_session_id",
+    "dt",
+    "is_anon",
+    "meta",
+    "page_id",
+    "wiki_db"
+  ],
   "properties": {
-    "wiki_db": {
-      "type": "string",
-      "description": "The database column name of the wiki that the article belongs to"
-    },
-    "page_id": {
-      "type": "integer",
-      "description": "Unique identifier for an article in a particular wiki",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "num_peeks": {
-      "type": "integer",
-      "description": "Number of times that the circular thumb scroller peeked out of the screen edge",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "num_opens": {
-      "type": "integer",
-      "description": "Number of times that the ToC was opened fully",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "num_section_clicks": {
-      "type": "integer",
-      "description": "Number of times that the user clicked on a section in the ToC",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "total_peek_sec": {
-      "type": "integer",
-      "description": "Total amount of time, in seconds, that the circular thumb scroller was peeking out of the screen edge",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "total_open_sec": {
-      "type": "integer",
-      "description": "Total amount of time, in seconds, that the user spent looking at the ToC before either canceling or making a selection",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
-    "num_sections": {
-      "type": "integer",
-      "description": "Total number of sections displayed in the ToC",
-      "minimum": -9007199254740991,
-      "maximum": 9007199254740991
-    },
     "$schema": {
       "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
       "type": "string"
@@ -78,6 +43,10 @@
     "http": {
       "type": "object",
       "properties": {
+        "client_ip": {
+          "description": "The http client's IP address, usually set from the X-Client-IP header, the value of which is extracted from X-Forwarded-For.",
+          "type": "string"
+        },
         "has_cookies": {
           "description": "True if the http request has any cookies set",
           "type": "boolean"
@@ -154,38 +123,73 @@
           "maxLength": 8192
         }
       }
+    },
+    "num_opens": {
+      "description": "Number of times that the ToC was opened fully",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "num_peeks": {
+      "description": "Number of times that the circular thumb scroller peeked out of the screen edge",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "num_section_clicks": {
+      "description": "Number of times that the user clicked on a section in the ToC",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "num_sections": {
+      "description": "Total number of sections displayed in the ToC",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "page_id": {
+      "description": "Unique identifier for an article in a particular wiki",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "total_open_sec": {
+      "description": "Total amount of time, in seconds, that the user spent looking at the ToC before either canceling or making a selection",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "total_peek_sec": {
+      "description": "Total amount of time, in seconds, that the circular thumb scroller was peeking out of the screen edge",
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": -9007199254740991
+    },
+    "wiki_db": {
+      "description": "The database column name of the wiki that the article belongs to",
+      "type": "string"
     }
   },
-  "required": [
-    "$schema",
-    "app_install_id",
-    "app_session_id",
-    "dt",
-    "is_anon",
-    "meta",
-    "page_id",
-    "wiki_db"
-  ],
   "examples": [
     {
+      "$schema": "/analytics/mobile_apps/android_article_toc_interaction/1.0.0",
+      "app_install_id": "00AB59AC-77A1-4484-B49D-A047A036C77B",
+      "app_session_id": "dd21852b02db926a1b81",
+      "dt": "2020-04-02T19:11:20.942Z",
+      "is_anon": true,
       "meta": {
         "dt": "2020-04-02T19:11:20.942Z",
         "stream": "android.article_toc_interaction"
       },
-      "dt": "2020-04-02T19:11:20.942Z",
-      "app_install_id": "00AB59AC-77A1-4484-B49D-A047A036C77B",
-      "app_session_id": "dd21852b02db926a1b81",
-      "is_anon": true,
-      "num_peeks": 2,
       "num_opens": 2,
+      "num_peeks": 2,
       "num_section_clicks": 6,
-      "total_peek_sec": 60,
-      "total_open_sec": 65,
       "num_sections": 8,
-      "wiki_db": "enwiki",
       "page_id": 19021953,
-      "$schema": "/analytics/mobile_apps/android_article_toc_interaction/1.0.0"
+      "total_open_sec": 65,
+      "total_peek_sec": 60,
+      "wiki_db": "enwiki"
     }
-  ],
-  "additionalProperties": false
+  ]
 }

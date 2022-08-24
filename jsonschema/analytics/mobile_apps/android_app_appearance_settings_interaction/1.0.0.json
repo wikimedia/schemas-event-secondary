@@ -4,25 +4,22 @@
   "$id": "/analytics/mobile_apps/android_app_appearance_settings_interaction/1.0.0",
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "app_install_id",
+    "app_session_id",
+    "dt",
+    "is_anon",
+    "meta"
+  ],
   "properties": {
-    "action": {
-      "type": "string",
-      "description": "Which action in the funnel this is representing. Like fontSizeChange, themeChange, fontThemeChange, readingFocusMode, etc"
-    },
-    "current_value": {
-      "type": "string",
-      "description": "The current value of the appearance setting being changed"
-    },
-    "new_value": {
-      "type": "string",
-      "description": "The new value of the appearance setting that's been changed"
-    },
-    "source": {
-      "type": "string",
-      "description": "Source screen from which the user accessed the appearance settings dialog. e.g. \"pageActivity\", \"settings\""
-    },
     "$schema": {
       "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n",
+      "type": "string"
+    },
+    "action": {
+      "description": "Which action in the funnel this is representing. Like fontSizeChange, themeChange, fontThemeChange, readingFocusMode, etc",
       "type": "string"
     },
     "app_install_id": {
@@ -39,6 +36,10 @@
       "minLength": 20,
       "pattern": "^[0-9a-z]{20}$"
     },
+    "current_value": {
+      "description": "The current value of the appearance setting being changed",
+      "type": "string"
+    },
     "dt": {
       "description": "ISO-8601 formatted timestamp of when the event occurred/was generated in UTC). This exists separately from meta.dt in the main common schema. For external client-sent instrumentation events, we want to allow meta.dt to be the received time (filled in by EventGate at ingest time), as we don't trust client-sent events to always set the proper date and time. Client-set event generation time should be set here instead. See: https://phabricator.wikimedia.org/T240460\n",
       "type": "string",
@@ -48,6 +49,10 @@
     "http": {
       "type": "object",
       "properties": {
+        "client_ip": {
+          "description": "The http client's IP address, usually set from the X-Client-IP header, the value of which is extracted from X-Forwarded-For.",
+          "type": "string"
+        },
         "has_cookies": {
           "description": "True if the http request has any cookies set",
           "type": "boolean"
@@ -124,32 +129,31 @@
           "maxLength": 8192
         }
       }
+    },
+    "new_value": {
+      "description": "The new value of the appearance setting that's been changed",
+      "type": "string"
+    },
+    "source": {
+      "description": "Source screen from which the user accessed the appearance settings dialog. e.g. \"pageActivity\", \"settings\"",
+      "type": "string"
     }
   },
-  "required": [
-    "$schema",
-    "app_install_id",
-    "app_session_id",
-    "dt",
-    "is_anon",
-    "meta"
-  ],
   "examples": [
     {
+      "$schema": "/analytics/mobile_apps/android_app_appearance_settings_interaction/1.0.0",
+      "action": "themeChange",
+      "app_install_id": "00AB59AC-77A1-4484-B49D-A047A036C77B",
+      "app_session_id": "dd21852b02db926a1b81",
+      "current_value": "light",
+      "dt": "2020-04-02T19:11:20.942Z",
+      "is_anon": true,
       "meta": {
         "dt": "2020-04-02T19:11:20.942Z",
         "stream": "android.customize_toolbar_interaction"
       },
-      "dt": "2020-04-02T19:11:20.942Z",
-      "action": "themeChange",
-      "app_install_id": "00AB59AC-77A1-4484-B49D-A047A036C77B",
-      "app_session_id": "dd21852b02db926a1b81",
-      "is_anon": true,
-      "current_value": "light",
       "new_value": "sepia",
-      "source": "pageActionTab",
-      "$schema": "/analytics/mobile_apps/android_app_appearance_settings_interaction/1.0.0"
+      "source": "pageActionTab"
     }
-  ],
-  "additionalProperties": false
+  ]
 }
