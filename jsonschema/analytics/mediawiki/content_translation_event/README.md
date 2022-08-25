@@ -46,16 +46,20 @@ Occurs when the system shows the user an invitation to use Content Translation. 
 Occurs whenever the user navigates to the main Content Translation dashboard.
 
 Possible sources:
+- `content_language_selector`: the language links shown when a user searches for a language where the article is not available and where mobile translation is supported as an invitation to translate. Note: On desktop, this is a source for the editor_open event as it opens the editor directly without an intermediate stop on the dashboard.
 - `contributions_menu`: the link in the dropdown menu shown when the user hovers over the “contributions” link in the top-right corner of the logged-in interface.
 - `contributions_page`: the link shown above the user’s list of contributions on Special:Contributions
 - `direct`: when the user follows a generic link to the dashboard or enters its URL manually
 - `direct_preselect`: same as direct, except that the link/URL specified a particular translation. This means the translation confirmation dialog will automatically open with that translation preselected after the dashboard is opened.
 - `editor_close`: closing the Content Translation editor, which returns the user to the dashboard.
+- `frequent_languages`: An indicator in the "Suggested Languages" section of the language selector that surfaces frequently-accessed missing languages as an opportunity to translate them.
 - `invite_new_article_creation`: the invitation shown when the user opens the editor on a non-existent page (e.g. after following a red link). This is shown only once per user per wiki.
 - `invite_translate_another_section`: the invitation shown when the user views a section translation they have just published. If the user accepts the invitation, they are taken straight to the “select a section” step for the same article, making this source similar to direct_preselect.
 - `notification_deletion`: an email or web notification advising the user that an unpublished translation of theirs will soon be deleted. The link will take them to the dashboard only if the article has since been deleted.
 - `notification_milestone`: the web notification shown when the user has reached a memorable number of translation
 - `notification_new_recommendations`: a one-time notification for new Content Translation users who have recently published a translation, stating that the system has new recommendations for them (since having a seed article improves the quality of the recommendations).
+- `recent_edit`: An invitation shown when the user is on a page that they have edited in another language recently in their 10 latest significant edits (+500 bytes or more) for a section missing in the current language.
+- `recent_translation`: A notice on recently translated articles that invites users to review and expand with the translation of a new section.
 
 ## `dashboard_search`
 Occurs when the user begins entering text in the search box which allows them to start a non-suggested new translation. Can re-occurs only after the user’s focus has left the search box.
