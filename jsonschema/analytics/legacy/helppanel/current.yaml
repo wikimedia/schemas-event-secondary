@@ -2,7 +2,7 @@ title: analytics/legacy/helppanel
 description: >-
   Logs interactions with the help panel or the post-edit panel displayed to new
   editors by the GrowthExperiments extension
-$id: /analytics/legacy/helppanel/1.2.0
+$id: /analytics/legacy/helppanel/1.3.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -60,6 +60,9 @@ allOf:
               - postedit-expand
               - postedit-collapse
               - postedit-task-navigation
+              - postsignup-impression
+              - postsignup-homepage
+              - postsignup-close
             description: >-
               Action the user took:
 
@@ -155,6 +158,14 @@ allOf:
               - postedit-collapse: the user collases the postedit dialog
 
               - postedit-task-navigation: the user navigates through the task feed in the postedit dialog
+
+              - postsignup-impression: the user sees the post-signup post-edit dialog after
+              signing up during an edit.
+
+              - postsignup-homepage: the user clicks the "go to the homepage" option on the
+              post-signup post-edit dialog.
+
+              - postsignup-close: the user dismisses the post-signup post-edit dialog.
 
           action_data:
             description: >-
