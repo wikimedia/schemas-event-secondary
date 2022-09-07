@@ -62,6 +62,9 @@ allOf:
           isAnon:
             description: Is the user viewing anonymously?
             type: boolean
+          userGroups:
+            description: The list of groups the user belongs to.
+            type: string
           editCountBucket:
             description: Number of edits by user. Set only if user is logged in.
             type: string
@@ -79,6 +82,7 @@ examples:
       token: example_token
       pageToken: example_page_token
       isAnon: true
+      userGroups: 'sysop,*,user,autoconfirmed'
     meta:
       dt: '2020-04-02T19:11:20.942Z'
       id: b0caf18d-6c7f-4403-947d-2712bbe28610
