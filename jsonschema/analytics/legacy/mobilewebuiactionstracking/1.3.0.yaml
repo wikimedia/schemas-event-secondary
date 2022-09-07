@@ -95,6 +95,9 @@ properties:
           Session token that survives across pages (mw.user.sessionId()), but
           not when browser restarts.
         type: string
+      userGroups:
+        description: The list of groups the user belongs to.
+        type: string
   http:
     type: object
     properties:
@@ -200,6 +203,7 @@ examples:
       name: example_name
       pageToken: example_page_token
       token: example_token
+      userGroups: 'sysop,*,user,autoconfirmed'
     meta:
       dt: '2020-04-02T19:11:20.942Z'
       id: b0caf18d-6c7f-4403-947d-2712bbe28610
