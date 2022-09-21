@@ -1,0 +1,216 @@
+title: analytics/mediawiki/accountcreation/block
+description: >-
+  Represents an event where the user is blocked from creating an account via
+  Special:CreateAccount or the createaccount API.
+$id: /analytics/mediawiki/accountcreation/block/3.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - block_expiry
+  - block_scope
+  - block_type
+  - error_message_keys
+  - error_messages
+  - is_api
+  - meta
+  - user_ip
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  block_expiry:
+    description: >-
+      The ISO timestamp of when the block will be released, or the string
+      'infinity' for indefinite blocks.
+    type: string
+  block_id:
+    description: >-
+      The identifier of the block (as in Block::getIdentifier()) as a JSON
+      string. For most blocks, this the block ID (ipb_id or gb_id DB field). For
+      system blocks, it's a keyword describing the type of block. For composite
+      blocks, it's an array of the identifiers of each composing block. See
+      https://www.mediawiki.org/wiki/Manual:Block_abstraction_layer for more
+      information on these.
+    type: string
+  block_scope:
+    type: string
+    enum:
+      - local
+      - global
+  block_type:
+    description: >-
+      How the block is targeted (matches Block::getType()). 'id' is a legacy
+      value.
+    type: string
+    enum:
+      - user
+      - ip
+      - range
+      - autoblock
+      - id
+      - other
+  database:
+    description: The name of the wiki database this event entity belongs to.
+    type: string
+    minLength: 1
+  dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  error_message_keys:
+    description: List of the error keys thrown during account creation.
+    type: array
+    items:
+      type: string
+  error_messages:
+    description: List of the error messages thrown during account creation.
+    type: array
+    items:
+      type: string
+  http:
+    type: object
+    properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  is_api:
+    description: >-
+      Whereas the create account request was made via the MW API or web
+      interface.
+    type: boolean
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  performer:
+    description: Represents the user that performed this change.
+    type: object
+    properties:
+      user_edit_count:
+        description: >
+          The number of edits this user has made at the time of this event. Not
+          present for anonymous users.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      user_groups:
+        description: 'A list of the groups this user belongs to.  E.g. bot, sysop etc.'
+        type: array
+        items:
+          type: string
+          minLength: 1
+      user_id:
+        description: >
+          The user id that performed this change.  This is optional, and will
+          not be present for anonymous users.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      user_is_bot:
+        description: >
+          True if this user is considered to be a bot at the time of this event.
+          This is checked via the $user->isBot() method, which considers both
+          user_groups and user permissions.
+        type: boolean
+      user_registration_dt:
+        description: >
+          The datetime of the user account registration. Not present for
+          anonymous users or if missing in the MW database.
+        type: string
+        format: date-time
+        maxLength: 128
+      user_text:
+        description: The text representation of the user that performed this change.
+        type: string
+        minLength: 1
+  user_ip:
+    description: The IP of the blocked user.
+    type: string
+examples:
+  - $schema: /analytics/mediawiki/accountcreation/block/3.0.0
+    block_expiry: infinity
+    block_id: '1'
+    block_scope: local
+    block_type: ip
+    database: abwiki
+    error_message_keys:
+      - globalblocking-ipblocked
+    error_messages:
+      - Your IP address has been blocked on all wikis...
+    http:
+      client_ip: 10.0.2.2
+      request_headers:
+        user-agent: curl/7.64.1
+    is_api: true
+    meta:
+      domain: cs.wikipedia.org
+      dt: '2021-10-12T00:20:00.649Z'
+      stream: mediawiki.accountcreation_block
+    performer:
+      user_edit_count: 100
+      user_id: 1
+    user_ip: 2.145.65.78

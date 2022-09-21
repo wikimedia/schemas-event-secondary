@@ -2,7 +2,7 @@ title: analytics/mediawiki/accountcreation/block
 description: >-
   Represents an event where the user is blocked from creating an
   account via Special:CreateAccount or the createaccount API.
-$id: /analytics/mediawiki/accountcreation/block/2.0.0
+$id: /analytics/mediawiki/accountcreation/block/3.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -17,8 +17,6 @@ allOf:
     - error_messages
     - user_ip
     - is_api
-    - database # from fragment/mediawiki/common
-    - performer # from fragment/mediawiki/common
   - properties:
       block_id:
         type: string
