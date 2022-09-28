@@ -1,0 +1,144 @@
+{
+  "title": "analytics/mediawiki/wikistories_contribution_event",
+  "description": "An event related to the creation or editing of story content from Extension:Wikistories. A \"story\" is essentially a slideshow of images with superimposed text; a \"frame\" is one of the individual slides.\n",
+  "$id": "/analytics/mediawiki/wikistories_contribution_event/1.1.0",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "description": "The type of event that occured:\n* story_builder_open: The user opens the story editing interface.\n* add_frame: The user adds a new frame to the story. Currently, this happens when the user adds an image to the story, which becomes a new frame. Multiple images can be added at once, but this should only result in a single event.\n* remove_frame: The user deletes a frame from the story.\n* replace_image: The user replaces an image already used in the story.\n* import_text: The user imports text from an article into a frame.\n* edit_text: The user edits the text in a frame. Logged when the user leaves a text box having made/saved a change.\n* publish_failure: The user's publish attempt fails due to an invalid title, AbuseFilter or other publication limit.\n* publish_success: The user's publish attempt succeeds and the story is published.\n",
+      "type": "string",
+      "enum": [
+        "story_builder_open",
+        "add_frame",
+        "remove_frame",
+        "replace_image",
+        "import_text",
+        "edit_text",
+        "publish_failure",
+        "publish_success"
+      ]
+    },
+    "publish_failure_message": {
+      "description": "The content of the explanatory message shown to the user after a publish attempt fails. Applies only to publish_failure events.\n",
+      "type": "string"
+    },
+    "access_method": {
+      "description": "Which interface the user is using to access the wiki. Note that \"mobile web\" uses a space rather than an underscore.\n",
+      "type": "string",
+      "enum": [
+        "desktop",
+        "mobile web"
+      ]
+    },
+    "user_name": {
+      "description": "The name of the user. Null for anonymous users.\n",
+      "type": "string"
+    },
+    "user_edit_count_bucket": {
+      "description": "The range in which the user's edit count on the wiki falls. Null if the user is anonymous. Avaiable in the `wgUserEditCountBucket` config variable.\n",
+      "type": "string",
+      "enum": [
+        "0",
+        "1-4",
+        "5-99",
+        "10-99",
+        "100-999",
+        "1000+"
+      ]
+    },
+    "user_is_anonymous": {
+      "description": "Whether the user is anonymous (unregistered) or registered.",
+      "type": "boolean"
+    },
+    "context_page_title": {
+      "description": "The name of the page where the user followed the link to the story builder. Null if the user accessed the story builder directly, without passing through a context page.\n",
+      "type": "string"
+    },
+    "story_title": {
+      "description": "The name of the current story. Since the name is only chosen at the end of the creation process, this will only applied to publish_success events or if editing an existing story.\n",
+      "type": "string"
+    },
+    "story_already_exists": {
+      "description": "Whether the user is editing a story that already exists. If false, the user is attempting to create a new story.\n",
+      "type": "boolean"
+    },
+    "contribution_attempt_id": {
+      "description": "A unique ID for the current attempt to create or edit a story. Generated each time the user opens the story builder and persists until the user publishes or exits the story builder.\n",
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 20,
+      "pattern": "^[0-9a-z]{20}$"
+    },
+    "$schema": {
+      "type": "string",
+      "description": "A URI identifying the JSONSchema for this event. This should match an schema's $id in a schema repository. E.g. /schema/title/1.0.0\n"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dt",
+        "stream"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri-reference",
+          "maxLength": 8192,
+          "description": "Unique URI identifying the event or entity"
+        },
+        "request_id": {
+          "type": "string",
+          "description": "Unique ID of the request that caused the event"
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique ID of this event"
+        },
+        "dt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 128,
+          "description": "UTC event datetime, in ISO-8601 format"
+        },
+        "domain": {
+          "type": "string",
+          "description": "Domain the event or entity pertains to",
+          "minLength": 1
+        },
+        "stream": {
+          "type": "string",
+          "description": "Name of the stream/queue/dataset that this event belongs in",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "required": [
+    "$schema",
+    "access_method",
+    "event_type",
+    "meta",
+    "story_already_exists",
+    "user_is_anonymous"
+  ],
+  "examples": [
+    {
+      "$schema": "/analytics/mediawiki/wikistories_contribution_event/1.1.0",
+      "meta": {
+        "stream": "mediawiki.wikistories_contribution_event",
+        "domain": "id.m.wikipedia.org",
+        "dt": "2022-10-03T03:22:01.187Z"
+      },
+      "event_type": "publish_success",
+      "access_method": "mobile web",
+      "user_name": "PecintaKucing38",
+      "user_edit_count_bucket": "100-999",
+      "user_is_anonymous": false,
+      "context_page_title": "Istanbul",
+      "story_title": "Kucing_Istanbul",
+      "story_already_exists": false,
+      "contribution_attempt_id": "d38c1866acc475a5501f"
+    }
+  ]
+}

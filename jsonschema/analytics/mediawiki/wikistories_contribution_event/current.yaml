@@ -1,7 +1,7 @@
 title: analytics/mediawiki/wikistories_contribution_event
 description: >
         An event related to the creation or editing of story content from Extension:Wikistories. A "story" is essentially a slideshow of images with superimposed text; a "frame" is one of the individual slides.
-$id: /analytics/mediawiki/wikistories_contribution_event/1.0.0
+$id: /analytics/mediawiki/wikistories_contribution_event/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -88,6 +88,15 @@ properties:
             Whether the user is editing a story that already exists. If false, the user is
             attempting to create a new story.
         type: boolean
+    contribution_attempt_id:
+        description: >
+            A unique ID for the current attempt to create or edit a story. Generated each time the
+            user opens the story builder and persists until the user publishes or exits the story
+            builder.
+        type: string
+        minLength: 20
+        maxLength: 20
+        pattern: '^[0-9a-z]{20}$'
 required:
     - event_type
     - access_method
@@ -109,3 +118,4 @@ examples:
         context_page_title: Istanbul
         story_title: Kucing_Istanbul
         story_already_exists: false
+        contribution_attempt_id: d38c1866acc475a5501f
