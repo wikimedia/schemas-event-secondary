@@ -1,8 +1,8 @@
 title: analytics/mediawiki/wikistories_consumption_event
 description: >
-  An event related to the consumption of story content from
-  Extension:Wikistories. A "story" is essentially a slideshow of images with
-  superimposed text; a "frame" is one of the individual slides.
+  An event related to the viewing of story content from Extension:Wikistories.
+  In this context, a "story" is a slideshow of images with superimposed text; a
+  "frame" is one of the individual slides.
 $id: /analytics/mediawiki/wikistories_consumption_event/1.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
@@ -23,7 +23,7 @@ properties:
     type: string
   access_method:
     description: >
-      Which interface the user is using to access the wiki. Note that "mobile
+      Which interface the user was using to access the wiki. Note that "mobile
       web" uses a space rather than an underscore.
     type: string
     enum:
@@ -31,27 +31,31 @@ properties:
       - mobile web
   activity_session_id:
     description: >
-      A random ID for the current session. Available from
-      `mw.eventLog.id.getSessionId()`.
+      The standard unique ID for the current activity session, which expires
+      after 30 minutes of inactivity.
+
+      The activity session was defined for the session_tick instrumention and
+      its ID can be retrieved using `mw.eventLog.id.getSessionId`. It should not
+      be confused with the standard MediaWiki session ID, which persists in a
+      session cookie and can be retrieved using `mw.user.sessionId`.
     type: string
     maxLength: 20
     minLength: 20
     pattern: '^[0-9a-z]{20}$'
   event_type:
     description: >
-      The type of event that occurred:
+      The type of event that occurred: * story_impression: The user loaded a
+      page with one or more attached stories. * story_view: The user finished
+      viewing a story, whether they viewed it to the end or
+        closed it early.
+      * experiment_pageview: For users enrolled in a Wikistories consumption
+      experiment, the
+        user finished viewing any page on the wiki. This is sent whenever the page is closed
+        or hidden, which will sometimes result in multiple events for the same page view.
+        These can be deduplicated by using only the latest experiment_pageview event for each
+        pageview ID.
 
-      * story_impression: A story becomes visible to the user for the first time
-      during a page view. If multiple adjacent stories are visible, each one
-      results in a simultaneous impression event. Any stories that have
-      overflowed produce impressions only when scrolled into view.
-
-      * story_view: The user finishes viewing a story, whether they viewed it to
-      the end or closed it early.
-
-      * experiment_pageview: A consumer enrolled in a Wikistories experiment
-      finishes viewing any page on the wiki. This should be sent whenever the
-      page is closed or hidden, which may result in duplicate events.
+      As of Oct 2022, experiment_pageview is not implemented.
     type: string
     enum:
       - story_impression
@@ -109,27 +113,33 @@ properties:
       Whether the user opened the story recommended in an extra frame at the end
       of the current story. Null if there is no such recommendation. Applies
       only to story_view events.
+
+      Not implemented as of Oct 2022.
     type: boolean
   page_story_count:
     description: |
-      The number of stories attached to the page the user is currently viewing.
+      The number of stories attached to the page the user viewed or was viewing.
     type: integer
     maximum: 9007199254740991
     minimum: 0
   page_title:
-    description: |
-      The page the user is currently viewing.
+    description: >
+      The title of the page the user was viewing. For story_view events, this is
+      the title of context page on which the story was viewed, not the title of
+      the story itself.
     type: string
   page_visible_time:
     description: >
-      The amount of time (in milliseconds) the page has been visible so far
-      during the current pageview.
+      The amount of time, in milliseconds, the page was visible so far during
+      the current page view.
+
+      Not implemented as of Oct 2022.
     type: integer
     maximum: 9007199254740991
     minimum: 0
   pageview_id:
     description: >
-      A random ID for the current pageview. Available from
+      The standard unique ID for the current pageview. Retrieved from
       `mw.user.getPageviewToken()`.
     type: string
     maxLength: 20
@@ -137,8 +147,14 @@ properties:
     pattern: '^[0-9a-z]{20}$'
   referrer_type:
     description: >
-      The type of web site given in the referrer header. This is the same
-      classification used in our main page view data.
+      The type of web site which referred the user to the current page.
+
+      This should match the classification used in our main page view data
+      stream, which requires duplicating logic from SearchEngine.java and
+      Webrequest.java in
+      analytics/refinery/source/refinery-core/src/main/java/org/wikimedia/analytics/refinery/core/.
+
+      Not implemented as of Oct 2022.
     type: string
     enum:
       - internal
@@ -148,10 +164,12 @@ properties:
       - unknown
   session_days:
     description: >
-      A list of the days on which the user *started* an activity session. Days
-      are given relative to the experiment entry date, so the entry date is
-      stored as 1, the following days is stored as 2, and so on. The same days
-      should not be listed more than once.
+      For users enrolled in an experiment, a list of the days on which the user
+      *started* an activity session. Days are given relative to the experiment
+      entry date, so the entry date is stored as 1, the following days is stored
+      as 2, and so on. The same day should not be listed more than once.
+
+      Not implemented as of Oct 2022.
     type: array
     items:
       type: integer
@@ -164,6 +182,8 @@ properties:
       which tells us that this session represents a new unique user for the day.
       To know when a new activity session starts, we can use
       `mw.trackSubscribe('sessionReset', …)`.
+
+      Not implemented as of Oct 2022.
     type: boolean
   story_completed:
     description: >
@@ -172,8 +192,8 @@ properties:
     type: boolean
   story_frame_count:
     description: >
-      The number of frames (slides) in the current story. Applies only to
-      story_impression and story_view events.
+      The number of frames in the story the user viewed. Applies only to
+      story_view events.
     type: integer
     maximum: 9007199254740991
     minimum: 0
@@ -186,16 +206,15 @@ properties:
     minimum: 0
   story_open_time:
     description: >
-      The amount of time (in milliseconds) the user has had a story open so far
-      during the current pageview. This time is also counted toward page visible
-      time.
+      The amount of time, in milliseconds, the user spent viewing the current
+      story. This time is also counted toward page_visible_time. Applies only to
+      story_view events.
     type: integer
     maximum: 9007199254740991
     minimum: 0
   story_title:
-    description: >
-      The title of the current story. Applies only to story_impression and
-      story_view events.
+    description: |
+      The title of the story the user viewed. Applies only to story_view events.
     type: string
 examples:
   - $schema: /analytics/mediawiki/wikistories_consumption_event/1.0.0
