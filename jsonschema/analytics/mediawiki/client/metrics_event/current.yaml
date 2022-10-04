@@ -19,7 +19,7 @@ description: |-
   values to them.
 
   See https://wikitech.wikimedia.org/wiki/Metrics_Platform for more detail.
-$id: /analytics/mediawiki/client/metrics_event/1.0.0
+$id: /analytics/mediawiki/client/metrics_event/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -238,6 +238,13 @@ allOf:
               Whether the MediaWiki instance is considered to be running in
               debug mode.
 
+          database:
+            type: string
+            description: |-
+              The name of the database used by the MediaWiki instance.
+
+              See https://www.mediawiki.org/wiki/Manual:$wgDBname
+
           site_content_language:
             type: string
             minLength: 1
@@ -453,6 +460,7 @@ examples:
       edit_count_bucket: 0 edits
     mediawiki:
       skin: vector
+      database: enwiki
 
   - $schema:
       $ref: "#/$id"
@@ -479,3 +487,4 @@ examples:
       edit_count_bucket: 5-99 edits
     mediawiki:
       skin: vector-2022
+      database: enwiki
