@@ -44,16 +44,19 @@ properties:
     pattern: '^[0-9a-z]{20}$'
   event_type:
     description: >
-      The type of event that occurred: * story_impression: The user loaded a
-      page with one or more attached stories. * story_view: The user finished
-      viewing a story, whether they viewed it to the end or
-        closed it early.
+      The type of event that occurred:
+
+      * story_impression: The user loaded a page with one or more attached
+      stories.
+
+      * story_view: The user finished viewing a story, whether they viewed it to
+      the end or closed it early.
+
       * experiment_pageview: For users enrolled in a Wikistories consumption
-      experiment, the
-        user finished viewing any page on the wiki. This is sent whenever the page is closed
-        or hidden, which will sometimes result in multiple events for the same page view.
-        These can be deduplicated by using only the latest experiment_pageview event for each
-        pageview ID.
+      experiment, the user finished viewing any page on the wiki. This is sent
+      whenever the page is closed or hidden, which will sometimes result in
+      multiple events for the same page view. These can be deduplicated by using
+      only the latest experiment_pageview event for each pageview ID.
 
       As of Oct 2022, experiment_pageview is not implemented.
     type: string
@@ -151,8 +154,8 @@ properties:
 
       This should match the classification used in our main page view data
       stream, which requires duplicating logic from SearchEngine.java and
-      Webrequest.java in
-      analytics/refinery/source/refinery-core/src/main/java/org/wikimedia/analytics/refinery/core/.
+      Webrequest.java in `analytics/refinery/source/refinery-core/src
+      /main/java/org/wikimedia/analytics/refinery/core/`.
 
       Not implemented as of Oct 2022.
     type: string

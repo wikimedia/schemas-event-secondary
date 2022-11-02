@@ -49,18 +49,27 @@ properties:
     pattern: '^[0-9a-z]{20}$'
   event_type:
     description: >
-      The type of event that occured: * story_builder_open: The user opened the
-      story editing interface. * add_frame: The user added a new frame to the
-      story. Currently, this happens when the
-        user adds an image to the story, which becomes a new frame. Multiple images can be
-        added at once, but this should only result in a single event.
-      * remove_frame: The user deleted a frame from the story. * replace_image:
-      The user replaced an image already used in the story. * import_text: The
-      user imported text from an article into a frame. * edit_text: The user
-      edited the text in a frame. Specificially, the user's focus left a text
-      box after they made some change to the text. * publish_failure: The user's
-      publish attempt failed due to an invalid title,
-        AbuseFilter, or other publication limit.
+      The type of event that occured:
+
+      * story_builder_open: The user opened the story editing interface.
+
+      * add_frame: The user added a new frame to the story. Currently, this
+      happens when the user adds an image to the story, which becomes a new
+      frame. Multiple images can be added at once, but this should only result
+      in a single event.
+
+      * remove_frame: The user deleted a frame from the story.
+
+      * replace_image: The user replaced an image already used in the story.
+
+      * import_text: The user imported text from an article into a frame.
+
+      * edit_text: The user edited the text in a frame. Specificially, the
+      user's focus left a text box after they made some change to the text.
+
+      * publish_failure: The user's publish attempt failed due to an invalid
+      title, AbuseFilter, or other publication limit.
+
       * publish_success: The user's publish attempt succeeded and the story was
       published.
 
@@ -136,7 +145,8 @@ properties:
       - 100-999
       - 1000+
   user_is_anonymous:
-    description: Whether the user was anonymous (unregistered) or registered.
+    description: |
+      Whether the user was anonymous (unregistered) or registered.
     type: boolean
   user_name:
     description: |

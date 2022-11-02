@@ -1,11 +1,13 @@
 title: analytics/mediawiki/wikistories_contribution_event
 description: >
-        A step in the creation or editing of story content using Extension:Wikistories. In this
-        context, a "story" is a slideshow of images with superimposed text; a "frame" is one of the
-        individual slides.
+        A step in the creation or editing of story content using
+        Extension:Wikistories. In this context, a "story" is a slideshow of
+        images with superimposed text; a "frame" is one of the individual
+        slides.
 
-        This schema is designed for the main "story builder" interface and is not intended to be
-        used for the secondary "edit form" interface for stories (accessed at URLs like
+        This schema is designed for the main "story builder" interface and is
+        not intended to be used for the secondary "edit form" interface for
+        stories (accessed at URLs like
         /w/index.php?title=Story:Title&action=edit, compared to URLs like
         /wiki/Special:StoryBuilder/Article for the story builder).
 $id: /analytics/mediawiki/wikistories_contribution_event/1.1.0
@@ -17,21 +19,33 @@ properties:
     event_type:
         description: >
             The type of event that occured:
-            * story_builder_open: The user opened the story editing interface.
-            * add_frame: The user added a new frame to the story. Currently, this happens when the
-              user adds an image to the story, which becomes a new frame. Multiple images can be
-              added at once, but this should only result in a single event.
-            * remove_frame: The user deleted a frame from the story.
-            * replace_image: The user replaced an image already used in the story.
-            * import_text: The user imported text from an article into a frame.
-            * edit_text: The user edited the text in a frame. Specificially, the user's focus left
-            a text box after they made some change to the text.
-            * publish_failure: The user's publish attempt failed due to an invalid title,
-              AbuseFilter, or other publication limit.
-            * publish_success: The user's publish attempt succeeded and the story was published.
 
-            As of Oct 2022, only story_builder_open, publish_failure, and publish_success have been
-            implemented.
+            * story_builder_open: The user opened the story editing interface.
+
+            * add_frame: The user added a new frame to the story. Currently,
+            this happens when the user adds an image to the story, which becomes
+            a new frame. Multiple images can be added at once, but this should
+            only result in a single event.
+
+            * remove_frame: The user deleted a frame from the story.
+
+            * replace_image: The user replaced an image already used in the
+            story.
+
+            * import_text: The user imported text from an article into a frame.
+
+            * edit_text: The user edited the text in a frame. Specificially, the
+            user's focus left a text box after they made some change to the
+            text.
+
+            * publish_failure: The user's publish attempt failed due to an
+            invalid title, AbuseFilter, or other publication limit.
+
+            * publish_success: The user's publish attempt succeeded and the
+            story was published.
+
+            As of Oct 2022, only story_builder_open, publish_failure, and
+            publish_success have been implemented.
         type: string
         enum:
             - story_builder_open
@@ -44,13 +58,13 @@ properties:
             - publish_success
     publish_failure_message:
         description: >
-            The content of the explanatory message shown to the user after a failed publish attempt.
-            Filled only for publish_failure events.
+            The content of the explanatory message shown to the user after a
+            failed publish attempt. Filled only for publish_failure events.
         type: string
     access_method:
         description: >
-            Which interface the user was using to access the wiki. Note that "mobile web" uses a
-            space rather than an underscore.
+            Which interface the user was using to access the wiki. Note that
+            "mobile web" uses a space rather than an underscore.
         type: string
         enum:
             - desktop
@@ -61,8 +75,9 @@ properties:
         type: string
     user_edit_count_bucket:
         description: >
-            The range in which the user's edit count on the wiki fell. Null if the user was
-            anonymous. Avaiable from the `wgUserEditCountBucket` config variable.
+            The range in which the user's edit count on the wiki fell. Null if
+            the user was anonymous. Avaiable from the `wgUserEditCountBucket`
+            config variable.
         type: string
         enum:
             - '0'
@@ -72,29 +87,32 @@ properties:
             - '100-999'
             - '1000+'
     user_is_anonymous:
-        description: Whether the user was anonymous (unregistered) or registered.
+        description: >
+            Whether the user was anonymous (unregistered) or registered.
         type: boolean
     context_page_title:
         description: >
-            The name of the page where the user followed the link to the story builder. Null if the
-            user accessed the story builder directly, without passing through a context page.
+            The name of the page where the user followed the link to the story
+            builder. Null if the user accessed the story builder directly,
+            without passing through a context page.
         type: string
     story_title:
         description: >
-            The name of the story that was being edited. If the user was creating a new story, this
-            is filled only for publish_success and publish_failure events, since the name is only
-            chosen at the end of the creation process.
+            The name of the story that was being edited. If the user was
+            creating a new story, this is filled only for publish_success and
+            publish_failure events, since the name is only chosen at the end of
+            the creation process.
         type: string
     story_already_exists:
         description: >
-            Whether the user was editing a story that already existed. If false, the user was
-            creating a new story.
+            Whether the user was editing a story that already existed. If false,
+            the user was creating a new story.
         type: boolean
     contribution_attempt_id:
         description: >
-            A unique ID for the current attempt to create or edit a story. Generated each time the
-            user opens the story builder and persists until the user publishes or exits the story
-            builder.
+            A unique ID for the current attempt to create or edit a story.
+            Generated each time the user opens the story builder and persists
+            until the user publishes or exits the story builder.
         type: string
         minLength: 20
         maxLength: 20
