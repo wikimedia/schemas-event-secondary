@@ -1,7 +1,7 @@
 title: mediawiki/page/image-suggestions-feedback
 description: >
-  Represents feedback on an Image Suggestion
-$id: /mediawiki/page/image-suggestions-feedback/1.0.0
+  Represents user-generated feedback on an Image Suggestion
+$id: /mediawiki/page/image-suggestions-feedback/2.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 additionalProperties: false
@@ -20,44 +20,71 @@ required:
   - dt
 properties:
   wiki:
-    description: The Wikipedia project that the image suggestion belongs to (eg. enwiki)
+    description: >
+      The wiki where the image needs to be added according to the recommendation.
+      The page_id property included in this event is local to "wiki".
     type: string
   page_id:
-    description: The page ID of the page that the suggestion belongs to
+    description: The ID of the page where the image was supposed to be added.
     type: integer
   filename:
-    description: Link to the suggested image
+    description: >
+      The filename for the suggested image. The NS_FILE namespace prefix is not included.
     type: string
   origin_wiki:
-    description: Where the recommended image resides
+    description: The wiki where the image is hosted. Currently, this is always "commonswiki"
     type: string
   user_id:
     description: User who submitted feedback
     type: integer
   is_accepted:
-    description: True if feedback indicates acceptance
+    description: >
+      True indicates acceptance. If this is false
+      and is_rejected is also false, the image is invalidated for other
+      reasons, for example:
+        - a client failed to validate the metadata for a suggestion
+        - as part of the suggested images workflow on-wiki, a user visits an
+          article that already has an image added to it.
     type: boolean
   is_rejected:
-    description: True if feedback indicates rejection
+    description: >
+      True indicates rejection. If this is false
+      and is_accepted is also false, the image is invalidated for other 
+      reasons, for example:
+        - a client failed to validate the metadata for a suggestion
+        - as part of the suggested images workflow on-wiki, a user visits an
+          article that already has an image added to it.
     type: boolean
-  rejection_reason:
-    description: User-selected reason for a rejection
-    type: string
+  rejection_reasons:
+    description: >
+      User-selected reason for rejecting an image suggestion.
+    type: array
+    items:
+      enum:
+      # The enum properties are from AddImageSubmissionHandler::REJECTION_REASONS
+      # mediawiki.org/wiki/Extension:GrowthExperiments
+      - notrelevant
+      - noinfo
+      - offensive
+      - lowquality
+      - unfamiliar
+      - foreignlanguage
+      - other
   dt:
     description: 'UTC event datetime, in ISO-8601 format'
     type: string
     format: date-time
     maxLength: 128
 examples:
-  - $schema: /mediawiki/page/image-suggestions-feedback/1.0.0
+  - $schema: /mediawiki/page/image-suggestions-feedback/2.0.0
     wiki: enwiki
     page_id: 1234
-    filename: https://commons.wikimedia.org/wiki/File:example.JPEG
-    origin_wiki: commons
+    filename: example.JPEG
+    origin_wiki: commonswiki
     user_id: 1234
     is_accepted: false
     is_rejected: true
-    rejection_reason: Incorrect Image
+    rejection_reasons: ['notrelevant','lowquality']
     dt: '2022-04-13T14:12:16.372Z'
     meta:
       dt: '2022-04-13T14:12:16.372Z'
