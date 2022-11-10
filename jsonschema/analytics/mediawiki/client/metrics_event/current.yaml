@@ -19,7 +19,7 @@ description: |-
   values to them.
 
   See https://wikitech.wikimedia.org/wiki/Metrics_Platform for more detail.
-$id: /analytics/mediawiki/client/metrics_event/1.1.0
+$id: /analytics/mediawiki/client/metrics_event/1.1.1
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -434,6 +434,7 @@ allOf:
                 - string
                 - boolean
                 - null
+                - "null"
             value:
               type: string
 
@@ -488,3 +489,18 @@ examples:
     mediawiki:
       skin: vector-2022
       database: enwiki
+
+  - $schema:
+      $ref: "#/$id"
+    dt: "2022-11-09T08:00:00.000Z"
+    name: T322758
+    custom_data:
+      mode:
+        data_type: "null"
+        value: "null"
+    meta:
+      stream: mediawiki_edit_attempt
+      dt: "2022-11-09T08:00:00.500Z"
+    agent:
+      client_platform: mediawiki_js
+      client_platform_family: desktop_browser
