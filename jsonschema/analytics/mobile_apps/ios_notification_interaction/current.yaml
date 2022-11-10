@@ -2,12 +2,11 @@ title: analytics/mobile_apps/ios_notification_interaction
 description: >
   Track user interactions with Echo notifications.
 
-$id: /analytics/mobile_apps/ios_notification_interaction/2.0.0
+$id: /analytics/mobile_apps/ios_notification_interaction/2.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/common/2.0.0#
-  - $ref: /fragment/analytics/app_identifiers/1.0.0#
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_ios_app/1.0.0#
 properties:
   device_level_enabled:
     type: string
