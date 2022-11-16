@@ -2,7 +2,7 @@ title: analytics/legacy/navigationtiming
 description: >-
   Represents a set of client-side latency measurements provided by
   NavigationTiming API
-$id: /analytics/legacy/navigationtiming/1.1.0
+$id: /analytics/legacy/navigationtiming/1.2.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -122,7 +122,7 @@ allOf:
               - stable
             type: string
           mediaWikiVersion:
-            description: MediaWiki version string (same as `wgVersion`)
+            description: MediaWiki version string (mw.config reported `wgVersion`)
             type: string
           originCountry:
             description: 'Country in which request originated, based on GeoIP look-up.'
@@ -214,6 +214,9 @@ allOf:
               Edge cache response host (eg. "cp3062"). Collected via
               the Server Timing API when available. See:
               https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing
+            type: string
+          skin:
+            description: MediaWiki skin name; "vector", "vector-2022", "minerva" etc.
             type: string
 examples:
   - event:
