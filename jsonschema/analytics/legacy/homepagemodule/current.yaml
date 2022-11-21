@@ -2,7 +2,7 @@ title: analytics/legacy/homepagemodule
 description: >-
   Logs interactions with the homepage modules on the Special:Homepage provided
   by the GrowthExperiments extension
-$id: /analytics/legacy/homepagemodule/1.6.0
+$id: /analytics/legacy/homepagemodule/1.6.1
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -199,6 +199,17 @@ allOf:
           action_data:
             description: >-
               Additional data for certain actions:
+
+              For the user impact module impression action:
+
+              - no_cached_user_impact: boolean indicating the module did not show the impact data
+              to the user (true) or it did show the user's cached impact data (false)
+              - timeframe_in_days: the number of days the impact module shows activity for
+              - timeframe_edits_count: the number of edits within the module time frame
+              - thanks_count: the total number of thanks received
+              - last_edit_timestamp: Unix timestamp of the user's last edit
+              - longest_streak_days_count: the number of days of their longest editing streak
+              - top_articles_views_count: the number of pageviews of all the articles in the article list
 
 
               For action=link-click: symbolic name of the link being clicked.
