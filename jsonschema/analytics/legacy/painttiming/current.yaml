@@ -1,6 +1,6 @@
 title: analytics/legacy/painttiming
 description: Holds the paint event timings captured by the NavigationTiming extension
-$id: /analytics/legacy/painttiming/1.0.0
+$id: /analytics/legacy/painttiming/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -42,6 +42,9 @@ allOf:
             type: string
           originCountry:
             description: 'Country in which request originated, based on GeoIP look-up.'
+            type: string
+          skin:
+            description: MediaWiki skin name; "vector", "vector-2022", "minerva" etc.
             type: string
 examples:
   - event:
