@@ -1,6 +1,6 @@
 title: analytics/legacy/painttiming
 description: Holds the paint event timings captured by the NavigationTiming extension
-$id: /analytics/legacy/painttiming/1.1.0
+$id: /analytics/legacy/painttiming/1.2.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -46,6 +46,14 @@ allOf:
           skin:
             description: MediaWiki skin name; "vector", "vector-2022", "minerva" etc.
             type: string
+          action:
+            description: >-
+              Value of 'wgAction': 'view', 'submit', 'history', etc. Unset for
+              special pages.
+            type: string
+          namespaceId:
+            description: '`page_namespace` of the requested page. Unset for special pages.'
+            type: integer
 examples:
   - event:
       name: example_name
