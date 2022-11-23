@@ -2,7 +2,7 @@ title: analytics/legacy/navigationtiming
 description: >-
   Represents a set of client-side latency measurements provided by
   NavigationTiming API
-$id: /analytics/legacy/navigationtiming/1.2.0
+$id: /analytics/legacy/navigationtiming/1.3.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -217,6 +217,22 @@ allOf:
             type: string
           skin:
             description: MediaWiki skin name; "vector", "vector-2022", "minerva" etc.
+            type: string
+          cumulativeLayoutShift:
+            description: >-
+              The cumulative layout shift score: measuring the visual stability
+              by collecting layout shifts that occurs when visible elements changes
+              its position from one rendered frame to the next.
+            type: number
+          largestContentfulPaint:
+            description: >-
+              The render time in milliseconds when the largest element within the
+              viewport was painted.
+            type: integer
+          largestContentfulPaintElement:
+            description: >-
+              The element type: "p", "img", "h1" etc of what was painted as largest
+              contentful paint.
             type: string
 examples:
   - event:
