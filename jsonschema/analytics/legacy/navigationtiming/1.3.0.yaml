@@ -1,0 +1,392 @@
+title: analytics/legacy/navigationtiming
+description: >-
+  Represents a set of client-side latency measurements provided by
+  NavigationTiming API
+$id: /analytics/legacy/navigationtiming/1.3.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - event
+  - meta
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  client_dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  dt:
+    description: 'UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.'
+    type: string
+    format: date-time
+    maxLength: 128
+  event:
+    type: object
+    required:
+      - isAnon
+    properties:
+      action:
+        description: >-
+          Value of 'wgAction': 'view', 'submit', 'history', etc. Unset for
+          special pages.
+        type: string
+      cacheHost:
+        description: >-
+          Edge cache response host (eg. "cp3062"). Collected via the Server
+          Timing API when available. See:
+          https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing
+        type: string
+      cacheResponseType:
+        description: >-
+          Edge cache response type (eg. "miss", "hit-front"). Collected via the
+          Server Timing API when available. See:
+          https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing
+        type: string
+      connectEnd:
+        description: >-
+          The time immediately after the user agent finishes establishing the
+          connection to the server to retrieve the current document.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      connectStart:
+        description: >-
+          The time immediately before the user agent start establishing the
+          connection to the server to retrieve the document.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      cumulativeLayoutShift:
+        description: >-
+          The cumulative layout shift score: measuring the visual stability by
+          collecting layout shifts that occurs when visible elements changes its
+          position from one rendered frame to the next.
+        type: number
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      deviceMemory:
+        description: >-
+          The available RAM on the device, in MB. See
+          https://developer.mozilla.org/en-US/docs/Web/API/Navigator/deviceMemory
+        type: number
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      dnsLookup:
+        description: Time it took to resolve names (domainLookupEnd - domainLookupStart).
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      domComplete:
+        description: >-
+          The time immediately before the user agent sets the current document
+          readiness to "complete".
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      domInteractive:
+        description: >-
+          The time immediately before the user agent sets the current document
+          readiness to "interactive".
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      fetchStart:
+        description: >-
+          The time immediately before the user agent starts checking any
+          relevant application caches.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      gaps:
+        description: >-
+          The gaps in the Navigation Timing metrics. Calculated by taking the
+          sum of: domainLookupStart - fetchStart, connectStart -
+          domainLookupEnd, requestStart - connectEnd and loadEventStart -
+          domComplete
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      hardwareConcurrency:
+        description: >-
+          The number of logical CPU cores on the device. See
+          https://developer.mozilla.org/en-US/docs/Web/API/NavigatorConcurrentHardware/hardwareConcurrency
+        type: number
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      isAnon:
+        description: True if the user was anonymous; false if logged in.
+        type: boolean
+      isOversample:
+        description: 'Whether this request is an oversample, or a standard sample.'
+        type: boolean
+      largestContentfulPaint:
+        description: >-
+          The render time in milliseconds when the largest element within the
+          viewport was painted.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      largestContentfulPaintElement:
+        description: >-
+          The element type: "p", "img", "h1" etc of what was painted as largest
+          contentful paint.
+        type: string
+      loadEventEnd:
+        description: The time when the load event of the current document is completed.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      loadEventStart:
+        description: >-
+          The time immediately before the load event of the current document is
+          fired.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      mediaWikiLoadEnd:
+        description: >-
+          The time at which all ResourceLoader modules for this page have
+          completed loading and executing.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      mediaWikiVersion:
+        description: MediaWiki version string (mw.config reported `wgVersion`)
+        type: string
+      mobileMode:
+        description: 'If in mobile view, specifies the mobile mode. Absent otherwise.'
+        type: string
+        enum:
+          - alpha
+          - beta
+          - stable
+      mwSpecialPageName:
+        description: >-
+          If the page being measured is a Special Page, this will contain the
+          name of the page
+        type: string
+      namespaceId:
+        description: '`page_namespace` of the requested page. Unset for special pages.'
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      netinfoConnectionType:
+        description: >-
+          The connection type.  See
+          https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation
+        type: string
+      netinfoDownlink:
+        description: >-
+          The browser's impression of the downlink bandwidth in Mbps, based on
+          measurements.  See
+          https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation
+        type: number
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      netinfoEffectiveConnectionType:
+        description: >-
+          The browser's impression of the connection type, based on
+          bandwidth/RTT measurements.  See
+          https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation
+        type: string
+      netinfoRtt:
+        description: >-
+          The browser's impression of the RTT in milliseconds, based on
+          measurements.  See
+          https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      originCountry:
+        description: 'Country in which request originated, based on GeoIP look-up.'
+        type: string
+      oversampleReason:
+        description: The reason that this request was oversampled
+        type: string
+      pageviewToken:
+        description: >-
+          Token unique to current page's JS execution context. Used to link
+          NavTiming data to survey responses.
+        type: string
+      redirecting:
+        description: Time spent following redirects.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      requestStart:
+        description: >-
+          the time immediately before the user agent starts requesting the
+          current document from the server, or from relevant application caches
+          or from local resources.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      responseEnd:
+        description: >-
+          the time immediately after the user agent receives the last byte of
+          the current document or immediately before the transport connection is
+          closed, whichever comes first.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      responseStart:
+        description: >-
+          The time immediately after the user agent receives the first byte of
+          the response from the server, or from relevant application caches or
+          from local resources.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      revId:
+        description: Revision ID of requested page. Unset for special pages.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      secureConnectionStart:
+        description: >-
+          The time immediately before the user agent starts the handshake
+          process to secure the current connection.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      skin:
+        description: 'MediaWiki skin name; "vector", "vector-2022", "minerva" etc.'
+        type: string
+      transferSize:
+        description: 'Transfer size of the main document, in octets.'
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      unload:
+        description: The time spent unload (unloadEventEnd - unloadEventStart)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      veaction:
+        description: >-
+          Value of 'veaction': 'edit', 'editsource', etc. Unset when the visual
+          editor isn't in use.
+        type: string
+  http:
+    type: object
+    properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  ip:
+    description: >
+      Client IP address that sent this event, usually best guess parsed out of
+      from X-Client-IP header which is set by varnish from X-Forwarded-For.
+      Deprecated, use http.client_ip.
+    type: string
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  recvFrom:
+    description: Hostname of server emitting the log line.  Deprecated.
+    type: string
+  revision:
+    description: Revision ID of event schema.  Deprecated.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  schema:
+    description: Title of event schema.  Deprecated.
+    type: string
+  seqId:
+    description: Udp2log sequence ID.  Deprecated.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  topic:
+    description: The queue topic name this event belongs in.  Deprecated.
+    type: string
+  uuid:
+    description: 'Unique event identifier.  Deprecated, use meta.id.'
+    type: string
+    maxLength: 128
+  webHost:
+    description: >-
+      Request host. 'window.location.hostname' on client-side events;
+      $_SERVER['HTTP_HOST'] on server.
+    type: string
+  wiki:
+    description: $wgDBName e.g. enwiki
+    type: string
+examples:
+  - $schema: /analytics/legacy/navigationtiming/1.3.0
+    client_dt: '2020-04-02T19:11:20.942Z'
+    dt: '2020-04-02T19:11:20.942Z'
+    event:
+      isAnon: true
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_NavigationTiming
+    schema: NavigationTiming
