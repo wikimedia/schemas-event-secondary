@@ -2,7 +2,7 @@ title: analytics/legacy/homepagemodule
 description: >-
   Logs interactions with the homepage modules on the Special:Homepage provided
   by the GrowthExperiments extension
-$id: /analytics/legacy/homepagemodule/1.6.1
+$id: /analytics/legacy/homepagemodule/1.6.2
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -214,7 +214,12 @@ allOf:
 
               For action=link-click: symbolic name of the link being clicked.
               n.b. for impact module links, we will not append a number for each
-              link in the list.
+              link in the list. Links are:
+                -impact-total-edits: Link in the total edits score card
+                -impact-thanks-log: Link in the thanks score card
+                -impact-article-title: Link for the article and image in the article list
+                -impact-pageviews: Link for the pageviews of an article in the article list
+                -impact-contributions: Link for viewing all edits at the bottom of the module
 
 
               For mentorship module, we will add the mentor edit count and the
