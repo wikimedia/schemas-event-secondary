@@ -2,7 +2,7 @@ title: analytics/legacy/homepagemodule
 description: >-
   Logs interactions with the homepage modules on the Special:Homepage provided
   by the GrowthExperiments extension
-$id: /analytics/legacy/homepagemodule/1.6.2
+$id: /analytics/legacy/homepagemodule/1.6.3
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -61,6 +61,8 @@ allOf:
               - se-edit-button-click
               - mentorship-optout
               - mentorship-optin
+              - newimpactdiscovery-close
+              - newimpactdiscovery-impression
             description: >-
               Action the user took:
 
@@ -196,6 +198,10 @@ allOf:
 
               - mentorship-optin: User opts in to Growth mentorship (ie. changed their mind after
               opting out in the past).
+
+              - newimpactdiscovery-impression: User sees the tour or drawer announcing the new impact module
+
+              - newimpactdiscovery-close: User closes the tour or drawer announcing the new impact module
           action_data:
             description: >-
               Additional data for certain actions:
@@ -300,6 +306,13 @@ allOf:
               For the mentorship-optout action:
 
               - reasons: optout reason(s) provided by the user for opting out. Will be an array consisting of reason codes.
+
+              For the newimpactdiscovery-close action:
+
+              - type: the method by which the tour or drawer was closed:
+                - 'close-icon' for the normal close icon
+                - 'outside-click' for clicking outside the dialog/drawer
+                - 'button' for the clicking the button)
             type: string
           user_id:
             description: The user id.
