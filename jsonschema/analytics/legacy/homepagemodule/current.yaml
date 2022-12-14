@@ -2,7 +2,7 @@ title: analytics/legacy/homepagemodule
 description: >-
   Logs interactions with the homepage modules on the Special:Homepage provided
   by the GrowthExperiments extension
-$id: /analytics/legacy/homepagemodule/1.6.3
+$id: /analytics/legacy/homepagemodule/1.6.4
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -30,6 +30,10 @@ allOf:
               - link-click
               - open-nopageviews-tooltip
               - close-nopageviews-tooltip
+              - open-streak-info-tooltip
+              - close-streak-info-tooltip
+              - open-thanks-info-tooltip
+              - close-thanks-info-tooltip
               - close
               - welcome-impression
               - welcome-close
@@ -85,6 +89,22 @@ allOf:
 
               - close-nopageviews-tooltip: User closes the tooltip on the shown
               when pageviews is not available yet.
+              
+              
+              - open-streak-info-tooltip: User opens the tooltip on the streak 
+              scorecard.
+
+              
+              - close-streak-info-tooltip: User closes the tooltip on the streak 
+              scorecard.
+
+              
+              - open-thanks-info-tooltip: User opens the tooltip on the thanks
+              scorecard.
+
+
+              - close-thanks-info-tooltip: User closes the tooltip on the thanks
+              scorecard.
 
 
               - close: User closes then mobile overlay.
