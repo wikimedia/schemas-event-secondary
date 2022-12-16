@@ -1,7 +1,7 @@
 title: analytics/mediawiki/searchpreview
 description: >
   Measures features on the SearchVue extension.
-$id: /analytics/mediawiki/searchpreview/1.0.0
+$id: /analytics/mediawiki/searchpreview/2.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -15,7 +15,7 @@ allOf:
           - open-searchpreview
           - close-searchpreview
           - click-image
-          - click-section
+          - click-snippet
           - click-article-section
           - click-interwiki-commons
           - click-interwiki-links
