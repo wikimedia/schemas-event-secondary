@@ -4,7 +4,7 @@ description: >-
   https://phabricator.wikimedia.org/T323113
 
   Sent every time a geoshape is expanded by the backend.
-$id: /analytics/mediawiki/maps/externaldata_fetch/1.0.0
+$id: /analytics/mediawiki/maps/externaldata_fetch/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -15,14 +15,26 @@ allOf:
   - $ref: /fragment/mediawiki/page/common/2.0.0#
   - properties:
       expansion_duration_ms:
-        type: integer
         description: >-
           Elapsed wall time from the beginning to end of the expansion.
+        type: integer
         minimum: 0
       url:
-        type: string
         description: >-
           External data URL being requested.  May be truncated.
+        type: string
+      response_status:
+        description: >-
+          HTTP status code from the remote service.  Note that a 200 status
+          doesn't necessarily mean that the request was successful at the
+          application level.
+        type: integer
+      response_length:
+        description: >-
+          Response size given by the Content-Length header, or 0 in case of
+          failure.
+        type: integer
+        minimum: 0
 
 examples:
   - $schema:
@@ -36,3 +48,5 @@ examples:
     page_namespace: 0
     page_id: 5678
     rev_id: 9876
+    response_status: 200
+    response_length: 1024
