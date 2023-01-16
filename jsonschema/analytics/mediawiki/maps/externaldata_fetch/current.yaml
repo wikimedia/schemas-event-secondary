@@ -1,0 +1,38 @@
+title: analytics/mediawiki/maps/externaldata_fetch
+description: >-
+  Performance monitoring for the GeoJSON ExternalData expansion feature, see
+  https://phabricator.wikimedia.org/T323113
+
+  Sent every time a geoshape is expanded by the backend.
+$id: /analytics/mediawiki/maps/externaldata_fetch/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+additionalProperties: false
+required:
+  - expansion_duration_ms
+allOf:
+  - $ref: /fragment/analytics/common/2.0.0#
+  - $ref: /fragment/mediawiki/page/common/2.0.0#
+  - properties:
+      expansion_duration_ms:
+        type: integer
+        description: >-
+          Elapsed wall time from the beginning to end of the expansion.
+        minimum: 0
+      url:
+        type: string
+        description: >-
+          External data URL being requested.  May be truncated.
+
+examples:
+  - $schema:
+      $ref: '#/$id'
+    meta:
+      dt: '2022-01-01T00:00:00Z'
+      domain: ar.wikipedia.org
+      stream: mediawiki.maps.externaldata_fetch
+    expansion_duration_ms: 123
+    url: 'https://maps.wikimedia.org/geoshape?getgeojson=1&ids=Q1028'
+    page_namespace: 0
+    page_id: 5678
+    rev_id: 9876
