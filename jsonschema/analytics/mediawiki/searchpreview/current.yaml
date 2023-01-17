@@ -1,7 +1,7 @@
 title: analytics/mediawiki/searchpreview
 description: >
   Measures features on the SearchVue extension.
-$id: /analytics/mediawiki/searchpreview/2.0.0
+$id: /analytics/mediawiki/searchpreview/3.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -19,6 +19,7 @@ allOf:
           - click-article-section
           - click-interwiki-commons
           - click-interwiki-links
+          - new-session
 
       wiki_id:
         type: string
@@ -49,13 +50,17 @@ allOf:
           identifies a single user performing searches within a limited
           timespan. If no search is performed within ten minutes of a previous
           search a new session id is generated.
-          This matches event.searchSessionId in analytics/legacy/searchsatisfaction.
+      is_anon:
+        type: boolean
+        description: >-
+          Whether the user is anonymous (unregistered) or registered.
 
 required:
   - action
   - wiki_id
   - platform
   - result_display_position
+  - is_anon
 
 examples:
   - $schema:
@@ -69,3 +74,4 @@ examples:
     platform: desktop
     result_display_position: 0
     dt: '2020-12-12T00:20:00.649Z'
+    is_anon: true
