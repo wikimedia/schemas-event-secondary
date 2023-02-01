@@ -1,0 +1,92 @@
+title: analytics/mobile_apps/ios_search
+description: >
+  Track user actions when using the search interface.
+  This schema is based on iOS legacy schema MobileWikiAppiOSSearch (https://meta.wikimedia.org/wiki/Schema:MobileWikiAppiOSSearch)
+$id: /analytics/mobile_apps/ios_search/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_ios_app/2.0.0#  
+  - properties:
+      action:
+        type: string
+        enum:
+          - start
+          - results
+          - didyoumean
+          - autoswitch
+          - error
+          - click
+          - cancel
+          - langswitch
+        description: >
+          Which particular action triggered this event:
+          start: 
+            the user started a search
+          results: 
+            search results were shown to the user as a result of explicit user input
+          didyoumean: 
+            the user clicked the 'did you mean' link shown above full-text results
+          autoswitch: 
+            the user got no results from a prefixsearch, and was automatically switched to fulltext mode
+          error: 
+            the user was presented with an error
+          click: 
+            the user clicked on a search result
+          cancel: 
+            the user aborted their search by clicking cancel or hitting back
+          langswitch: 
+            when the user switches to search or see results in another language"
+      source:
+        type: string
+        enum:
+          - top_of_feed
+          - search_tab
+          - article
+          - unknown
+        description: The source from which the search interface was invoked.
+      position: 
+        type: integer
+        description: 
+          The position of the search result that was selected, from the list that was presented to the user (used with the 'click' action).
+      search_type:
+        type: string
+        description: >
+          The type of search that was run (used with 'results' and 'error'):
+          prefix: prefix (title only) search
+          full: full-text search
+      number_of_results:
+        type: integer
+        description: The number of results that the user was shown as a result of their input (used with 'results').
+      time_to_display_results:
+        type: integer
+        description:
+          The number of milliseconds it took, from the app's/user's point of view, between sending the query and actually displaying the results (used with 'results').
+      session_token:
+        type: string
+        description: Session token for this search funnel.
+
+required:
+  - dt
+  - app_install_id
+  - app_session_id
+  - primary_language
+  - is_anon
+  - session_token
+  - source
+  - action
+
+examples:
+  - meta:
+      dt: '2023-02-01T19:51:26.942Z'
+      stream: 'ios.search'
+    dt: '2023-02-01T19:51:26.942Z'
+    app_install_id: 1127dd8f-0c65-4e05-a4ad-8fa866cf62e3
+    app_session_id: dd21852b02db926a1b81
+    is_anon: false
+    primary_language: en
+    $schema:
+      $ref: '#/$id'
+    session_token: 8f6e6846-3ffc-4295-9580-e43f0241c9c9
+    source: search_tab
+    action: results
