@@ -1,0 +1,97 @@
+title: analytics/mobile_apps/ios_reading_lists
+description: >
+  Measure user interactions with the reading list feature on iOS
+  This schema is based on iOS legacy schema MobileWikiAppiOSReadingLists (https://meta.wikimedia.org/wiki/Schema:MobileWikiAppiOSReadingLists)
+$id: /analytics/mobile_apps/ios_reading_lists/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+allOf:
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_ios_app/2.0.0#
+  - properties:
+      category:
+        type: string
+        enum: 
+          - feed
+          - feed_detail
+          - history
+          - places
+          - search
+          - add_to_list
+          - saved
+          - article
+          - shared
+        description: >
+          On which screen this action is triggered:
+          feed: 
+            the explore view
+          feed_detail: 
+            the feed card detail view
+          history: 
+            the history tab
+          places: 
+            the places tab, can be map or list view
+          search: 
+            the search interface, can be invoked from several sources
+          add_to_list: 
+            the screen allowing users to add an article to existing/new reading list, or delete lists
+          saved: 
+            the saved tab
+          article: 
+            the article view
+          shared: 
+            the import shared reading list flow
+      label:
+        type: string
+        description: >
+          On which element of that screen this action is triggered:
+            When category='feed' or 'feed_detail', this represents the name of feed card.
+            When category='saved', this is 'items' (when users see the articles within a list) or 'lists' (when users see all their reading lists).
+            When category='article', this can be 'default', 'read_more', 'out_link' or 'similar_page'.
+            When category is other value, this is NULL.
+      action: 
+        type: string
+        enum:
+          - save
+          - unsave
+          - createlist
+          - deletelist
+          - read_start
+          - receive_start
+          - receive_cancel
+          - receive_finish
+          - survey_shown
+          - survey_clicked
+        description: Identifies the context in which the event was created.
+      measure:
+        type: integer
+        description: Number of lists/articles affected.
+      measure_position:
+        type: integer
+        description: 0 based index for the articles in a single card.
+      measure_age:
+        type: integer
+        description: 0 based age of the feed. 0 represents today, 1 represents yesterday, etc.
+
+required:
+  - dt
+  - app_install_id
+  - app_session_id
+  - is_anon
+  - primary_language
+  - category
+  - action
+
+examples:
+  - meta:
+      dt: '2023-02-01T12:56:40.942Z'
+      stream: 'ios.reading_lists'
+    dt: '2023-02-01T12:56:40.942Z'
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    is_anon: false
+    primary_language: en
+    category: saved
+    action: save
+    label: lists
+    $schema:
+      $ref: '#/$id'     
