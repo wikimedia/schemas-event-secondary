@@ -8,7 +8,7 @@ $id: /analytics/mobile_apps/ios_edit_history_compare/2.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
-  - $ref: /fragment/analytics/mobile_apps/wikipedia_ios_app/1.0.0#
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_ios_app/2.0.0#
   - properties:
       action:
         type: string
@@ -43,12 +43,6 @@ allOf:
           thank_fail:
             User received an error after trying to thank the editor (e.g. if
             user is not logged in, anonymous thanks are not allowed)
-      primary_language:
-        type: string
-        description: User's primary language.
-      is_anon:
-        type: boolean
-        description: Whether user is anonymous or logged-in.
 
 required:
   - dt

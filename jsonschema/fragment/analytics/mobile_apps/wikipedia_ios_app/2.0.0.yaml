@@ -1,31 +1,20 @@
-title: analytics/mobile_apps/ios_notification_interaction
-description: |
-  Track user interactions with Echo notifications.
-$id: /analytics/mobile_apps/ios_notification_interaction/2.1.0
+title: fragment/analytics/mobile_apps/wikipedia_ios_app
+description: >
+  Required fields that will be part of all ios app schemas, for Wikimedia
+  product/feature analytics in mobile apps which use an implementation of the
+  Event Platform Client (EPC) specification.
+$id: /fragment/analytics/mobile_apps/wikipedia_ios_app/2.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 additionalProperties: false
 required:
   - $schema
-  - action
-  - app_install_id
-  - app_session_id
-  - device_level_enabled
-  - dt
-  - is_anon
   - meta
-  - notification_id
-  - notification_type
-  - notification_wiki
-  - primary_language
 properties:
   $schema:
     description: >
       A URI identifying the JSONSchema for this event. This should match an
       schema's $id in a schema repository. E.g. /schema/title/1.0.0
-    type: string
-  action:
-    description: String description of notification action taken by the user.
     type: string
   app_install_id:
     description: >
@@ -55,9 +44,6 @@ properties:
     maxLength: 20
     minLength: 20
     pattern: '^[0-9a-z]{20}$'
-  device_level_enabled:
-    description: Device push notifications permissions status
-    type: string
   dt:
     description: >
       ISO-8601 formatted timestamp of when the event occurred/was generated in
@@ -138,56 +124,30 @@ properties:
         type: string
         format: uri-reference
         maxLength: 8192
-  notification_id:
-    description: Unique identifier of the Echo event triggering the notification
-    type: integer
-    maximum: 9007199254740991
-    minimum: -9007199254740991
-  notification_type:
-    description: >-
-      Type of notification interacted with, for example, welcome, edit-thank,
-      and thank-you-edit (milestone)
-    type: string
-  notification_wiki:
-    description: The wiki which the notification came from
-    type: string
   primary_language:
     description: User's primary language.
     type: string
-  selection_token:
-    description: >
-      In cases where user has selected multiple notifications and has marked all
-      as read (and archived), a unique identifier is generated for the set and
-      included with the event sent for each of the notifications. This enables
-      us to analyze usage of the multi-select feature
-    type: string
 examples:
-  - $schema: /analytics/mobile_apps/ios_notification_interaction/2.1.0
-    action: mark_read
-    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
-    app_session_id: dd21852b02db926a1b81
-    device_level_enabled: authorized
-    dt: '2021-12-02T19:11:20.942Z'
+  - $schema: /fragment/analytics/mobile_apps/wikipedia_ios_app/2.0.0
+    app_install_id: 33333333-3333-3333-3333-333333333333
+    app_session_id: '55555555555555555555'
+    dt: '2021-01-01T00:00:00.0Z'
+    http:
+      client_ip: dolor
+      has_cookies: false
+      method: dolor
+      protocol: dolor
+      request_headers:
+        dolorb: dolor
+      response_headers:
+        dolorb: dolor
+      status_code: -6305039478318694
     is_anon: false
     meta:
-      dt: '2020-04-02T19:11:20.942Z'
-      stream: ios.notification_interaction
-    notification_id: 562648
-    notification_type: edit-user-talk
-    notification_wiki: ndswiki
-    primary_language: en
-    selection_token: token
-  - $schema: /analytics/mobile_apps/ios_notification_interaction/2.1.0
-    action: sender_page
-    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
-    app_session_id: dd21852b02db926a1b81
-    device_level_enabled: denied
-    dt: '2020-04-02T19:11:20.942Z'
-    is_anon: false
-    meta:
-      dt: '2021-11-02T19:11:20.942Z'
-      stream: ios.notification_interaction
-    notification_id: 578768
-    notification_type: mention-summary
-    notification_wiki: hiwiki
-    primary_language: en
+      domain: dolor
+      dt: '2021-01-01T00:00:00.0Z'
+      id: dolor
+      request_id: dolor
+      stream: dolor
+      uri: 'http://example.org'
+    primary_language: dolor

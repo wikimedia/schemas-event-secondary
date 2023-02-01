@@ -2,7 +2,7 @@ title: fragment/analytics/mobile_apps/wikipedia_ios_app
 description: >
   Required fields that will be part of all ios app schemas, for Wikimedia product/feature analytics in mobile apps
   which use an implementation of the Event Platform Client (EPC) specification.
-$id: /fragment/analytics/mobile_apps/wikipedia_ios_app/1.0.0
+$id: /fragment/analytics/mobile_apps/wikipedia_ios_app/2.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -16,3 +16,6 @@ properties:
       Information about app user: is true if the user is not logged in the app,
       false if the user is logged in. This is automatically saved as a boolean
       in the app, and is sent by the app with every event.
+  primary_language: 
+    type: string
+    description: User's primary language.
