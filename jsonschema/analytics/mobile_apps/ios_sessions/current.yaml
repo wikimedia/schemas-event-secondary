@@ -1,0 +1,63 @@
+title: analytics/mobile_apps/ios_sessions
+description: >
+  Track the start and end of a session of using the app.
+  This schema is based on iOS legacy schema MobileWikiAppiOSSessions (https://meta.wikimedia.org/wiki/Schema:MobileWikiAppiOSSessions)
+$id: /analytics/mobile_apps/ios_sessions/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_ios_app/2.0.0#  
+  - properties:
+      category:
+        type: string
+        enum:
+          - unknown
+        description: On which screen this session is started/ended. Currently we don't have a reliable way to identify the screen when users start a session.
+      label: 
+        type: string
+        description: On which element of that screen this session is started/ended.
+      action:
+        type: string
+        enum:
+          - session_start
+          - session_end
+        description: Identifies the context in which the event was created.
+      measure_time:
+        type: integer
+        description: >
+          When action='session_end', this is the interval in seconds between session_start and session_end.
+          When action='session_start', this is NULL.
+      page_load_latency_min:
+        type: integer
+        description: Minimum latency, in milliseconds, of loading an article from the network.
+      page_load_latency_max:
+        type: integer
+        description: Maximum latency, in milliseconds, of loading an article from the network.
+      page_load_latency_average: 
+        type: integer
+        description: Average latency, in milliseconds, of loading articles from the network.
+      
+required:
+  - dt
+  - app_install_id
+  - app_session_id
+  - primary_language
+  - is_anon
+  - category
+  - action
+
+examples:
+  - meta:
+      dt: '2023-02-02T19:51:26.942Z'
+      stream: 'ios.search'
+    dt: '2023-02-02T19:51:26.942Z'
+    app_install_id: 1127dd8f-0c65-4e05-a4ad-8fa866cf62e3
+    app_session_id: dd21852b02db926a1b81
+    is_anon: false
+    primary_language: en
+    $schema:
+      $ref: '#/$id'
+    action: session_end
+    category: unknown
+    measure_time: 123
+    label: lorem
