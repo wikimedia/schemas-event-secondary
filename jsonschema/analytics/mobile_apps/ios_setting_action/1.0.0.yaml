@@ -170,5 +170,5 @@ examples:
     measure: 123
     meta:
       dt: '2023-02-02T19:51:26.942Z'
-      stream: ios.search
+      stream: ios.setting_action
     primary_language: en
