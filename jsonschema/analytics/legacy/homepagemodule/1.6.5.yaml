@@ -2,7 +2,7 @@ title: analytics/legacy/homepagemodule
 description: >-
   Logs interactions with the homepage modules on the Special:Homepage provided
   by the GrowthExperiments extension
-$id: /analytics/legacy/homepagemodule/1.6.4
+$id: /analytics/legacy/homepagemodule/1.6.5
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 additionalProperties: false
@@ -520,7 +520,7 @@ properties:
     description: $wgDBName e.g. enwiki
     type: string
 examples:
-  - $schema: /analytics/legacy/homepagemodule/1.6.4
+  - $schema: /analytics/legacy/homepagemodule/1.6.5
     client_dt: '2020-04-02T19:11:20.942Z'
     dt: '2020-04-02T19:11:20.942Z'
     event:

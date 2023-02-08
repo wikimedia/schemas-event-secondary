@@ -2,7 +2,7 @@ title: analytics/legacy/homepagemodule
 description: >-
   Logs interactions with the homepage modules on the Special:Homepage provided
   by the GrowthExperiments extension
-$id: /analytics/legacy/homepagemodule/1.6.4
+$id: /analytics/legacy/homepagemodule/1.6.5
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -236,6 +236,7 @@ allOf:
               - last_edit_timestamp: Unix timestamp of the user's last edit
               - longest_streak_days_count: the number of days of their longest editing streak
               - top_articles_views_count: the number of pageviews of all the articles in the article list
+              - total_pageviews_count: the sum of the pageview counts of all articles the user has edited
 
 
               For action=link-click: symbolic name of the link being clicked.
