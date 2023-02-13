@@ -60,6 +60,7 @@ properties:
       User-selected reason for rejecting an image suggestion.
     type: array
     items:
+      type: string
       enum:
       # The enum properties are from AddImageSubmissionHandler::REJECTION_REASONS
       # mediawiki.org/wiki/Extension:GrowthExperiments
