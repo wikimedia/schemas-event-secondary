@@ -19,7 +19,7 @@ description: |-
   values to them.
 
   See https://wikitech.wikimedia.org/wiki/Metrics_Platform for more detail.
-$id: /analytics/mediawiki/client/metrics_event/1.1.1
+$id: /analytics/mediawiki/client/metrics_event/1.2.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -153,6 +153,14 @@ allOf:
           # If the page has none, this attribute will not appear.
           wikidata_id:
             type: integer
+            description: |-
+              Wikibase item ID corresponding to the page at the time of the event.
+              Note that this property is superceded by the wikidata_qid property.
+
+              See https://www.wikidata.org/wiki/Wikidata:Identifiers
+
+          wikidata_qid:
+            type: string
             description: |-
               Wikibase item ID corresponding to the page at the time of the event.
 
