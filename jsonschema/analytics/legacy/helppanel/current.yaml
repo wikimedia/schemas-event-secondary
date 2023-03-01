@@ -2,7 +2,7 @@ title: analytics/legacy/helppanel
 description: >-
   Logs interactions with the help panel or the post-edit panel displayed to new
   editors by the GrowthExperiments extension
-$id: /analytics/legacy/helppanel/1.3.0
+$id: /analytics/legacy/helppanel/1.3.1
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -244,7 +244,8 @@ allOf:
 
               - type: 'full' when the panel is shown with a task card, 'small'
               when the panel is intentionally shown without a task, 'error' when
-              the task is omitted due to some error.
+              the task is omitted due to some error. Omitted when
+              context=postedit-nonsuggested.
 
               - newcomerTaskToken: (type=full only) a token that can be used to
               connect this to a NewcomerTaskImpression event.
@@ -252,9 +253,9 @@ allOf:
               - error: (type=error only) error message
 
               - savedTaskType: type of the suggested edit task that has just
-              been saved
+              been saved. Omitted when context=postedit-nonsuggested.
 
-              - userTaskTypes:(type=full only)  the user's task type
+              - userTaskTypes: (type=full only)  the user's task type
               (difficulty) filter settings (array of strings)
 
               - userTopics: (type=full only) the user's topic filter settings
@@ -294,6 +295,7 @@ allOf:
               - editing
               - reading
               - postedit
+              - postedit-nonsuggested
               - homepage_help
               - homepage_mentorship
             description: >-
