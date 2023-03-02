@@ -1,0 +1,250 @@
+title: analytics/legacy/homepagevisit
+description: >-
+  Log visits to Special:Homepage (provided by Extension:GrowthExperiments) from
+  the server-side.
+$id: /analytics/legacy/homepagevisit/1.5.1
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - event
+  - meta
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  client_dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  dt:
+    description: 'UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.'
+    type: string
+    format: date-time
+    maxLength: 128
+  event:
+    type: object
+    required:
+      - is_mobile
+      - user_editcount
+      - user_id
+      - impact_module_state
+      - start_email_state
+      - homepage_pageview_token
+    properties:
+      homepage_pageview_token:
+        description: >-
+          One-time token per page load. This is a random user session ID that
+          will be exported to the client-side, so that HomepageModule schema
+          events can be associated with this HomepageVisit event.
+        type: string
+      impact_module_state:
+        description: Activation state of the impact module.
+        type: string
+        enum:
+          - activated
+          - unactivated
+          - notrendered
+      is_mobile:
+        description: If the event is associated with the mobile web frontend.
+        type: boolean
+      referer_action:
+        description: >-
+          The action associated with the user activities on the MediaWiki Title
+          that is the referer to this page. Calculated by looking at the action
+          parameter in the query string of the HTTP REFERER header.
+        type: string
+        enum:
+          - view
+          - edit
+          - other
+      referer_namespace:
+        description: >-
+          The namespace associated with the MediaWiki Title (e.g. 0, for
+          Main_Page) that is the referer to this page. Calculated by attempting
+          to load a MediaWiki title from parsing the HTTP REFERER header
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      referer_route:
+        description: >-
+          The route the user took to arrive at the Special:Homepage. Calculated
+          by looking at the query parameter.
+        type: string
+        enum:
+          - userpagetab
+          - usertalkpagetab
+          - personaltoolslink
+          - direct
+          - specialconfirmemail
+          - specialcontributions
+          - specialwelcomesurvey
+          - postedit-panel
+          - postedit-panel-nonsuggested
+          - other
+          - welcomesurvey-originalcontext
+          - contributelist
+          - suggestion-skip
+          - welcomeemail-april2022
+          - specialcontribute
+      start_email_state:
+        description: Completion state of the email module.
+        type: string
+        enum:
+          - noemail
+          - unconfirmed
+          - confirmed
+      start_startediting_state:
+        description: Completion state of the startediting module.
+        type: string
+        enum:
+          - complete
+          - incomplete
+      start_tutorial_state:
+        description: Completion state of the tutorial module.
+        type: string
+        enum:
+          - complete
+          - incomplete
+      start_userpage_state:
+        description: Completion state of the userpage module.
+        type: string
+        enum:
+          - complete
+          - incomplete
+      user_editcount:
+        description: The user edit count.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      user_id:
+        description: 'User ID, needed for tracking across login sessions.'
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  http:
+    type: object
+    properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  ip:
+    description: >
+      Client IP address that sent this event, usually best guess parsed out of
+      from X-Client-IP header which is set by varnish from X-Forwarded-For.
+      Deprecated, use http.client_ip.
+    type: string
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  recvFrom:
+    description: Hostname of server emitting the log line.  Deprecated.
+    type: string
+  revision:
+    description: Revision ID of event schema.  Deprecated.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  schema:
+    description: Title of event schema.  Deprecated.
+    type: string
+  seqId:
+    description: Udp2log sequence ID.  Deprecated.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  topic:
+    description: The queue topic name this event belongs in.  Deprecated.
+    type: string
+  uuid:
+    description: 'Unique event identifier.  Deprecated, use meta.id.'
+    type: string
+    maxLength: 128
+  webHost:
+    description: >-
+      Request host. 'window.location.hostname' on client-side events;
+      $_SERVER['HTTP_HOST'] on server.
+    type: string
+  wiki:
+    description: $wgDBName e.g. enwiki
+    type: string
+examples:
+  - $schema: /analytics/legacy/homepagevisit/1.5.1
+    client_dt: '2020-04-02T19:11:20.942Z'
+    dt: '2020-04-02T19:11:20.942Z'
+    event:
+      homepage_pageview_token: example token
+      impact_module_state: activated
+      is_mobile: true
+      start_email_state: noemail
+      user_editcount: 123
+      user_id: 456
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_HomepageVisit
+    schema: HomepageVisit
