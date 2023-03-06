@@ -2,7 +2,7 @@ title: analytics/legacy/homepagevisit
 description: >-
   Log visits to Special:Homepage (provided by Extension:GrowthExperiments) from
   the server-side.
-$id: /analytics/legacy/homepagevisit/1.5.1
+$id: /analytics/legacy/homepagevisit/1.5.2
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -45,6 +45,12 @@ allOf:
               - suggestion-skip
               - welcomeemail-april2022
               - specialcontribute
+              - keep-going-primary-link-email
+              - keep-going-primary-link-web
+              - keep-going-secondary-link
+              - get-started-primary-link-email
+              - get-started-primary-link-web
+              - get-started-secondary-link
           referer_namespace:
             description: >-
               The namespace associated with the MediaWiki Title (e.g. 0, for
