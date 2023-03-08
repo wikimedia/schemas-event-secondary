@@ -2,7 +2,7 @@ title: analytics/legacy/helppanel
 description: >-
   Logs interactions with the help panel or the post-edit panel displayed to new
   editors by the GrowthExperiments extension
-$id: /analytics/legacy/helppanel/1.3.2
+$id: /analytics/legacy/helppanel/1.4.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -51,6 +51,10 @@ allOf:
               - peek-impression
               - peek-tap
               - peek-dismiss
+              - trynewtask-impression
+              - trynewtask-close
+              - trynewtask-trynewtask-action
+              - trynewtask-nothanks-action
               - postedit-impression
               - postedit-close
               - postedit-link-click
@@ -167,6 +171,14 @@ allOf:
 
               - postsignup-close: the user dismisses the post-signup post-edit dialog.
 
+              - trynewtask-impression: The user sees the "try new task type" dialog after saving a suggested edit.
+
+              - trynewtask-close: The user closes the "try new task type" dialog.
+
+              - trynewtask-trynewtask-action: The user clicks the button to try the suggested task type.
+
+              - trynewtask-nothanks-action: The user declines to try the suggested task type.
+
           action_data:
             description: >-
               Additional data for certain actions:
@@ -282,6 +294,23 @@ allOf:
               - dir: next or prev
 
               - navigation_type: swipe or click
+
+              For action=trynewtask-impression:
+
+              - next-suggested-task-type: The task type that the "try new task" dialog suggests to the user.
+              - edit-count-for-task-type: The count for the active task type when the user was prompted to try a new task type.
+
+              For action=trynewtask-action-trynewtask:
+
+              - dont-show-again: 1 if the user selected the box to not see the prompt again for this task type, 0 otherwise.
+
+              For action=trynewtask-action-nothanks:
+
+              - dont-show-again: 1 if the user selected the box to not see the prompt again for this task type, 0 otherwise.
+
+              For action=trynewtask-close
+
+              - dont-show-again: 1 if the user selected the box to not see the prompt again for this task type, 0 otherwise.
             type: string
           user_id:
             description: The user id.
@@ -298,9 +327,11 @@ allOf:
               - postedit-nonsuggested
               - homepage_help
               - homepage_mentorship
+              - postedit-trynewtask
             description: >-
               The context in which the panel appears: during editing, during
-              viewing a page, as a notice after saving, or on the homepage.
+              viewing a page, as a notice after saving, as a suggestion to try
+              a new task type after saving, or on the homepage.
           editor_interface:
             type: string
             enum:
