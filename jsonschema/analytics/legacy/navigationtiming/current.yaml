@@ -2,7 +2,7 @@ title: analytics/legacy/navigationtiming
 description: >-
   Represents a set of client-side latency measurements provided by
   NavigationTiming API
-$id: /analytics/legacy/navigationtiming/1.3.0
+$id: /analytics/legacy/navigationtiming/1.4.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -234,6 +234,15 @@ allOf:
               The element type: "p", "img", "h1" etc of what was painted as largest
               contentful paint.
             type: string
+          longTaskTotalTasks:
+            description: >-
+              A long task is any uninterrupted period where the main UI thread is busy for 50ms or longer. This is the total
+              number of long task.
+            type: integer
+          longTaskTotalDuration:
+            description: >-
+              The total time spent in long task.
+            type: integer
 examples:
   - event:
       isAnon: true
