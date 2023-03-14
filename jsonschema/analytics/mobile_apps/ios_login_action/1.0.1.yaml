@@ -1,0 +1,186 @@
+title: analytics/mobile_apps/ios_login_action
+description: >
+  Measure users' login and account creating actions on iOS This schema is based
+  on iOS legacy schema MobileWikiAppiOSLoginAction
+  (https://meta.wikimedia.org/wiki/Schema:MobileWikiAppiOSLoginAction)
+$id: /analytics/mobile_apps/ios_login_action/1.0.1
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - action
+  - app_install_id
+  - app_session_id
+  - category
+  - dt
+  - is_anon
+  - meta
+  - primary_language
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  action:
+    description: Identifies the context in which the event was created.
+    type: string
+    enum:
+      - login_start
+      - logout
+      - login_success
+      - createaccount_start
+      - createaccount_success
+      - impression
+  app_install_id:
+    description: >
+      Identifies an install of the app and persists across all sessions. When
+      the user uninstalls the app and re-installs it, a new app install ID is
+      randomly generated.
+
+      This UUIDv4 identifier is assigned automatically by the EPC library in the
+      the Wikipedia app for Android and iOS.
+    type: string
+    maxLength: 36
+    minLength: 36
+    pattern: >-
+      ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+  app_session_id:
+    description: >
+      Identifies an app session: a cluster of actions taken by the user in the
+      app within a limited period of time. A session ID is generated the first
+      time it is requested by the instrumentation code, which will usually be
+      soon after the user launches the app. A new session ID is generated
+      anytime the app has been inactive (that is, in the background state) for
+      at least 15 minutes or has been forcibly stopped by the OS or the user.
+
+      This identifier is managed and assigned automatically by the EPC library
+      in the Wikipedia app for Android and iOS.
+    type: string
+    maxLength: 20
+    minLength: 20
+    pattern: '^[0-9a-z]{20}$'
+  category:
+    description: On which screen this action is triggered
+    type: string
+    enum:
+      - feed
+      - login_to_sync_popover
+      - setting
+      - login
+  dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  http:
+    type: object
+    properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  is_anon:
+    description: >
+      Information about app user: is true if the user is not logged in the app,
+      false if the user is logged in. This is automatically saved as a boolean
+      in the app, and is sent by the app with every event.
+    type: boolean
+  label:
+    description: >
+      On which element of that screen this action is triggered: When
+      category='setting', this is 'login'. When category is other value, this is
+      NULL.
+    type: string
+    enum:
+      - login
+  measure_time:
+    description: >
+      Time spent in seconds from action start to action success in seconds: When
+      action='login_success', this is the interval between 'login_start' and
+      'login_success'. When action='createaccount_success', this is the interval
+      between 'createaccount_start' and 'createaccount_success'. When action is
+      other value, this is NULL.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  primary_language:
+    description: User's primary language.
+    type: string
+examples:
+  - $schema: /analytics/mobile_apps/ios_login_action/1.0.1
+    action: login_success
+    app_install_id: 1127dd8f-0c65-4e05-a4ad-8fa866cf62e3
+    app_session_id: dd21852b02db926a1b81
+    category: setting
+    dt: '2023-02-02T19:51:26.942Z'
+    is_anon: false
+    label: login
+    measure_time: 123
+    meta:
+      dt: '2023-02-02T19:51:26.942Z'
+      stream: ios.login_action
+    primary_language: en

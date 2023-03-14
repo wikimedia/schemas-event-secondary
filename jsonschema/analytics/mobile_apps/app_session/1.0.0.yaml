@@ -1,0 +1,240 @@
+title: analytics/mobile_apps/app_session
+description: >
+  Tracks user behavior during a session of using the app. This schema was moved
+  from android_app_session, so it can be used for the iOS client as well. This
+  schema was migrated from legacy MobileWikiAppSessions.
+$id: /analytics/mobile_apps/app_session/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - app_install_id
+  - app_session_id
+  - dt
+  - is_anon
+  - length_ms
+  - meta
+  - session_data
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  app_install_id:
+    description: >
+      Identifies an install of the app and persists across all sessions. When
+      the user uninstalls the app and re-installs it, a new app install ID is
+      randomly generated.
+
+      This UUIDv4 identifier is assigned automatically by the EPC library in the
+      the Wikipedia app for Android and iOS.
+    type: string
+    maxLength: 36
+    minLength: 36
+    pattern: >-
+      ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+  app_session_id:
+    description: >
+      Identifies an app session: a cluster of actions taken by the user in the
+      app within a limited period of time. A session ID is generated the first
+      time it is requested by the instrumentation code, which will usually be
+      soon after the user launches the app. A new session ID is generated
+      anytime the app has been inactive (that is, in the background state) for
+      at least 15 minutes or has been forcibly stopped by the OS or the user.
+
+      This identifier is managed and assigned automatically by the EPC library
+      in the Wikipedia app for Android and iOS.
+    type: string
+    maxLength: 20
+    minLength: 20
+    pattern: '^[0-9a-z]{20}$'
+  dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  http:
+    type: object
+    properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  is_anon:
+    description: >
+      Information about app user: is true if the user is not logged in the app,
+      false if the user is logged in. This is automatically saved as a boolean
+      in the app, and is sent by the app with every event.
+    type: boolean
+  languages:
+    description: Array of the languages selected by the user in the app. Used by Android.
+    type: array
+    items:
+      type: string
+  length_ms:
+    description: 'The length of this session, in milliseconds'
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  primary_language:
+    description: The app's primary language. Mainly used by iOS.
+    type: string
+  session_data:
+    type: object
+    properties:
+      from_back:
+        description: >-
+          Number of pages viewed that resulted from the Back button being
+          pressed
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      from_external:
+        description: >-
+          Number of pages viewed that came from external links (e.g. from the
+          Browser app)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      from_history:
+        description: Number of pages viewed that came from History
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      from_internal:
+        description: Number of pages viewed that came from internal links
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      from_lang_link:
+        description: Number of pages viewed that came from the Other Languages selection
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      from_random:
+        description: Number of pages viewed that came from Random
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      from_reading_list:
+        description: Number of pages viewed that came from Reading Lists
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      from_search:
+        description: Number of pages viewed that came from the Search bar
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      from_suggested_edits:
+        description: Number of pages viewed that resulted from the Suggested Edits feature
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      no_description:
+        description: Number of pages viewed that had no Wikidata description displayed
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      page_load_latency_ms:
+        description: >-
+          Average latency, in milliseconds, of loading articles from the network
+          and rendering them
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      total_pages:
+        description: Number of total pages viewed during this session
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+examples:
+  - $schema: /analytics/mobile_apps/app_session/1.0.0
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    dt: '2023-03-14T11:41:32.942Z'
+    is_anon: false
+    languages:
+      - en
+      - kn
+    length_ms: 60
+    meta:
+      dt: '2023-03-14T11:41:32.942Z'
+      stream: app_session
+    session_data:
+      from_back: 6
+      from_external: 16
+      from_history: 0
+      from_internal: 66
+      from_lang_link: 6
+      from_random: 16
+      from_reading_list: 0
+      from_search: 0
+      from_suggested_edits: 0
+      no_description: 6
+      page_load_latency_ms: 60
+      total_pages: 6

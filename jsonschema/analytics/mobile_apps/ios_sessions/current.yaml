@@ -1,8 +1,9 @@
 title: analytics/mobile_apps/ios_sessions
 description: >
+  Deprecated. Please use analytics/mobile_apps/app_session
   Track the start and end of a session of using the app.
   This schema is based on iOS legacy schema MobileWikiAppiOSSessions (https://meta.wikimedia.org/wiki/Schema:MobileWikiAppiOSSessions)
-$id: /analytics/mobile_apps/ios_sessions/1.0.0
+$id: /analytics/mobile_apps/ios_sessions/1.0.1
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:

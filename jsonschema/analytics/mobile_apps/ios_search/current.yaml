@@ -2,7 +2,7 @@ title: analytics/mobile_apps/ios_search
 description: >
   Track user actions when using the search interface.
   This schema is based on iOS legacy schema MobileWikiAppiOSSearch (https://meta.wikimedia.org/wiki/Schema:MobileWikiAppiOSSearch)
-$id: /analytics/mobile_apps/ios_search/1.0.0
+$id: /analytics/mobile_apps/ios_search/2.0.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -65,6 +65,9 @@ allOf:
       session_token:
         type: string
         description: Session token for this search funnel.
+      wiki_id:
+        type: string
+        description: Current search content language code
 
 required:
   - dt
