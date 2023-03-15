@@ -2,7 +2,7 @@ title: analytics/legacy/helppanel
 description: >-
   Logs interactions with the help panel or the post-edit panel displayed to new
   editors by the GrowthExperiments extension
-$id: /analytics/legacy/helppanel/1.4.0
+$id: /analytics/legacy/helppanel/1.4.1
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -297,6 +297,8 @@ allOf:
 
               For action=trynewtask-impression:
 
+              - savedTaskType: type of the suggested edit task that has just
+                    been saved.
               - next-suggested-task-type: The task type that the "try new task" dialog suggests to the user.
               - edit-count-for-task-type: The count for the active task type when the user was prompted to try a new task type.
 
