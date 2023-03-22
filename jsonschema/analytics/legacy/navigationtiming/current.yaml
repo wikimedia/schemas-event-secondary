@@ -2,7 +2,7 @@ title: analytics/legacy/navigationtiming
 description: >-
   Represents a set of client-side latency measurements provided by
   NavigationTiming API
-$id: /analytics/legacy/navigationtiming/1.4.0
+$id: /analytics/legacy/navigationtiming/1.5.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -243,6 +243,15 @@ allOf:
             description: >-
               The total time spent in long task.
             type: integer
+          firstPaint:
+            description: >-
+              Time when anything is rendered. Note that the marking of the first paint is optional, not all user agents report it.
+            type: integer
+          firstContentfulPaint:
+            description: >-
+              Time when the first bit of DOM text or image content is rendered.
+            type: integer
+
 examples:
   - event:
       isAnon: true
