@@ -2,7 +2,7 @@ title: analytics/mediawiki/mentor_dashboard/visit
 description: >-
   Log visits to Special:MentorDashboard (provided by Extension:GrowthExperiments) from
   the server-side.
-$id: /analytics/mediawiki/mentor_dashboard/visit/1.0.0
+$id: /analytics/mediawiki/mentor_dashboard/visit/1.0.1
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -11,12 +11,26 @@ allOf:
       - is_mobile
       - user_id
     properties:
+        wiki_db:
+          description: The database code of the wiki this event is logged for.
+          type: string
         is_mobile:
           description: Whether the mobile site is being used.
           type: boolean
         user_id:
           description: User ID, needed for tracking across login sessions.
           type: integer
+        referer_route:
+            description: >-
+              The route the user took to arrive at the Special:MentorDashboard.
+              Calculated by looking at the query parameter.
+            type: string
+            enum:
+              - usermenu
+              - personalized-praise-notification-web
+              - personalized-praise-notification-email
+              - other
+              - direct
 
 examples:
   - $schema:
@@ -25,6 +39,8 @@ examples:
       stream: mediawiki.mentor_dashboard.visit
       domain: cs.wikipedia.org
       dt: '2021-10-12T00:20:00.649Z'
+    wiki_db: cswiki
     dt: '2021-10-12T00:20:00.649Z'
     is_mobile: false
     user_id: 123
+    referer_route: usermenu
