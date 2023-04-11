@@ -1,0 +1,47 @@
+title: analytics/legacy/firstinputdelay
+description: >-
+  Represents a set of user-triggered interactions provided by the PerformanceEventTiming interface.
+$id: /analytics/legacy/firstinputdelay/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - required:
+      - event
+    properties:
+      event:
+        type: object
+        properties:
+          isOversample:
+            description: 'Whether this request is an oversample, or a standard sample.'
+            type: boolean
+          originCountry:
+            description: 'Country in which request originated, based on GeoIP look-up.'
+            type: string
+          oversampleReason:
+            description: The reason that this request was oversampled
+            type: string
+          pageviewToken:
+            description: >-
+              Token unique to current page's JS execution context.
+            type: string
+          skin:
+            description: MediaWiki skin name; "vector", "vector-2022", "minerva" etc.
+            type: string
+          inputDelay:
+            description: >-
+              Time between a user action and the time the event handler starts to run
+            type: integer
+
+examples:
+  - event:
+      skin: 'vector'
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_FirstInputDelay
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: FirstInputDelay
