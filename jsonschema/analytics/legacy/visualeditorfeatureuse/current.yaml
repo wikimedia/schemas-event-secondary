@@ -5,7 +5,7 @@ description: >-
   user- and session-level data; as of May 2020, some of this is duplicated into
   this schema as well. For living dictionary of current values, see
   https://www.mediawiki.org/wiki/VisualEditor/FeatureUse_data_dictionary
-$id: /analytics/legacy/visualeditorfeatureuse/1.0.0
+$id: /analytics/legacy/visualeditorfeatureuse/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -78,6 +78,9 @@ allOf:
           user_id:
             description: The user id (0 if logged out).
             type: integer
+          user_is_temp:
+            description: Whether the user is using a temporary account.
+            type: boolean
           user_editcount:
             description: The total number of edits of the user.
             type: integer

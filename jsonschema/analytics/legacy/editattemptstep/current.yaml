@@ -3,7 +3,7 @@ description: >-
   Logs generic events related to editing activity. All events are logged
   client-side, except that init, saveSuccess, and saveFailure events for the
   wikitext editor are logged server-side.
-$id: /analytics/legacy/editattemptstep/1.3.2
+$id: /analytics/legacy/editattemptstep/1.4.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -369,6 +369,9 @@ allOf:
           user_id:
             description: The user id (0 if logged out).
             type: integer
+          user_is_temp:
+            description: Whether the user is using a temporary account.
+            type: boolean
           user_editcount:
             description: The total number of edits of the user.
             type: integer
@@ -420,6 +423,7 @@ examples:
       platform: other
       user_editcount: 0
       user_id: 1
+      user_is_temp: false
       version: 1
     meta:
       dt: '2020-04-02T19:11:20.942Z'
