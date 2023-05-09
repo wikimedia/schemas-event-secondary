@@ -4,7 +4,7 @@ description: >-
   Represented events include information about new mentees meeting the praiseworthiness
   criteria, notification sent to the mentor about this as well as whether the mentor decided
   to praise the suggested user(s).
-$id: /analytics/mediawiki/mentor_dashboard/personalized_praise/1.0.1
+$id: /analytics/mediawiki/mentor_dashboard/personalized_praise/1.0.2
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -13,6 +13,12 @@ allOf:
       - action
       - mentor_id
   - properties:
+        database:
+            type: string
+            description: |-
+              The name of the database used by the MediaWiki instance.
+
+              See https://www.mediawiki.org/wiki/Manual:$wgDBname
         action:
           description: >-
             Action describing the represented event. The following values are supported:
