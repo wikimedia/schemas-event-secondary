@@ -1,0 +1,100 @@
+title: analytics/mediawiki/mentor_dashboard/interaction
+description: >-
+  Captures user interaction in the Mentor dashboard.
+$id: /analytics/mediawiki/mentor_dashboard/interaction/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+allOf:
+  - $ref: /fragment/analytics/common/2.0.0#
+  - required:
+    - database
+    - action
+    - user_id
+    - module
+    - is_mobile
+    - pageview_token
+  - properties:
+      database:
+        type: string
+        description: |-
+          The name of the database used by the MediaWiki instance.
+
+          See https://www.mediawiki.org/wiki/Manual:$wgDBname
+      action:
+        type: string
+        enum:
+          - impression
+          - link-click
+          - pp-prev-page
+          - pp-next-page
+          - pp-praise-mentee
+          - pp-skip-mentee
+          - pp-skip-mentee-close
+          - pp-settings-impression
+          - pp-settings-closed
+          - pp-settings-saved
+        description: >-
+          Action the user took:
+
+          - impression: The module has loaded
+          - link-click: User clicks a link in the module
+          - pp-prev-page: User clicked the Previous icon in the Personalized praise module
+          - pp-next-page: User clicked the Next icon in the Personalized praise module
+          - pp-praise-mentee: User clicked the "Send praise" button (actual praising is recorded in /personalized-praise schema)
+          - pp-skip-mentee: User clicked the "Skip mentee" button (actual skip is recorded in /personalized-praise schema)
+          - pp-skip-mentee-close: User closed the "Skip mentee" dialog
+          - pp-settings-impression: User opened Personalized praise's settings module
+          - pp-settings-closed: User closed Personalized praise's settings module (if the user saved changes, pp-settings-saved is sent in addition to this event)
+          - pp-settings-saved: User saved changes in Personalized praise's settings module (pp-settings-closed is sent as well)
+      action_data:
+        type: string
+        description: >-
+          Additional data for the particular action the user took. Might not be available for all actions;
+          see below for list of available action_data fields.
+
+          impression when module="personalized-praise":
+            - totalMentees: Total number of available mentees
+            - mentee: JSON-encoded information about the currently displayed mentee
+
+          pp-prev-page and pp-next-page when module="personalized-praise":
+            - mentee: JSON-encoded information about the currently displayed mentee
+
+          pp-settings-saved when module="personalized-praise":
+            All settings fields available in the Settings dialog of Personalized praise data.
+
+          pp-skip-mentee and pp-skip-mentee-close when module="personalized-praise":
+            - menteeUserId: User ID of the skipped mentee
+      user_id:
+        description: The user ID
+        type: integer
+      module:
+        type: string
+        enum:
+          - mentee-overview
+          - personalized-praise
+          - mentor-tools
+          - resources
+        description: The module the user is interacting with.
+      is_mobile:
+        description: Whether the mobile site is being used.
+        type: boolean
+      pageview_token:
+        description: >-
+          One-time token per page load. This is a random user session ID
+          that will be exported to the client-side when the view events
+          are recorded.
+        type: string
+examples:
+  - $schema:
+      $ref: '#/$id'
+    meta:
+      stream: mediawiki.mentor_dashboard.interaction
+      domain: cs.wikipedia.org
+      dt: '2021-10-12T00:20:00.649Z'
+    dt: '2021-10-12T00:20:00.649Z'
+    database: cswiki
+    action: pp-prev-page
+    user_id: 123
+    module: personalized-praise
+    is_mobile: true
+    pageview_token: 7rqTnSo2FG35Nxx24bH4
