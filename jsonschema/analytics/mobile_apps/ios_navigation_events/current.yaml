@@ -1,0 +1,70 @@
+title: analytics/mobile_apps/ios_navigation_events
+description: >
+  Track user navigation and setting actions .
+  This schema is based on iOS legacy schema MobileWikiAppiOSNavigationEvents (https://meta.wikimedia.org/wiki/Schema:MobileWikiAppiOSNavigationEvents)
+$id: /analytics/mobile_apps/ios_navigation_events/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+allOf:
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_ios_app/2.0.0#
+  - properties:
+      action:
+        type: string
+        enum:
+          - explore
+          - places
+          - saved
+          - saved_all
+          - saved_lists
+          - history
+          - search
+          - setting_open_nav
+          - setting_open_explore
+          - setting_account
+          - setting_close
+          - setting_fundraise
+          - setting_languages
+          - setting_search
+          - setting_explorefeed
+          - setting_notifications
+          - setting_read_prefs
+          - setting_storagesync
+          - setting_read_danger
+          - setting_cleardata
+          - setting_privacy
+          - setting_tos
+          - setting_usage_reports
+          - setting_rate
+          - setting_help
+          - setting_about
+          - article_toolbar_toc 
+          - article_toolbar_lang
+          - article_toolbar_lang_success 
+          - article_toolbar_save 
+          - article_toolbar_save_success 
+          - article_toolbar_share
+          - article_toolbar_share_success 
+          - article_toolbar_appearance 
+          - article_toolbar_search 
+          - article_toolbar_search_success
+
+required:
+  - dt
+  - app_install_id
+  - app_session_id
+  - is_anon
+  - primary_language
+  - action
+
+examples:
+  - meta:
+      dt: '2023-05-11T11:42:30.942Z'
+      stream: 'ios.navigation_events'
+    dt: '2023-05-11T11:42:30.942Z'
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    is_anon: false
+    primary_language: en
+    action: search
+    $schema:
+      $ref: '#/$id'  
