@@ -1,12 +1,13 @@
 title: analytics/mediawiki/web_ui_scroll
 description: >-
   Tracks scroll events by a user
-$id: /analytics/mediawiki/web_ui_scroll/1.0.1
+$id: /analytics/mediawiki/web_ui_scroll/1.0.2
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
   - $ref: /fragment/analytics/common/2.0.0#
   - $ref: /fragment/analytics/web_identifiers/1.0.0#
+  - $ref: /fragment/analytics/web/1.0.0#
 required:
   - action
   - is_anon
