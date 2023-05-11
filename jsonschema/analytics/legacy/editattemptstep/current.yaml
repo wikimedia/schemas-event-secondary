@@ -3,12 +3,13 @@ description: >-
   Logs generic events related to editing activity. All events are logged
   client-side, except that init, saveSuccess, and saveFailure events for the
   wikitext editor are logged server-side.
-$id: /analytics/legacy/editattemptstep/1.4.0
+$id: /analytics/legacy/editattemptstep/1.4.1
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
   - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
   - $ref: /fragment/http/client_ip/1.0.0#
+  - $ref: /fragment/analytics/web/1.0.1#
   - required:
       - event
     properties:
