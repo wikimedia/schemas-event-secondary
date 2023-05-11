@@ -2,7 +2,7 @@ title: analytics/mobile_apps/ios_reading_lists
 description: >
   Measure user interactions with the reading list feature on iOS
   This schema is based on iOS legacy schema MobileWikiAppiOSReadingLists (https://meta.wikimedia.org/wiki/Schema:MobileWikiAppiOSReadingLists)
-$id: /analytics/mobile_apps/ios_reading_lists/2.0.0
+$id: /analytics/mobile_apps/ios_reading_lists/2.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -61,6 +61,9 @@ allOf:
           - receive_finish
           - survey_shown
           - survey_clicked
+          - all_articles_tab
+          - reading_lists_tab
+          - edit_tab
         description: Identifies the context in which the event was created.
       measure:
         type: integer
