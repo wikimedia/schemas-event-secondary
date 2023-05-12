@@ -2,7 +2,7 @@ title: analytics/mediawiki/mentor_dashboard/visit
 description: >-
   Log visits to Special:MentorDashboard (provided by Extension:GrowthExperiments) from
   the server-side.
-$id: /analytics/mediawiki/mentor_dashboard/visit/1.0.1
+$id: /analytics/mediawiki/mentor_dashboard/visit/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -20,6 +20,11 @@ allOf:
         user_id:
           description: User ID, needed for tracking across login sessions.
           type: integer
+        pageview_token:
+          description: >-
+            One-time token per page load. This is a random user session ID
+            that will be exported to the client-side when the events are recorded.
+          type: string
         referer_route:
             description: >-
               The route the user took to arrive at the Special:MentorDashboard.
