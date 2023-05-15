@@ -2,12 +2,11 @@ title: fragment/analytics/web
 description: >
   Required fields that will be part of all Wikimedia product/feature analytics on
   MediaWiki-powered mobile and desktop website schemas.
-$id: /fragment/analytics/web/1.0.0
+$id: /fragment/analytics/web/1.0.1
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
   - $ref: /fragment/analytics/common/2.0.0#
-  - $ref: /fragment/analytics/app_identifiers/1.0.0#
 properties:
   is_anon:
     type: boolean
