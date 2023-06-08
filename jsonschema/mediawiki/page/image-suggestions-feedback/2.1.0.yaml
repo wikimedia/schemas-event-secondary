@@ -1,0 +1,140 @@
+title: mediawiki/page/image-suggestions-feedback
+description: |
+  Represents user-generated feedback on an Image Suggestion
+$id: /mediawiki/page/image-suggestions-feedback/2.1.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - dt
+  - filename
+  - is_accepted
+  - is_rejected
+  - meta
+  - page_id
+  - user_id
+  - wiki
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  dt:
+    description: 'UTC event datetime, in ISO-8601 format'
+    type: string
+    format: date-time
+    maxLength: 128
+  filename:
+    description: >
+      The filename for the suggested image. The NS_FILE namespace prefix is not
+      included.
+    type: string
+  is_accepted:
+    description: >
+      True indicates acceptance. If this is false and is_rejected is also false,
+      the image is invalidated for other reasons, for example:
+        - a client failed to validate the metadata for a suggestion
+        - as part of the suggested images workflow on-wiki, a user visits an
+          article that already has an image added to it.
+    type: boolean
+  is_rejected:
+    description: >
+      True indicates rejection. If this is false and is_accepted is also false,
+      the image is invalidated for other  reasons, for example:
+        - a client failed to validate the metadata for a suggestion
+        - as part of the suggested images workflow on-wiki, a user visits an
+          article that already has an image added to it.
+    type: boolean
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream (dataset) that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  origin_wiki:
+    description: >-
+      The wiki where the image is hosted. Currently, this is always
+      "commonswiki"
+    type: string
+  page_id:
+    description: The ID of the page where the image was supposed to be added.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  rejection_reasons:
+    description: |
+      User-selected reason for rejecting an image suggestion.
+    type: array
+    items:
+      type: string
+      enum:
+        - notrelevant
+        - noinfo
+        - offensive
+        - lowquality
+        - unfamiliar
+        - foreignlanguage
+        - other
+        - sectionnotappropriate
+  section_ordinal:
+    description: The ordinal number for the article section the suggestion is for
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  section_title:
+    description: The title for the article section the suggestion is for
+    type: string
+  user_id:
+    description: User who submitted feedback
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  wiki:
+    description: >
+      The wiki where the image needs to be added according to the
+      recommendation. The page_id property included in this event is local to
+      "wiki".
+    type: string
+examples:
+  - $schema: /mediawiki/page/image-suggestions-feedback/2.1.0
+    dt: '2022-04-13T14:12:16.372Z'
+    filename: example.JPEG
+    is_accepted: false
+    is_rejected: true
+    meta:
+      dt: '2022-04-13T14:12:16.372Z'
+      stream: /mediawiki/page/image-suggestions-feedback
+    origin_wiki: commonswiki
+    page_id: 1234
+    rejection_reasons:
+      - notrelevant
+      - lowquality
+      - sectionnotappropriate
+    user_id: 1234
+    wiki: enwiki

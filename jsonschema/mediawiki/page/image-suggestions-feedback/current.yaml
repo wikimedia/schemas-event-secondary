@@ -1,7 +1,7 @@
 title: mediawiki/page/image-suggestions-feedback
 description: >
   Represents user-generated feedback on an Image Suggestion
-$id: /mediawiki/page/image-suggestions-feedback/2.0.0
+$id: /mediawiki/page/image-suggestions-feedback/2.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 additionalProperties: false
@@ -71,13 +71,20 @@ properties:
       - unfamiliar
       - foreignlanguage
       - other
+      - sectionnotappropriate
   dt:
     description: 'UTC event datetime, in ISO-8601 format'
     type: string
     format: date-time
     maxLength: 128
+  section_title:
+    description: The title for the article section the suggestion is for
+    type: string
+  section_ordinal:
+    description: The ordinal number for the article section the suggestion is for
+    type: integer
 examples:
-  - $schema: /mediawiki/page/image-suggestions-feedback/2.0.0
+  - $schema: /mediawiki/page/image-suggestions-feedback/2.1.0
     wiki: enwiki
     page_id: 1234
     filename: example.JPEG
@@ -85,7 +92,7 @@ examples:
     user_id: 1234
     is_accepted: false
     is_rejected: true
-    rejection_reasons: ['notrelevant','lowquality']
+    rejection_reasons: ['notrelevant','lowquality', 'sectionnotappropriate' ]
     dt: '2022-04-13T14:12:16.372Z'
     meta:
       dt: '2022-04-13T14:12:16.372Z'
