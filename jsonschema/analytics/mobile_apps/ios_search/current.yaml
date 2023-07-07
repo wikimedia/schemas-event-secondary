@@ -2,7 +2,7 @@ title: analytics/mobile_apps/ios_search
 description: >
   Track user actions when using the search interface.
   This schema is based on iOS legacy schema MobileWikiAppiOSSearch (https://meta.wikimedia.org/wiki/Schema:MobileWikiAppiOSSearch)
-$id: /analytics/mobile_apps/ios_search/2.0.0
+$id: /analytics/mobile_apps/ios_search/2.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -44,6 +44,7 @@ allOf:
           - search_tab
           - article
           - unknown
+          - places
         description: The source from which the search interface was invoked.
       position: 
         type: integer
