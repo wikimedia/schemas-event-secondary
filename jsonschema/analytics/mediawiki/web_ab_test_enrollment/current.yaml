@@ -1,13 +1,13 @@
 title: analytics/mediawiki/web_ab_test_enrollment
 description: >-
   Tracks bucketing of users for an A/B test
-$id: /analytics/mediawiki/web_ab_test_enrollment/1.0.2
+$id: /analytics/mediawiki/web_ab_test_enrollment/2.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
   - $ref: /fragment/analytics/common/2.0.0#
   - $ref: /fragment/analytics/web_identifiers/1.0.0#
-  - $ref: /fragment/analytics/web/1.0.1#
+  - $ref: /fragment/analytics/web/2.0.0#
 required:
   - wiki
   - group
