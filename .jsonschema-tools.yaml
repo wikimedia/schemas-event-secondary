@@ -21,10 +21,31 @@ skipSchemaTestCases:
     # check between 1.0.0 and 1.1.0.
     '/analytics/legacy/test/1.1.0':
       - schema-version-compatibility
+    # As of jsonschema-tools 1.1.0, removing fields between
+    # minor versions fails validation.
+    # 'client_ip' was removed between minor versions.
+    '/fragment/analytics/common/1.1.0':
+      - schema-version-compatibility
+    '/analytics/test/1.1.0':
+      - schema-version-compatibility
+    '/fragment/analytics/legacy/eventcapsule/1.2.0':
+      - schema-version-compatibility
+    '/analytics/legacy/templatewizard/1.2.0':
+      - schema-version-compatibility
+    '/analytics/legacy/test/1.2.0':
+      - schema-version-compatibility
+    # 'wiki' was removed between minor versions.
+    '/analytics/legacy/editattemptstep/1.5.0':
+      - schema-version-compatibility
+    # 'app_install_id' and 'app_session_id' was removed between minor versions.
+    '/analytics/mediawiki/web_ui_scroll/1.0.3':
+      - schema-version-compatibility
+    '/fragment/analytics/web/1.0.1':
+      - schema-version-compatibility
     # The 'token' property was removed between universallanguageselector 1.0.0 and 1.1.0.
     # Skip compatibility check until this is resolved.
     '/analytics/legacy/universallanguageselector/.*':
-      - schema-version-compatibilty
+      - schema-version-compatibility
       # The token property was left in the list of required properties though, so we need
       # To disable this check too!
       - schema-required-properties-exist
