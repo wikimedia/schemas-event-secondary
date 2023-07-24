@@ -1,0 +1,141 @@
+title: analytics/mobile_apps/ios_watchlists
+description: >
+  Track user actions when using Watchlist
+$id: /analytics/mobile_apps/ios_watchlists/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+allOf:
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_ios_app/2.0.0#
+properties:
+  action:
+    type: string
+    enum:
+      - open_diff
+      - diff_user_menu
+      - diff_user_menu_from
+      - diff_user_menu_to
+      - diff_user_page
+      - diff_user_talk
+      - diff_user_contribution
+      - diff_nav_previous
+      - diff_nav_next
+      - diff_nav_undo
+      - diff_undo
+      - diff_undo_cancel
+      - diff_undo_confirm
+      - diff_undo_success
+      - diff_undo_fail
+      - diff_nav_thank
+      - diff_thank_send
+      - diff_thank_cancel
+      - diff_thank_login
+      - diff_thank_confirm
+      - diff_over_history
+      - diff_over_share
+      - diff_over_share_confirm
+      - diff_over_rollback
+      - diff_rollback
+      - diff_rollback_cancel
+      - diff_rollback_confirm
+      - diff_rollback_success
+      - diff_rollback_fail
+    description: >
+      Which particular action triggered this event, as described below:
+        open_diff:
+          User accesses diff view
+        diff_user_menu:
+          User selects editor name from diff view
+        diff_user_menu_from:
+          User selects editor name in From section (split edit view)
+        diff_user_menu_to:
+          User selects editor name in To section (split edit view)
+        diff_user_page:
+          User selects editor page from user menu (single editor view)
+        diff_user_talk:
+          User selects editor talk page from user menu
+        diff_user_contribution:
+          User selects editor contributions from user menu
+        diff_nav_previous:
+          User selects previous revision button
+        diff_nav_next:
+          User selects next revision button
+        diff_nav_undo:
+          User selects Undo navbar icon
+        diff_undo:
+          User selects ‘Undo’ after entering reason text
+        diff_undo_cancel:
+          User selects Cancel button on Undo popup
+        diff_undo_confirm:
+          User is shown Undo confirm popup
+        diff_undo_success:
+          Undo is successful
+        diff_undo_fail:
+          Undo failed
+        diff_nav_thank:
+          User selects thank navbar icon
+        diff_thank_send:
+          User selects Send from Thanks pop up
+        diff_thank_cancel:
+          User selects Cancel from Thanks pop up
+        diff_thank_login:
+          Non-logged-in user selects login
+        diff_thank_confirm:
+          User is shown Thanks confirm popup
+        diff_over_history:
+          User selects ‘article edit history’ in overflow menu
+        diff_over_share:
+          User selects ‘Share’ in overflow menu
+        diff_over_share_confirm:
+          User is shown Share confirm popup
+        diff_over_rollback:
+          User selects ‘Rollback’ in overflow menu
+        diff_rollback:
+          User selects ‘Rollback’ button on popup
+        diff_rollback_cancel:
+          User selects Cancel button on Rollback popup
+        diff_rollback_confirm:
+          User is shown Rollback confirm popup
+        diff_rollback_success:
+          Rollback is successful
+        diff_rollback_fail:
+          Rollback failed
+  action_data:
+    type: object
+    properties:
+      revision_id:
+        type: string
+        description: Revision ID of successful edit
+      edit_type:
+        type: string
+        description: Type of edit. Currently `undo` or `rollback`
+      error_reason:
+        type: string
+        description: Reason code for any response where edit fails
+  wiki_id:
+    type: string
+    description: Wiki that watchlist action was performed against
+
+required:
+  - dt
+  - app_install_id
+  - app_session_id
+  - action
+  - primary_language
+  - is_anon
+
+examples:
+  - $schema: { $ref: "#/$id" }
+    meta:
+      stream: ios.watchlists
+      dt: '2022-10-11T19:20:00.649Z'
+      domain: en.wikipedia.org
+    dt: '2022-10-11T19:20:00.649Z'
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    action: diff_undo_fail
+    action_data:
+        error_reason: "MediaWikiAPIResponseError.undofailure"
+        edit_type: "undo"
+    wiki_id: enwiki
+    primary_language: en 
+    is_anon: false

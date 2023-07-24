@@ -2,7 +2,7 @@ title: analytics/mobile_apps/ios_login_action
 description: >
   Measure users' login and account creating actions on iOS
   This schema is based on iOS legacy schema MobileWikiAppiOSLoginAction (https://meta.wikimedia.org/wiki/Schema:MobileWikiAppiOSLoginAction)
-$id: /analytics/mobile_apps/ios_login_action/1.0.1
+$id: /analytics/mobile_apps/ios_login_action/1.0.2
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -15,6 +15,7 @@ allOf:
           - login_to_sync_popover
           - setting
           - login
+          - diff
         description: On which screen this action is triggered
       label:
         type: string
