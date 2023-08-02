@@ -1,7 +1,7 @@
 title: analytics/mobile_apps/ios_watchlists
 description: >
   Track user actions when using Watchlist
-$id: /analytics/mobile_apps/ios_watchlists/1.0.0
+$id: /analytics/mobile_apps/ios_watchlists/2.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -10,7 +10,7 @@ properties:
   action:
     type: string
     enum:
-      - open_diff
+      - diff_open
       - diff_user_menu
       - diff_user_menu_from
       - diff_user_menu_to
@@ -41,7 +41,7 @@ properties:
       - diff_rollback_fail
     description: >
       Which particular action triggered this event, as described below:
-        open_diff:
+        diff_open:
           User accesses diff view
         diff_user_menu:
           User selects editor name from diff view
