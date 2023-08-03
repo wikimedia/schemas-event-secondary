@@ -1,7 +1,7 @@
 title: analytics/mobile_apps/ios_watchlists
 description: >
   Track user actions when using Watchlist
-$id: /analytics/mobile_apps/ios_watchlists/2.0.0
+$id: /analytics/mobile_apps/ios_watchlists/3.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -12,8 +12,8 @@ properties:
     enum:
       - diff_open
       - diff_user_menu
-      - diff_user_menu_from
-      - diff_user_menu_to
+      - diff_user_menu_previous
+      - diff_user_menu_display
       - diff_user_page
       - diff_user_talk
       - diff_user_contribution
@@ -44,13 +44,13 @@ properties:
         diff_open:
           User accesses diff view
         diff_user_menu:
-          User selects editor name from diff view
-        diff_user_menu_from:
-          User selects editor name in From section (split edit view)
-        diff_user_menu_to:
-          User selects editor name in To section (split edit view)
+          User selects editor name in header  (single edit view - i.e. an article's first revision with no previous)
+        diff_user_menu_previous:
+          User selects editor name in header Previous section (side-by-side or stacked edit view)
+        diff_user_menu_display:
+          User selects editor name in header Display section (side-by-side or stacked edit view)
         diff_user_page:
-          User selects editor page from user menu (single editor view)
+          User selects editor page from user menu
         diff_user_talk:
           User selects editor talk page from user menu
         diff_user_contribution:

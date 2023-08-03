@@ -1,0 +1,256 @@
+title: analytics/mobile_apps/ios_watchlists
+description: |
+  Track user actions when using Watchlist
+$id: /analytics/mobile_apps/ios_watchlists/3.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - action
+  - app_install_id
+  - app_session_id
+  - dt
+  - is_anon
+  - meta
+  - primary_language
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  action:
+    description: |
+      Which particular action triggered this event, as described below:
+        diff_open:
+          User accesses diff view
+        diff_user_menu:
+          User selects editor name in header  (single edit view - i.e. an article's first revision with no previous)
+        diff_user_menu_previous:
+          User selects editor name in header Previous section (side-by-side or stacked edit view)
+        diff_user_menu_display:
+          User selects editor name in header Display section (side-by-side or stacked edit view)
+        diff_user_page:
+          User selects editor page from user menu
+        diff_user_talk:
+          User selects editor talk page from user menu
+        diff_user_contribution:
+          User selects editor contributions from user menu
+        diff_nav_previous:
+          User selects previous revision button
+        diff_nav_next:
+          User selects next revision button
+        diff_nav_undo:
+          User selects Undo navbar icon
+        diff_undo:
+          User selects ‘Undo’ after entering reason text
+        diff_undo_cancel:
+          User selects Cancel button on Undo popup
+        diff_undo_confirm:
+          User is shown Undo confirm popup
+        diff_undo_success:
+          Undo is successful
+        diff_undo_fail:
+          Undo failed
+        diff_nav_thank:
+          User selects thank navbar icon
+        diff_thank_send:
+          User selects Send from Thanks pop up
+        diff_thank_cancel:
+          User selects Cancel from Thanks pop up
+        diff_thank_login:
+          Non-logged-in user selects login
+        diff_thank_confirm:
+          User is shown Thanks confirm popup
+        diff_over_history:
+          User selects ‘article edit history’ in overflow menu
+        diff_over_share:
+          User selects ‘Share’ in overflow menu
+        diff_over_share_confirm:
+          User is shown Share confirm popup
+        diff_over_rollback:
+          User selects ‘Rollback’ in overflow menu
+        diff_rollback:
+          User selects ‘Rollback’ button on popup
+        diff_rollback_cancel:
+          User selects Cancel button on Rollback popup
+        diff_rollback_confirm:
+          User is shown Rollback confirm popup
+        diff_rollback_success:
+          Rollback is successful
+        diff_rollback_fail:
+          Rollback failed
+    type: string
+    enum:
+      - diff_open
+      - diff_user_menu
+      - diff_user_menu_previous
+      - diff_user_menu_display
+      - diff_user_page
+      - diff_user_talk
+      - diff_user_contribution
+      - diff_nav_previous
+      - diff_nav_next
+      - diff_nav_undo
+      - diff_undo
+      - diff_undo_cancel
+      - diff_undo_confirm
+      - diff_undo_success
+      - diff_undo_fail
+      - diff_nav_thank
+      - diff_thank_send
+      - diff_thank_cancel
+      - diff_thank_login
+      - diff_thank_confirm
+      - diff_over_history
+      - diff_over_share
+      - diff_over_share_confirm
+      - diff_over_rollback
+      - diff_rollback
+      - diff_rollback_cancel
+      - diff_rollback_confirm
+      - diff_rollback_success
+      - diff_rollback_fail
+  action_data:
+    type: object
+    properties:
+      edit_type:
+        description: Type of edit. Currently `undo` or `rollback`
+        type: string
+      error_reason:
+        description: Reason code for any response where edit fails
+        type: string
+      revision_id:
+        description: Revision ID of successful edit
+        type: string
+  app_install_id:
+    description: >
+      Identifies an install of the app and persists across all sessions. When
+      the user uninstalls the app and re-installs it, a new app install ID is
+      randomly generated.
+
+      This UUIDv4 identifier is assigned automatically by the EPC library in the
+      the Wikipedia app for Android and iOS.
+    type: string
+    maxLength: 36
+    minLength: 36
+    pattern: >-
+      ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+  app_session_id:
+    description: >
+      Identifies an app session: a cluster of actions taken by the user in the
+      app within a limited period of time. A session ID is generated the first
+      time it is requested by the instrumentation code, which will usually be
+      soon after the user launches the app. A new session ID is generated
+      anytime the app has been inactive (that is, in the background state) for
+      at least 15 minutes or has been forcibly stopped by the OS or the user.
+
+      This identifier is managed and assigned automatically by the EPC library
+      in the Wikipedia app for Android and iOS.
+    type: string
+    maxLength: 20
+    minLength: 20
+    pattern: '^[0-9a-z]{20}$'
+  dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  http:
+    type: object
+    properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  is_anon:
+    description: >
+      Information about app user: is true if the user is not logged in the app,
+      false if the user is logged in. This is automatically saved as a boolean
+      in the app, and is sent by the app with every event.
+    type: boolean
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  primary_language:
+    description: User's primary language.
+    type: string
+  wiki_id:
+    description: Wiki that watchlist action was performed against
+    type: string
+examples:
+  - $schema: /analytics/mobile_apps/ios_watchlists/3.0.0
+    action: diff_undo_fail
+    action_data:
+      edit_type: undo
+      error_reason: MediaWikiAPIResponseError.undofailure
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    dt: '2022-10-11T19:20:00.649Z'
+    is_anon: false
+    meta:
+      domain: en.wikipedia.org
+      dt: '2022-10-11T19:20:00.649Z'
+      stream: ios.watchlists
+    primary_language: en
+    wiki_id: enwiki
