@@ -53,4 +53,8 @@ skipSchemaTestCases:
     # have a explicitly declared maximums above max JS integer.
     '/analytics/legacy/(codemirrorusage|twocolconflict|twocolconflictexit)/.*':
       - schema-enforced-numeric-bounds
+    # /analytics/mediawiki/client/metrics_event schema has an enum
+    # with a null enum value, making it a union type.
+    '/analytics/mediawiki/client/metrics_event/1.*':
+      - schema-deterministic-types
 
