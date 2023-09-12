@@ -156,6 +156,6 @@ examples:
     is_anon: false
     meta:
       dt: '2020-04-02T19:11:20.942Z'
-      stream: android.android_image_recommendation_event
+      stream: android.image_recommendation_event
     primary_language: en
     wiki_id: en
