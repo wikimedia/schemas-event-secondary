@@ -35,7 +35,7 @@ required:
 examples:
   - meta:
       dt: '2020-04-02T19:11:20.942Z'
-      stream: 'android.android_image_recommendation_event'
+      stream: 'android.image_recommendation_event'
     dt: '2020-04-02T19:11:20.942Z'
     app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
     app_session_id: dd21852b02db926a1b81
