@@ -19,7 +19,7 @@ description: |-
   values to them.
 
   See https://wikitech.wikimedia.org/wiki/Metrics_Platform for more detail.
-$id: /analytics/mediawiki/client/metrics_event/1.2.0
+$id: /analytics/mediawiki/client/metrics_event/2.0.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -441,7 +441,6 @@ allOf:
                 - number
                 - string
                 - boolean
-                - null
                 - "null"
             value:
               type: string
