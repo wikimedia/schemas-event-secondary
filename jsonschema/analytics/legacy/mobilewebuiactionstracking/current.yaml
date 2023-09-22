@@ -1,12 +1,13 @@
 title: analytics/legacy/mobilewebuiactionstracking
 description: >-
   Logs when certain UI elements get visible and when user interacts with those
-  on Wikimedia Minerva skin
-$id: /analytics/legacy/mobilewebuiactionstracking/1.3.0
+  on Wikimedia Minerva skin.
+$id: /analytics/legacy/mobilewebuiactionstracking/1.3.1
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
   - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/analytics/web_accessibility/1.0.0#
   - required:
       - event
     properties:
@@ -21,9 +22,9 @@ allOf:
         properties:
           action:
             description: >-
-              Type of interaction. `Shown` is special interaction, not triggered
+              Type of interaction. `Shown` is a special interaction, not triggered
               by user. It can be sent to mark that given dynamic UI element got
-              presented to the user
+              presented to the user.
             type: string
             enum:
               - init

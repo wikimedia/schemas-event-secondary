@@ -1,0 +1,255 @@
+title: analytics/legacy/desktopwebuiactionstracking
+description: >-
+  Logs when certain UI elements get visible and when user interacts with those
+  on desktop.
+$id: /analytics/legacy/desktopwebuiactionstracking/1.4.1
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - event
+  - meta
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  client_dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  dt:
+    description: 'UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.'
+    type: string
+    format: date-time
+    maxLength: 128
+  event:
+    type: object
+    required:
+      - action
+      - token
+      - isSidebarCollapsed
+      - isAnon
+    properties:
+      action:
+        description: >-
+          Type of interaction. `Shown` is a special interaction, not triggered
+          by user. It can be sent to mark that given dynamic UI element got
+          presented to the user.
+        type: string
+        enum:
+          - init
+          - click
+      editCountBucket:
+        description: Number of edits by user. Set only if user is logged in.
+        type: string
+        enum:
+          - 0 edits
+          - 1-4 edits
+          - 5-99 edits
+          - 100-999 edits
+          - 1000+ edits
+      isAnon:
+        description: Is the user viewing anonymously?
+        type: boolean
+      isSidebarCollapsed:
+        description: Is the sidebar collapsed?
+        type: boolean
+      name:
+        description: >-
+          Uniquely describes the thing that was interacted. Clicks on element
+          with `data-event-name` attribute will be automatically tracked, using
+          `data-event-name` as `name`. Not required for init events.
+        type: string
+      pageNamespace:
+        description: The namespace ID of the page with which the user was interacting.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      pageToken:
+        description: >-
+          One-time token per page load (consistent with Schema:EditAttemptStep
+          and other schemas that use mw.user.getPageviewToken).
+        type: string
+      skin:
+        description: >-
+          The skin. Right now the schema is only used on Vector, but this is
+          reserved for future usage.
+        type: string
+      skinVersion:
+        description: The skin version. 1 = legacy. 2 = modern.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      token:
+        description: >-
+          Session token that survives across pages (mw.user.sessionId()), but
+          not when browser restarts.
+        type: string
+      viewportSizeBucket:
+        description: Users screen resolution in CSS pixels.
+        type: string
+        enum:
+          - <320px
+          - 320px-719px
+          - 720px-999px
+          - 1000px-1199px
+          - 1200px-2000px
+          - '>2000px'
+  font:
+    description: |
+      The font set in the interface. This is automatically saved as a string.
+    type: string
+  http:
+    type: object
+    properties:
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  ip:
+    description: >
+      Client IP address that sent this event, usually best guess parsed out of
+      from X-Client-IP header which is set by varnish from X-Forwarded-For.
+      Deprecated, use http.client_ip.
+    type: string
+  is_dark_mode_on:
+    description: >
+      Indicates whether the dark mode is actively turned on by the user. This is
+      automatically saved as a boolean in the app, and is sent by the app with
+      every event.
+    type: boolean
+  is_dark_mode_prepared_by_os:
+    description: >
+      Indicates whether the dark mode is prepared or enabled by the user's
+      operating system (OS). This is automatically saved as a boolean in the
+      app, and is sent by the app with every event.
+    type: boolean
+  is_full_width:
+    description: >
+      Indicates whether the interface width is in full width. This is
+      automatically saved as a boolean in the app, and is sent by the app with
+      every event.
+    type: boolean
+  is_media_viewer_enabled:
+    description: >
+      Indicates whether the MultimediaViewer is enabled. This is automatically
+      saved as a boolean in the app, and is sent by the app with every event.
+    type: boolean
+  is_page_preview_on:
+    description: >
+      Indicates whether Popups (known in Special:Version as Previews) is turned
+      on. This is automatically saved as a boolean in the app, and is sent by
+      the app with every event.
+    type: boolean
+  is_pinned:
+    description: >
+      Indicates whether any of the menus are pinned. This is automatically saved
+      as a boolean in the app, and is sent by the app with every event.
+    type: boolean
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  recvFrom:
+    description: Hostname of server emitting the log line.  Deprecated.
+    type: string
+  revision:
+    description: Revision ID of event schema.  Deprecated.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  schema:
+    description: Title of event schema.  Deprecated.
+    type: string
+  seqId:
+    description: Udp2log sequence ID.  Deprecated.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  topic:
+    description: The queue topic name this event belongs in.  Deprecated.
+    type: string
+  uuid:
+    description: 'Unique event identifier.  Deprecated, use meta.id.'
+    type: string
+    maxLength: 128
+  webHost:
+    description: >-
+      Request host. 'window.location.hostname' on client-side events;
+      $_SERVER['HTTP_HOST'] on server.
+    type: string
+  wiki:
+    description: $wgDBName e.g. enwiki
+    type: string
+examples:
+  - $schema: /analytics/legacy/desktopwebuiactionstracking/1.4.1
+    client_dt: '2020-04-02T19:11:20.942Z'
+    dt: '2020-04-02T19:11:20.942Z'
+    event:
+      action: init
+      isAnon: false
+      isSidebarCollapsed: false
+      pageToken: example_page_token
+      token: example_token
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_DesktopWebUIActionsTracking
+    schema: DesktopWebUIActionsTracking
