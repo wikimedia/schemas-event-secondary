@@ -1,0 +1,134 @@
+title: analytics/mediawiki/accountcreation/account_conversion
+description: Schema for events related to account creation tasks
+$id: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+$schema: https://json-schema.org/draft-07/schema#
+type: object
+additionalProperties: false
+allOf:
+  - $ref: /fragment/analytics/common/2.0.0
+properties:
+  performer:
+    description: >
+      Represents the MediaWiki actor that made this change.
+      If this change is an edit, this will be the same as
+      revision.editor.
+    $ref: /fragment/mediawiki/state/entity/user/1.0.0
+  event_type:
+    type: string
+    description:
+      Type of event being recorded. It can have three possible values >
+      impression (when the user sees the form), success
+      (when the user logs in or signs up successfully), or failure
+      (when the user fails to log in or sign up due to an error or invalid input).
+    enum:
+      - impression
+      - success
+      - failure
+  error_message_key:
+    type: string
+    maxLength: 100
+    description:
+      The key of the error message in the i18n system.
+      This key corresponds to a specific message and is used for failure events.
+  page_namespace:
+    type: integer
+    description: The namespace ID this page belongs to.
+  page_title:
+    type: string
+    description: Title of the page where the event occurred.
+  source_wiki:
+    type: string
+    description: The ID of the wiki where the event occurred.
+required:
+  - $schema
+  - meta
+  - event_type
+  - performer
+examples:
+  - $schema: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+    dt: '2023-07-26T08:58:41Z'
+    event_type: impression
+    meta:
+      domain: example.org
+      dt: '2023-07-26T08:58:41Z'
+      id: 12345678-1234-5678-1234-567812345678
+      request_id: 12345678-1234-5678
+      stream: mediawiki.accountcreation.login
+      uri: 'http://example.org/some-event'
+    page_namespace: -1
+    page_title: 'Special:UserLogin'
+    performer:
+      is_temp: false
+      user_id: 12345678
+      user_text: UserOne
+    source_wiki: "enwiki"
+  - $schema: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+    dt: '2023-07-26T08:58:41Z'
+    event_type: success
+    meta:
+      domain: example.org
+      dt: '2023-07-26T08:58:41Z'
+      id: 12345678-1234-5678-1234-567812345678
+      request_id: 12345678-1234-5678
+      stream: mediawiki.accountcreation.login
+      uri: 'http://example.org/some-event'
+    page_namespace: -1
+    page_title: 'Special:UserLogin'
+    performer:
+      is_temp: false
+      user_id: 12345678
+      user_text: UserOne
+    source_wiki: "enwiki"
+  - $schema: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+    dt: '2023-07-26T08:58:41Z'
+    event_type: impression
+    meta:
+      domain: example.org
+      dt: '2023-07-26T08:58:41Z'
+      id: 12345678-1234-5678-1234-567812345678
+      request_id: 12345678-1234-5678
+      stream: mediawiki.accountcreation.account_conversion
+      uri: 'http://example.org/some-event'
+    page_namespace: -1
+    page_title: 'Special:CreateAccount'
+    performer:
+      is_temp: true
+      user_id: 12345678
+      user_text: UserOne
+    source_wiki: "enwiki"
+  - $schema: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+    dt: '2023-07-26T08:58:41Z'
+    error_message_key: userexists
+    event_type: failure
+    meta:
+      domain: example.org
+      dt: '2023-07-26T08:58:41Z'
+      id: 12345678-1234-5678-1234-567812345678
+      request_id: 12345678-1234-5678
+      stream: mediawiki.accountcreation.account_conversion
+      uri: 'http://example.org/some-event'
+    page_namespace: -1
+    page_title: 'Special:CreateAccount'
+    performer:
+      is_temp: false
+      user_id: 12345678
+      user_text: UserOne
+    source_wiki: "enwiki"
+  - $schema: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+    dt: '2023-07-26T08:58:41Z'
+    error_message_key: wrongpassword
+    event_type: failure
+    meta:
+      domain: example.org
+      dt: '2023-07-26T08:58:41Z'
+      id: 12345678-1234-5678-1234-567812345678
+      request_id: 12345678-1234-5678
+      stream: mediawiki.accountcreation.login
+      uri: 'http://example.org/some-event'
+    page_namespace: -1
+    page_title: 'Special:UserLogin'
+    performer:
+      is_temp: false
+      user_id: 12345678
+      user_text: UserOne
+    source_wiki: "enwiki"
