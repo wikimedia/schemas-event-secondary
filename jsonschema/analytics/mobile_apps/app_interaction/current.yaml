@@ -1,0 +1,52 @@
+title: analytics/mobile_apps/app_interaction
+description: >
+  Tracks user interactions with app ui elements while using the app. Used by both android and iOS apps
+$id: /analytics/mobile_apps/app_interaction/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0#
+properties:
+  active_interface:
+    type: string
+    description: Name of the active screen that the user is currently on
+  action:
+    type: string
+    description: Click action or impression on the active screen or its components
+  action_data:
+    type: string
+    description: String key value pairs of data related to specific action
+  primary_language:
+    type: string
+    description: Language that the user has configured in the app as their primary wiki
+  platform:
+    type: string
+    description: Name of the platform that is sending in the event
+  wiki_id:
+    type: string
+    description: Wiki where events are occurring
+
+required:
+  - platform
+  - primary_language
+  - app_install_id
+  - app_session_id
+  - dt
+  - is_anon
+
+examples:
+  - meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      stream: 'app_interaction'
+    dt: '2020-04-02T19:11:20.942Z'
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    platform: 'android'
+    primary_language: en
+    is_anon: false
+    active_interface: 'caption_entry'
+    action: 'impression'
+    action_data: 'add_transaction:true, email_subscribe:false'
+    wiki_id: en
+    $schema:
+      $ref: '#/$id'
