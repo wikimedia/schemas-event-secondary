@@ -1,13 +1,13 @@
 title: rdf_streaming_updater/fetch_failure
 description: >
   Indicates a failure when fetching the data from wikibase
-$id: /rdf_streaming_updater/fetch_failure/1.1.0
+$id: /rdf_streaming_updater/fetch_failure/1.2.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
 
 allOf:
-  - $ref: /fragment/rdf_streaming_updater/side_output_common/1.0.0#
+  - $ref: /fragment/rdf_streaming_updater/side_output_common/1.1.0#
   - properties:
       op_type:
         type: string
@@ -51,6 +51,7 @@ examples:
     item : "Q1"
     original_ingestion_dt : "2020-12-10T14:11:16.372Z"
     revision_id : 123
+    emitter_id: my_job
     original_event_info:
       $schema: "/mediawiki/revision-create/1.0.0"
       dt : "2020-12-10T14:11:16.372Z"

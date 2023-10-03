@@ -1,12 +1,12 @@
 title: rdf_streaming_updater/state_inconsistency
 description: >
   An event received which is not consistent with what the flink pipeline expects.
-$id: /rdf_streaming_updater/state_inconsistency/1.0.0
+$id: /rdf_streaming_updater/state_inconsistency/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
 allOf:
-  - $ref: /fragment/rdf_streaming_updater/side_output_common/1.0.0#
+  - $ref: /fragment/rdf_streaming_updater/side_output_common/1.1.0#
   - properties:
       action_type:
         type: string
@@ -42,6 +42,7 @@ examples:
     original_ingestion_dt: "2020-12-10T14:11:16.372Z"
     revision_id : 123
     action_type: revision-create
+    emitter_id: my_job
     original_event_info:
       $schema: "/mediawiki/revision-create/1.0.0"
       dt : "2020-12-10T14:11:16.372Z"

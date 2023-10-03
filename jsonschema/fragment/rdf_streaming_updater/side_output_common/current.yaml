@@ -1,6 +1,6 @@
 title: fragment/rdf_streaming_updater/side_output_common
 description: Common fields for side output events (flink rdf-streaming-updater)
-$id: /fragment/rdf_streaming_updater/side_output_common/1.0.0
+$id: /fragment/rdf_streaming_updater/side_output_common/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -24,6 +24,9 @@ properties:
     type: integer
     minimum: 0
     description: revision for which this event was triggered for
+  emitter_id:
+    type: string
+    description: identifies the job where a fatal failure occurred
   original_event_info:
     type: object
     description: Some original event data that triggered this side output event
