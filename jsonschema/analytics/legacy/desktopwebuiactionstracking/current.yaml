@@ -7,7 +7,10 @@ $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
   - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
-  - $ref: /fragment/analytics/web_accessibility/1.0.0#
+  - properties:
+      event:
+        properties:
+          $ref: /fragment/analytics/web_accessibility/1.0.0#/properties
   - required:
       - event
     properties:
