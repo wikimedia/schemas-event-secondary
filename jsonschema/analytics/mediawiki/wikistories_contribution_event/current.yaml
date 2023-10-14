@@ -10,11 +10,11 @@ description: >
         stories (accessed at URLs like
         /w/index.php?title=Story:Title&action=edit, compared to URLs like
         /wiki/Special:StoryBuilder/Article for the story builder).
-$id: /analytics/mediawiki/wikistories_contribution_event/1.1.0
+$id: /analytics/mediawiki/wikistories_contribution_event/1.2.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
-        - $ref: /fragment/common/1.0.0#
+        - $ref: /fragment/common/1.1.0#
 properties:
     event_type:
         description: >
@@ -44,6 +44,9 @@ properties:
             * publish_success: The user's publish attempt succeeded and the
             story was published.
 
+            * story_share: The user accesses one of the share links from the
+            editor (story builder) view.
+
             As of Oct 2022, only story_builder_open, publish_failure, and
             publish_success have been implemented.
         type: string
@@ -56,6 +59,7 @@ properties:
             - edit_text
             - publish_failure
             - publish_success
+            - story_share
     publish_failure_message:
         description: >
             The content of the explanatory message shown to the user after a
