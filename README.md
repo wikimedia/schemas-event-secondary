@@ -26,6 +26,7 @@ Prerequisites:
 To update a schema:
 
 1. Edit the `current.yaml` file, and remember to increment the version in the `$id` field.
+   ALWAYS increment the version after making changes to `current.yaml`.
 2. Run `npm run build-modified`, which generates the versioned YAML and JSON files.
 3. Commit the new and changed files to Git, and submit them for code review.
 
