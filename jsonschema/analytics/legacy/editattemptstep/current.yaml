@@ -3,7 +3,7 @@ description: >-
   Logs generic events related to editing activity. All events are logged
   client-side, except that init, saveSuccess, and saveFailure events for the
   wikitext editor are logged server-side.
-$id: /analytics/legacy/editattemptstep/2.0.0
+$id: /analytics/legacy/editattemptstep/2.0.1
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -126,6 +126,7 @@ properties:
           - click-new-sticky-header
           - url-sticky-header
           - url-new-sticky-header
+          - tooslow
         description: >-
           Mechanism information about action=init
 
@@ -143,6 +144,12 @@ properties:
           url-new: Editing has been initiated by direct navigation to a
           non-existent page if type=page or a new section link if
           type=section
+
+
+          tooslow: this editor was initialized as a fallback after the
+          initially-chosen editor failed to load quickly enough. There
+          should be an immediately-preceding init event with the same
+          page_token / session_token.
       init_timing:
         description: >-
           Timing information about action=init – this is mostly not logged /
