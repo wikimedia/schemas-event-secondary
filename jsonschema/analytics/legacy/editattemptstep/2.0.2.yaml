@@ -1,0 +1,611 @@
+title: analytics/legacy/editattemptstep
+description: >-
+  Logs generic events related to editing activity. All events are logged
+  client-side, except that init, saveSuccess, and saveFailure events for the
+  wikitext editor are logged server-side.
+$id: /analytics/legacy/editattemptstep/2.0.2
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - event
+  - meta
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  client_dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  dt:
+    description: 'UTC ISO-8601 timestamp of event.  Deprecated, use meta.dt.'
+    type: string
+    format: date-time
+    maxLength: 128
+  event:
+    type: object
+    required:
+      - version
+      - action
+      - editor_interface
+      - mw_version
+      - platform
+      - integration
+      - editing_session_id
+      - user_id
+      - user_editcount
+    properties:
+      abort_mechanism:
+        description: >-
+          Mechanism information about action=abort:
+
+
+          cancel: Editing was aborted by user clicking a cancel control
+
+
+          navigate: Editing was aborted by user navigating to another page
+
+
+          navigate-back: Editing was aborted by user navigating to the previous
+          page by means of the 'back' button/control in their browser
+
+
+          navigate-read: Editing was aborted by user navigating to the read page
+          by means of the 'read' tab/control in their browser.
+        type: string
+        enum:
+          - cancel
+          - navigate
+          - navigate-back
+          - navigate-read
+      abort_timing:
+        description: >-
+          Timing information about action=abort – time in milliseconds based on
+          action.abort.type:
+
+
+          preinit: Time since the editor was initialised
+
+
+          nochange: Time since the editor was ready
+
+
+          switchwith: Time since the editor was ready
+
+
+          switchwithout: Time since the editor was ready
+
+
+          abandon: Time since the editor was ready
+
+
+          abandonMidsave: Time since the user initiated a saveAttempt.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      abort_type:
+        description: >-
+          Type information about action=abort:
+
+
+          preinit: Editor has be initialised but is not yet ready
+
+
+          nochange: User is exiting the editor, and content block is unchanged /
+          transaction stack is empty
+
+
+          switchwith: User is switching from one editor to another, retaining
+          changes
+
+
+          switchwithout: User is switching from one editor to another,
+          discarding changes
+
+
+          switchnochange: User is switching from one editor to another, and the
+          content block is unchanged / transaction stack is empty
+
+
+          abandon: User is exiting the editor, discarding changes
+
+
+          abandonMidsave: User is exiting the editor, discarding changes, after
+          a saveAttempt has been initiated but before saveSuccess/saveFailure.
+
+
+          pageupdate: User is updating the page during an edit, requiring that
+          the edit session be refreshed
+        type: string
+        enum:
+          - preinit
+          - nochange
+          - switchwith
+          - switchwithout
+          - switchnochange
+          - abandon
+          - abandonMidsave
+          - pageupdate
+      action:
+        description: >-
+          The actions involved in an attempt to edit a page:
+
+
+          init: Initiation of the editor
+
+
+          ready: Editor is ready for user input – 'cursor blinking'
+
+
+          loaded: Editor has fully loaded
+
+
+          firstChange: user has done something to edit the content, hopefully
+          signaling intent-to-edit
+
+
+          saveIntent: Editor pre-save button (if available) has been activated,
+          showing user intent to save (regardless of whether they continue)
+
+
+          saveAttempt: Editor save button has been activated, showing user
+          attempt to save (regardless of success)
+
+
+          saveSuccess: Editor has successfully saved and user has been shown a
+          post-edit status on the client-side
+
+
+          saveFailure: Editor has not successfully saved and user has been shown
+          a save failure reason on the client-side
+
+
+          abort: Editor has been aborted by user action.
+        type: string
+        enum:
+          - init
+          - ready
+          - loaded
+          - firstChange
+          - saveIntent
+          - saveAttempt
+          - saveSuccess
+          - saveFailure
+          - abort
+      anonymous_user_token:
+        description: >-
+          A random, cookie-stored token used to temporarily distinguish
+          individual anonymous editors in certain A/B tests (ref T225209). Null
+          for registered editors and for any anonymous editors who were not
+          assigned a test condition.
+        type: string
+      bucket:
+        description: >-
+          If necessary, a string used to identify temporarily relevant groups of
+          users, such as the groups in a controlled experiment. For example
+          '2019-03-mobile-VE-section-editing-control'. If multiple buckets need
+          to be set at once (e.g. for overlapping experiment), separate the
+          strings with commas.
+        type: string
+      editing_session_id:
+        description: >-
+          A string of 32 alphanumeric characters, unique to the current page
+          view session; used for grouping events.
+        type: string
+      editor_interface:
+        description: >-
+          The editor interface through which the user is attempting to edit the
+          page.
+        type: string
+        enum:
+          - visualeditor
+          - wikitext-2017
+          - wikitext
+          - other
+      first_change_timing:
+        description: >-
+          Timing information about action=firstChange – time in milliseconds
+          since the editor was ready.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      init_mechanism:
+        description: >-
+          Mechanism information about action=init
+
+
+          click: Editing has been initiated from an edit link
+
+
+          new: Editing has been initiated by clicking on redlink if type=page or
+          new section link if type=section
+
+
+          url: Editing has been initiated by direct navigation.
+
+
+          url-new: Editing has been initiated by direct navigation to a
+          non-existent page if type=page or a new section link if type=section
+
+
+          tooslow: this editor was initialized as a fallback after the
+          initially-chosen editor failed to load quickly enough. There should be
+          an immediately-preceding init event with the same page_token /
+          session_token.
+        type: string
+        enum:
+          - click
+          - new
+          - url
+          - url-new
+          - click-sticky-header
+          - click-new-sticky-header
+          - new-sticky-header
+          - url-sticky-header
+          - url-new-sticky-header
+          - tooslow
+      init_timing:
+        description: >-
+          Timing information about action=init – this is mostly not logged /
+          logged as 0 because it's rarely meaningful. If a specific integration
+          chooses to log this, it should document that here.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      init_type:
+        description: |-
+          Type information about action=init
+
+          page: Editing has been initiated for the whole page
+
+          section: Editing has been initiated for a section of the page.
+        type: string
+        enum:
+          - page
+          - section
+      integration:
+        description: >-
+          The editor integration through which the user is attempting to edit
+          the page.
+        type: string
+        enum:
+          - page
+          - flow
+          - lqt
+          - app
+          - app-android
+          - app-ios
+          - discussiontools
+          - contenttranslation
+      is_anon:
+        description: >
+          Information about app user: is true if the user is not logged in the
+          app, false if the user is logged in. This is automatically saved as a
+          boolean in the app, and is sent by the app with every event.
+        type: boolean
+      is_bot:
+        description: >
+          Information about app user: is true if the user is not logged in the
+          app, false if the user is logged in. This is automatically saved as a
+          boolean in the app, and is sent by the app with every event.
+        type: boolean
+      is_oversample:
+        description: 'Whether this request is an oversample, or a standard sample.'
+        type: boolean
+      loaded_timing:
+        description: >-
+          Timing information about action=loaded – time in milliseconds since
+          the editor was initialised.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      mw_version:
+        description: MediaWiki version string.
+        type: string
+      page_id:
+        description: ID of the page the user is attempting to edit.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      page_ns:
+        description: Namespace ID of the page the user is attempting to edit.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      page_title:
+        description: >-
+          Full title of the page the user is attempting to edit, including
+          namespace (wgPageName format). This is needed to log edit activity on
+          redlinks, as pageId and revId are not available.
+        type: string
+      page_token:
+        description: >-
+          One-time token per page load (consistent with Schema:PageIssues and
+          other schemas that use
+          https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.user-method-getPageviewToken
+          ). This will only be set for client-side (JavaScript-generated)
+          events, for server-side events the value will be an empty string.
+        type: string
+      platform:
+        description: >-
+          The editing device through which the user is attempting to edit the
+          page.
+        type: string
+        enum:
+          - desktop
+          - tablet
+          - phone
+          - other
+      ready_timing:
+        description: >-
+          Timing information about action=ready – time in milliseconds since the
+          editor was initialised.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      revision_id:
+        description: >-
+          For all actions except `saveSuccess`, the ID of the revision that the
+          user is attempting to edit (0 if the user is attempting to create a
+          new page). For the `saveSuccess` action, the ID of the revision that
+          has just been saved unless it is a null edit, in which case the id of
+          the revision will have the same revision ID as the previous event
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      save_attempt_timing:
+        description: >-
+          Timing information about action=saveAttempt – time in milliseconds
+          since the user triggered saveIntent.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      save_failure_message:
+        description: The message key given for the first error when saving.
+        type: string
+      save_failure_timing:
+        description: >-
+          Timing information about action=saveFailure – time in milliseconds
+          spent by the system processing save (sum of two parts: saveIntent to
+          saveReady, and saveAttempt to saveFailure).
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      save_failure_type:
+        description: >-
+          Type information about action=saveFailure
+
+
+          userBadToken: Save attempt failed because the user's token was bad
+
+
+          userNewUser: Save attempt failed because the user's session has
+          changed user
+
+
+          extensionAbuseFilter: Save attempt failed because of the AbuseFilter
+          extension
+
+
+          extensionCaptcha: Save attempt failed because of the CAPTCHA
+          extensions
+
+
+          extensionSpamBlacklist: Save attempt failed because of the
+          SpamBlacklist extension
+
+
+          responseEmpty: Save attempt failed but the response was empty
+
+
+          responseUnknown: Save attempt failed but the response was not
+          recognised
+
+
+          editPageDeleted: Save attempt failed because the page was deleted
+
+
+          editConflict: Save attempt failed because of an edit conflict
+        type: string
+        enum:
+          - userBadToken
+          - userNewUser
+          - extensionAbuseFilter
+          - extensionCaptcha
+          - extensionSpamBlacklist
+          - extensionTitleBlacklist
+          - responseEmpty
+          - responseUnknown
+          - editPageDeleted
+          - editConflict
+      save_intent_timing:
+        description: >-
+          Timing information about action=saveIntent – time in milliseconds
+          since the editor was ready.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      save_success_timing:
+        description: >-
+          Timing information about action=saveSuccess – time in milliseconds
+          spent by the system processing save (sum of two parts: saveIntent to
+          saveReady, and saveAttempt to saveSuccess).
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      session_token:
+        description: >-
+          Session token that survives across pages (mw.user.sessionId()), but
+          not browser restarts, used in deterministic user bucketing. This will
+          only be set for client-side (JavaScript-generated) events, for
+          server-side events the value will be an empty string.
+        type: string
+      skin:
+        description: >
+          Information about which skin is being used. This is automatically
+          saved as a string.
+        type: string
+      user_class:
+        description: >-
+          A flag for a kind of user about whom we don't care or for whom we
+          can't measure edit counts.
+        type: string
+        enum:
+          - IP
+          - bot
+      user_editcount:
+        description: The total number of edits of the user.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      user_id:
+        description: The user id (0 if logged out).
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      user_is_temp:
+        description: Whether the user is using a temporary account.
+        type: boolean
+      version:
+        description: >-
+          Version number. This field can be used to track changes in
+          instrumentation that affect the nature of the data collected.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      wiki:
+        description: >
+          Information about which wiki is being used. This is automatically
+          saved as a string.
+        type: string
+  http:
+    type: object
+    properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  ip:
+    description: >
+      Client IP address that sent this event, usually best guess parsed out of
+      from X-Client-IP header which is set by varnish from X-Forwarded-For.
+      Deprecated, use http.client_ip.
+    type: string
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  recvFrom:
+    description: Hostname of server emitting the log line.  Deprecated.
+    type: string
+  revision:
+    description: Revision ID of event schema.  Deprecated.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  schema:
+    description: Title of event schema.  Deprecated.
+    type: string
+  seqId:
+    description: Udp2log sequence ID.  Deprecated.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  topic:
+    description: The queue topic name this event belongs in.  Deprecated.
+    type: string
+  uuid:
+    description: 'Unique event identifier.  Deprecated, use meta.id.'
+    type: string
+    maxLength: 128
+  webHost:
+    description: >-
+      Request host. 'window.location.hostname' on client-side events;
+      $_SERVER['HTTP_HOST'] on server.
+    type: string
+  wiki:
+    description: $wgDBName e.g. enwiki
+    type: string
+examples:
+  - $schema: /analytics/legacy/editattemptstep/2.0.2
+    client_dt: '2020-04-02T19:11:20.942Z'
+    dt: '2020-04-02T19:11:20.942Z'
+    event:
+      action: init
+      editing_session_id: example
+      editor_interface: other
+      integration: page
+      mw_version: example
+      platform: other
+      user_editcount: 0
+      user_id: 1
+      user_is_temp: false
+      version: 1
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_EditAttemptStep
+    schema: EditAttemptStep
