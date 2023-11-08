@@ -3,7 +3,7 @@ description: >
     An event related to the viewing of story content from Extension:Wikistories.
     In this context, a "story" is a slideshow of images with superimposed text;
     a "frame" is one of the individual slides.
-$id: /analytics/mediawiki/wikistories_consumption_event/1.0.0
+$id: /analytics/mediawiki/wikistories_consumption_event/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -26,9 +26,13 @@ properties:
             can be deduplicated by using only the latest experiment_pageview
             event for each pageview ID.
 
+            * story_share: The user accesses one of the share links from the editor(story builder) view.
+
+
             As of Oct 2022, experiment_pageview is not implemented.
         type: string
         enum:
+            - story_share
             - story_impression
             - story_view
             - experiment_pageview
@@ -109,6 +113,7 @@ properties:
             - external
             - none
             - unknown
+            - shared_link
     story_title:
         description: >
             The title of the story the user viewed. Applies only to story_view
@@ -182,6 +187,10 @@ properties:
             minimum: 1
             maximum: 9007199254740991
         uniqueItems: true
+    user_is_anonymous:
+        description: >
+            whether the users are logged in or not.
+        type: boolean
 required:
     - event_type
     - activity_session_id
@@ -220,3 +229,4 @@ examples:
             - 5
             - 9
             - 16
+        user_is_anonymous: false
