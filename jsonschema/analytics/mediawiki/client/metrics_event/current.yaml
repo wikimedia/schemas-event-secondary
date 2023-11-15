@@ -19,7 +19,7 @@ description: |-
   values to them.
 
   See https://wikitech.wikimedia.org/wiki/Metrics_Platform for more detail.
-$id: /analytics/mediawiki/client/metrics_event/2.0.0
+$id: /analytics/mediawiki/client/metrics_event/2.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -444,6 +444,33 @@ allOf:
                 - "null"
             value:
               type: string
+
+      #########################################################################
+      # Sampling Information
+      #########################################################################
+      sample:
+        type: object
+        description: |-
+          The sampling configuration of the stream at the time that the event was enqueued for
+          submission.
+
+          See https://phabricator.wikimedia.org/T310693 for more detail.
+
+          In future, we may add a "custom" sample unit to represent sampling configuration being passed
+          with the event at the time that was enqueued for submission (see
+          https://phabricator.wikimedia.org/T312279).
+        additionalProperties: false
+        properties:
+          unit:
+            type: string
+            enum:
+              - pageview
+              - session
+              - device
+          rate:
+            type: number
+            maximum: 1
+            minimum: 0
 
 examples:
   - $schema:
