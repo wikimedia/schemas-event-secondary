@@ -1,0 +1,139 @@
+title: analytics/external/wiki_highlights_experiment
+description: ''
+$id: /analytics/external/wiki_highlights_experiment/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - event_type
+  - experiment_group
+  - meta
+  - page_name
+  - session_id
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  event_type:
+    description: >
+      Type of event: - pageLoaded: sent at the beginning of a page/highlight
+      view - pageUnloaded: sent upon leaving the page/highlight
+    type: string
+    enum:
+      - pageLoaded
+      - pageUnloaded
+  experiment_group:
+    description: |
+      The experiment group the user is currently enrolled in.
+    type: string
+    enum:
+      - control
+      - experiment
+  http:
+    type: object
+    properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  page_bottom_was_visible:
+    description: >
+      Whether the bottom of the page was visible to the user, indicating that
+      they reached the end of the summaries/article.
+    type: boolean
+  page_name:
+    description: |
+      The name of the article or article summary user viewed.
+    type: string
+  session_id:
+    description: |
+      Session token that survives across pages but not browser restarts.
+    type: string
+  time_length_ms:
+    description: >
+      Total length of time (in milliseconds) from the page load to the page
+      unload. Only be sent with pageUnloaded events. For pageLoaded events this
+      field will be NULL.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+examples:
+  - $schema: /analytics/external/wiki_highlights_experiment/1.0.0
+    event_type: pageUnloaded
+    experiment_group: experiment
+    meta:
+      domain: wikimedia.github.io
+      dt: '2023-10-03T03:22:01.187Z'
+      stream: inuka.wiki_highlights_experiment
+    page_name: Buckingham_Palace
+    session_id: d38c1866acc475a5501f
