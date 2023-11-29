@@ -2,7 +2,7 @@ title: fragment/analytics/product_metrics/common
 description: |-
   The schema defines the common/base fragment of Metrics Platform core fields.
   See https://wikitech.wikimedia.org/wiki/Metrics_Platform for more detail.
-$id: /fragment/analytics/product_metrics/common/1.0.0
+$id: /fragment/analytics/product_metrics/common/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -299,6 +299,14 @@ properties:
           minLength: 1
         description: |-
           Groups that the user is in at the time of the event.
+
+      is_bot:
+        type: boolean
+        description: |-
+          Whether the user is considered a bot at the time of the event.
+
+          A user is considered a bot if they are in the "bot" group and
+          if they have the "bot" right.
 
       registration_dt:
         type: string
