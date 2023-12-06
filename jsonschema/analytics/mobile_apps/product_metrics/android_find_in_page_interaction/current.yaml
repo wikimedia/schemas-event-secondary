@@ -1,0 +1,45 @@
+title: analytics/mobile_apps/product_metrics/android_find_in_page_interaction
+description: Measure user interactions with find-in-page on article screen
+$id: /analytics/mobile_apps/product_metrics/android_find_in_page_interaction/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /analytics/product_metrics/app/base/1.0.0#
+properties:
+  find_text:
+    type: string
+    description: Text that the user typed into the 'Find' box
+  find_next_clicks_count:
+    type: integer
+    description: Number of times that the 'Find Next' button was clicked
+  find_prev_clicks_count:
+    type: integer
+    description: Number of times that the 'Find Previous' button was clicked
+  page_height:
+    type: integer
+    description: The total height of the page, in device-independent pixels
+  time_spent_ms:
+    type: integer
+    description: Amount of time, in milliseconds, that the user spent before tapping on the find in page actions. Timer starts when the article gets fully loaded.
+examples:
+  - meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      stream: 'android.customize_toolbar_interaction'
+    dt: '2020-04-02T19:11:20.942Z'
+    action: find_in_page_interaction
+    agent:
+      app_flavor: alphadebug
+      app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+      app_theme: light
+      app_version: 504590000
+      client_platform: android
+      client_platform_family: app
+      device_language: en
+      release_status: prod
+    find_text: earth
+    find_next_clicks_count: 2
+    find_prev_clicks_count: 1
+    page_height: 140
+    time_spent_ms: 60
+    $schema:
+      $ref: '#/$id'
