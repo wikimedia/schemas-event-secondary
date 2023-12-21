@@ -60,6 +60,8 @@ Possible sources:
 - `notification_new_recommendations`: a one-time notification for new Content Translation users who have recently published a translation, stating that the system has new recommendations for them (since having a seed article improves the quality of the recommendations).
 - `recent_edit`: An invitation shown when the user is on a page that they have edited in another language recently in their 10 latest significant edits (+500 bytes or more) for a section missing in the current language.
 - `recent_translation`: A notice on recently translated articles that invites users to review and expand with the translation of a new section.
+- `language_selector_options`: ...
+- `followup_after_publishing`: ...
 
 ## `dashboard_search`
 Occurs when the user begins entering text in the search box which allows them to start a non-suggested new translation. Can re-occurs only after the user’s focus has left the search box.

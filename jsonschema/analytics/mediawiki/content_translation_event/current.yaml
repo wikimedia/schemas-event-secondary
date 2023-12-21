@@ -6,7 +6,7 @@ description: >
   (like warning the user about using too much unmodified machine translation).
 
   For further details, see the readme in the schema repository.
-$id: /analytics/mediawiki/content_translation_event/1.2.0
+$id: /analytics/mediawiki/content_translation_event/1.3.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -136,6 +136,8 @@ allOf:
           # - - content_language_selector (already included)
           # - direct (already included)
           # - notification_deletion (already included)
+          - language_selector_options
+          - followup_after_publishing
 
       translation_type:
         description: >
