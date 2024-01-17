@@ -6,7 +6,7 @@ description: >
   (like warning the user about using too much unmodified machine translation).
 
   For further details, see the readme in the schema repository.
-$id: /analytics/mediawiki/content_translation_event/1.3.0
+$id: /analytics/mediawiki/content_translation_event/1.4.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -110,7 +110,6 @@ allOf:
           - contributions_page
           - direct
           - direct_preselect
-          - editor_close
           - frequent_languages
           - invite_new_article_creation
           - invite_translate_another_section
@@ -119,6 +118,13 @@ allOf:
           - notification_new_recommendations
           - recent_edit
           - recent_translation
+          - language_selector_options
+          - followup_after_publishing
+          # navigate back to the dashboard (dashboard open)
+          - return_from_search
+          - return_from_confirmation
+          - return_from_section_selection
+          - editor_close
           # Sources for `dashboard_translation_start`
           - continue_published
           # - direct_preselect (already included)
@@ -133,11 +139,10 @@ allOf:
           # Sources for `editor_open`
           - dashboard_translation_continue
           - dashboard_translation_start
-          # - - content_language_selector (already included)
+          # - content_language_selector (already included)
           # - direct (already included)
           # - notification_deletion (already included)
-          - language_selector_options
-          - followup_after_publishing
+
 
       translation_type:
         description: >

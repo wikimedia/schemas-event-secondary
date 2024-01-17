@@ -60,8 +60,12 @@ Possible sources:
 - `notification_new_recommendations`: a one-time notification for new Content Translation users who have recently published a translation, stating that the system has new recommendations for them (since having a seed article improves the quality of the recommendations).
 - `recent_edit`: An invitation shown when the user is on a page that they have edited in another language recently in their 10 latest significant edits (+500 bytes or more) for a section missing in the current language.
 - `recent_translation`: A notice on recently translated articles that invites users to review and expand with the translation of a new section.
-- `language_selector_options`: ...
-- `followup_after_publishing`: ...
+- `language_selector_options`: An invitation shown to the user from "more options" menu in the language selector.
+- `followup_after_publishing`: An invitation shown to the user to do another translation, after completing a translation.
+- `return_from_search`: returns to the dashboard after searching for an article to translate and closing the search, without confirming the article.
+- `return_from_confirmation`: returns to the dashboard after confirmation of an article to translate (from translation start screen).
+- `return_from_section_selection`: returns to the dashboard after picking a section to translation  (only accessible for non-lead section translations).
+- `editor_close`: returns to the dashboard after closing the translation editor.
 
 ## `dashboard_search`
 Occurs when the user begins entering text in the search box which allows them to start a non-suggested new translation. Can re-occurs only after the user’s focus has left the search box.
