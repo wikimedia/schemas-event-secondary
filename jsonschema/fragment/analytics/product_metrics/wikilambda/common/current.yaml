@@ -1,0 +1,25 @@
+title: fragment/analytics/product_metrics/wikilambda/common
+description: |-
+  The schema defines the common fragment for Wikilambda extension
+$id: /fragment/analytics/product_metrics/wikilambda/common/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+properties:
+  zobjecttype:
+    description: The type of the existing zobject
+    type: string
+  zobjectid:
+    description: The identifier of the existing zobject
+    type: string
+  zlang:
+    description: The natural language currently selected in the UI
+    type: string
+  implementationtype:
+    description: Implementation type
+    type: string
+  haserrors:
+    description: It indicates if any error was detected in the page
+    type: boolean
+  selectedfunctionzid:
+    description: It indicates which function is being called
+    type: string
