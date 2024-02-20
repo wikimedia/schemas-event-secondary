@@ -2,7 +2,7 @@ title: fragment/analytics/web_accessibility
 description: >
   Accessibility fields that will be part of all Wikimedia product/feature analytics on.
   MediaWiki-powered mobile and desktop website schemas.
-$id: /fragment/analytics/web_accessibility/1.0.0
+$id: /fragment/analytics/web_accessibility/1.0.1
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 properties:
@@ -40,3 +40,7 @@ properties:
       Indicates whether the dark mode is actively turned on by the user. This is automatically
       saved as a boolean in the app, and is sent by the app with every event.
     type: boolean
+  dark_mode_setting:
+    description: >
+      Indicates the current dark mode setting. This is saved as a string.
+    type: string

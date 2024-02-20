@@ -2,7 +2,7 @@ title: analytics/legacy/desktopwebuiactionstracking
 description: >-
   Logs when certain UI elements get visible and when user interacts with those
   on desktop.
-$id: /analytics/legacy/desktopwebuiactionstracking/1.4.2
+$id: /analytics/legacy/desktopwebuiactionstracking/1.4.3
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -10,7 +10,7 @@ allOf:
   - properties:
       event:
         properties:
-          $ref: /fragment/analytics/web_accessibility/1.0.0#/properties
+          $ref: /fragment/analytics/web_accessibility/1.0.1#/properties
   - required:
       - event
     properties:

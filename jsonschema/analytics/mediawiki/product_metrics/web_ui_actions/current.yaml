@@ -2,12 +2,12 @@ title: analytics/mediawiki/product_metrics/web_ui_actions
 description: >-
   Logs when certain UI elements get visible and when user interacts with those
   on desktop and mobile.
-$id: /analytics/mediawiki/product_metrics/web_ui_actions/1.0.0
+$id: /analytics/mediawiki/product_metrics/web_ui_actions/1.0.1
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
   - $ref: /analytics/product_metrics/web/base/1.1.0#
-  - $ref: /fragment/analytics/web_accessibility/1.0.0#
+  - $ref: /fragment/analytics/web_accessibility/1.0.1#
 properties:
   is_sidebar_collapsed:
     description: Is the sidebar collapsed?
