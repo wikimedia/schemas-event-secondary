@@ -3,11 +3,11 @@ description: >
     An event related to the viewing of story content from Extension:Wikistories.
     In this context, a "story" is a slideshow of images with superimposed text;
     a "frame" is one of the individual slides.
-$id: /analytics/mediawiki/wikistories_consumption_event/1.1.0
+$id: /analytics/mediawiki/wikistories_consumption_event/1.2.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
-    - $ref: /fragment/common/1.0.0#
+    - $ref: /fragment/common/1.1.0#
 properties:
     event_type:
         description: >
@@ -191,6 +191,11 @@ properties:
         description: >
             whether the users are logged in or not.
         type: boolean
+    dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
 required:
     - event_type
     - activity_session_id
@@ -230,3 +235,4 @@ examples:
             - 9
             - 16
         user_is_anonymous: false
+        dt: '2022-11-11T00:40:00.649Z'
