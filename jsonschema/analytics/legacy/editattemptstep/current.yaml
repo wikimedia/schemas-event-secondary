@@ -3,7 +3,7 @@ description: >-
   Logs generic events related to editing activity. All events are logged
   client-side, except that init, saveSuccess, and saveFailure events for the
   wikitext editor are logged server-side.
-$id: /analytics/legacy/editattemptstep/2.0.2
+$id: /analytics/legacy/editattemptstep/2.0.3
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -378,6 +378,14 @@ properties:
           A string of 32 alphanumeric characters, unique to the current page
           view session; used for grouping events.
         type: string
+      app_install_id:
+        type: string
+        minLength: 36
+        maxLength: 36
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+        description: |-
+          UUIDv4 identifier generated when an application is installed.
+          Identifies a particular install on a particular device. Only present in events submitted from apps.
       user_id:
         description: The user id (0 if logged out).
         type: integer
