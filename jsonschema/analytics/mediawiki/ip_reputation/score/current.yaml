@@ -2,7 +2,7 @@ title: analytics/mediawiki/ip_reputation/score
 description: >-
   Represents an event where MediaWiki fetches the IP reputation score
   for a particular action (editing, creating an account, etc)
-$id: /analytics/mediawiki/ip_reputation/score/1.0.0
+$id: /analytics/mediawiki/ip_reputation/score/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -30,6 +30,7 @@ allOf:
         enum:
           - edit
           - createaccount
+          - autocreateaccount
       identifier:
         type: integer
         description: >-
