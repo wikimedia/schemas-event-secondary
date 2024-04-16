@@ -19,7 +19,7 @@ description: |-
   values to them.
 
   See https://wikitech.wikimedia.org/wiki/Metrics_Platform for more detail.
-$id: /analytics/mediawiki/client/metrics_event/2.1.0
+$id: /analytics/mediawiki/client/metrics_event/2.1.1
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -28,7 +28,7 @@ allOf:
   - properties:
       name:
         type: string
-        mexLength: 128
+        maxLength: 128
         description: |-
           The name of the event. All events have a name used to identify
           them. This name is passed in by the instrumentation code, and is
