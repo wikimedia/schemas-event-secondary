@@ -1,0 +1,273 @@
+title: analytics/mediawiki/accountcreation/account_conversion
+description: Schema for events related to account creation tasks
+$id: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - event_type
+  - meta
+  - performer
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  error_message_key:
+    description: >-
+      The key of the error message in the i18n system. This key corresponds to a
+      specific message and is used for failure events.
+    type: string
+    maxLength: 100
+  event_type:
+    description: >-
+      Type of event being recorded. It can have three possible values >
+      impression (when the user sees the form), success (when the user logs in
+      or signs up successfully), or failure (when the user fails to log in or
+      sign up due to an error or invalid input).
+    type: string
+    enum:
+      - impression
+      - success
+      - failure
+  http:
+    type: object
+    properties:
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+  page_namespace:
+    description: The namespace ID this page belongs to.
+    type: integer
+    maximum: 9007199254740991
+    minimum: -9007199254740991
+  page_title:
+    description: Title of the page where the event occurred.
+    type: string
+  performer:
+    title: fragment/mediawiki/state/entity/user
+    description: >
+      Represents the MediaWiki actor that made this change. If this change is an
+      edit, this will be the same as revision.editor.
+    $id: /fragment/mediawiki/state/entity/user/1.0.0
+    $schema: 'https://json-schema.org/draft-07/schema#'
+    type: object
+    additionalProperties: false
+    properties:
+      edit_count:
+        description: >
+          The number of edits this user has made at the time of this event. Not
+          present for anonymous users.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      groups:
+        description: >
+          A list of the groups this user belongs to.  E.g. bot, sysop etc. Not
+          present for anonymous users.
+        type: array
+        items:
+          type: string
+          minLength: 1
+      is_bot:
+        description: >
+          True if this user is considered to be a bot at the time of this event.
+          This is checked via the $user->isBot() method, which considers both
+          user_groups and user permissions.
+        type: boolean
+      is_system:
+        description: >
+          True if the user is a MediaWiki 'system' user. These are users that
+          cannot 'authenticate'.  These are usually listed in ReservedUsernames.
+        type: boolean
+      is_temp:
+        description: >
+          True if the user is an autocreated temporary MediaWiki user. This is
+          used for IP masking.
+        type: boolean
+      registration_dt:
+        description: >
+          The datetime of the user account registration. Not present for
+          anonymous users or if missing in the MW database.
+        type: string
+        format: date-time
+        maxLength: 128
+      user_id:
+        description: >
+          The user ID that performed this change.  This is optional, and will
+          not be present for anonymous users.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      user_text:
+        description: >
+          The user name or text representation of the user that performed this
+          change.
+        type: string
+        minLength: 1
+    examples:
+      - edit_count: 1351079888211148
+        groups:
+          - dolor
+        is_bot: false
+        is_system: false
+        is_temp: false
+        registration_dt: '2021-01-01T00:00:00.0Z'
+        user_id: 1351079888211148
+        user_text: dolor
+  source_wiki:
+    description: The ID of the wiki where the event occurred.
+    type: string
+examples:
+  - $schema: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+    dt: '2023-07-26T08:58:41Z'
+    event_type: impression
+    meta:
+      domain: example.org
+      dt: '2023-07-26T08:58:41Z'
+      id: 12345678-1234-5678-1234-567812345678
+      request_id: 12345678-1234-5678
+      stream: mediawiki.accountcreation.login
+      uri: 'http://example.org/some-event'
+    page_namespace: -1
+    page_title: 'Special:UserLogin'
+    performer:
+      is_temp: false
+      user_id: 12345678
+      user_text: UserOne
+    source_wiki: enwiki
+  - $schema: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+    dt: '2023-07-26T08:58:41Z'
+    event_type: success
+    meta:
+      domain: example.org
+      dt: '2023-07-26T08:58:41Z'
+      id: 12345678-1234-5678-1234-567812345678
+      request_id: 12345678-1234-5678
+      stream: mediawiki.accountcreation.login
+      uri: 'http://example.org/some-event'
+    page_namespace: -1
+    page_title: 'Special:UserLogin'
+    performer:
+      is_temp: false
+      user_id: 12345678
+      user_text: UserOne
+    source_wiki: enwiki
+  - $schema: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+    dt: '2023-07-26T08:58:41Z'
+    event_type: impression
+    meta:
+      domain: example.org
+      dt: '2023-07-26T08:58:41Z'
+      id: 12345678-1234-5678-1234-567812345678
+      request_id: 12345678-1234-5678
+      stream: mediawiki.accountcreation.account_conversion
+      uri: 'http://example.org/some-event'
+    page_namespace: -1
+    page_title: 'Special:CreateAccount'
+    performer:
+      is_temp: true
+      user_id: 12345678
+      user_text: UserOne
+    source_wiki: enwiki
+  - $schema: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+    dt: '2023-07-26T08:58:41Z'
+    error_message_key: userexists
+    event_type: failure
+    meta:
+      domain: example.org
+      dt: '2023-07-26T08:58:41Z'
+      id: 12345678-1234-5678-1234-567812345678
+      request_id: 12345678-1234-5678
+      stream: mediawiki.accountcreation.account_conversion
+      uri: 'http://example.org/some-event'
+    page_namespace: -1
+    page_title: 'Special:CreateAccount'
+    performer:
+      is_temp: false
+      user_id: 12345678
+      user_text: UserOne
+    source_wiki: enwiki
+  - $schema: /analytics/mediawiki/accountcreation/account_conversion/1.0.0
+    dt: '2023-07-26T08:58:41Z'
+    error_message_key: wrongpassword
+    event_type: failure
+    meta:
+      domain: example.org
+      dt: '2023-07-26T08:58:41Z'
+      id: 12345678-1234-5678-1234-567812345678
+      request_id: 12345678-1234-5678
+      stream: mediawiki.accountcreation.login
+      uri: 'http://example.org/some-event'
+    page_namespace: -1
+    page_title: 'Special:UserLogin'
+    performer:
+      is_temp: false
+      user_id: 12345678
+      user_text: UserOne
+    source_wiki: enwiki
