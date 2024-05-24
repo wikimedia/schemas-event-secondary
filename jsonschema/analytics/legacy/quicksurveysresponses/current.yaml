@@ -1,6 +1,6 @@
 title: analytics/legacy/quicksurveysresponses
-description: Logs respones to QuickSurveys
-$id: /analytics/legacy/quicksurveysresponses/1.0.0
+description: Logs responses to QuickSurveys
+$id: /analytics/legacy/quicksurveysresponses/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
@@ -41,7 +41,7 @@ allOf:
           surveyResponseValue:
             description: >-
               The answer the user selected, using the i18n key and not the
-              localized value.
+              localized value.  Deprecated, use surveyAnswers.
             type: string
           platform:
             type: string
@@ -75,6 +75,24 @@ allOf:
               This is available from the GeoIP cookie's first field in its colon
               separated list. 'Unknown' if unknown.
             type: string
+          surveyQuestionLabel:
+            description: The question that the survey response was made for.
+            type: string
+          surveyAnswers:
+            description: >-
+              An array of the answers that the user selected, using the i18n
+              key and not the localized value.
+            type: array
+            items:
+              type: string
+          surveyResponseFreeText:
+            description: >-
+              Contains freeform text answers if they exist. This field is a
+              mapping between answers as keys and the freeform text answer as
+              the value.
+            type: object
+            additionalProperties:
+              type: string
 examples:
   - event:
       countryCode: DO
@@ -85,6 +103,30 @@ examples:
       platform: web
       surveyCodeName: perceived-performance-survey
       surveyResponseValue: ext-quicksurveys-example-internal-survey-answer-positive
+      userLanguage: en
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      id: b0caf18d-6c7f-4403-947d-2712bbe28610
+      stream: eventlogging_QuickSurveysResponses
+    dt: '2020-04-02T19:11:20.942Z'
+    client_dt: '2020-04-02T19:11:20.942Z'
+    $schema:
+      $ref: '#/$id'
+    schema: QuickSurveysResponses
+  - event:
+      countryCode: DO
+      isLoggedIn: false
+      isTablet: false
+      namespaceId: 0
+      pageId: 1
+      platform: web
+      surveyCodeName: perceived-performance-survey
+      surveyQuestionLabel: ext-quicksurveys-internal-gdi-question-1
+      surveyAnswers:
+        - ext-quicksurveys-example-internal-survey-answer-positive
+      surveyResponseFreeText:
+        ext-quicksurveys-example-internal-survey-answer-positive: "Free text answer response."
+      surveyResponseValue: ""
       userLanguage: en
     meta:
       dt: '2020-04-02T19:11:20.942Z'
