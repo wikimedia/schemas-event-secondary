@@ -85,7 +85,7 @@ examples:
     block_type: 'ip'
     block_expiry: 'infinity'
     block_scope: 'local'
-    error_message_keys: ['globalblocking-ipblocked']
+    error_message_keys: ['globalblocking-blockedtext-ip']
     error_messages: ['Your IP address has been blocked on all wikis...']
     user_ip: '2.145.65.78'
     is_api: true

@@ -200,7 +200,7 @@ examples:
     block_type: ip
     database: abwiki
     error_message_keys:
-      - globalblocking-ipblocked
+      - globalblocking-blockedtext-ip
     error_messages:
       - Your IP address has been blocked on all wikis...
     http:
