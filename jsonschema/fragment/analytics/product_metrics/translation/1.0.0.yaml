@@ -1,0 +1,88 @@
+title: fragment/analytics/product_metrics/translation
+description: |-
+  Defines a reusable set of fields for wiki tranlation workflows.
+  The fields allow to store information about the translation source
+  and the translated target, as well as properties of the translation itself.
+  See https://phabricator.wikimedia.org/T369687 for more detail.
+$id: /fragment/analytics/product_metrics/translation/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+required:
+  - translation
+properties:
+  translation:
+    description: |-
+      Schema section to store all translation related fields.
+      This way, there won't be naming collisions when this
+      fragment is referenced together with other fragments.
+    type: object
+    additionalProperties: false
+    properties:
+      is_mint_available:
+        type: boolean
+        descripotion: Whether the MinT service is available.
+      modification_rate:
+        description: |-
+          The proportion of the auto-generated translation
+          that has been manually changed by the user.
+        type: number
+        maximum: 1
+        minimum: 0
+      source_id:
+        description: The id of the translation source.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      source_language:
+        description: The language of the translation source.
+        type: string
+        minLength: 1
+      source_title:
+        description: The title of the translation source.
+        type: string
+        minLength: 1
+      source_type:
+        description: The type of translation source.
+        type: string
+        minLength: 1
+      target_id:
+        description: The id of the translation target.
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+      target_language:
+        description: The language of the translation target.
+        type: string
+        minLength: 1
+      target_title:
+        description: The title of the translation target.
+        type: string
+        minLength: 1
+      target_type:
+        description: The type of translation target.
+        type: string
+        minLength: 1
+      translatable_count:
+        description: The number of elements to translate.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+      translated_count:
+        description: The number of elements translated so far.
+        type: integer
+        maximum: 9007199254740991
+        minimum: 0
+examples:
+  - translation:
+      is_mint_available: false
+      modification_rate: 0.15
+      source_id: -6305039478318694
+      source_language: dolor
+      source_title: dolor
+      source_type: dolor
+      target_id: -6305039478318694
+      target_language: dolor
+      target_title: dolor
+      target_type: dolor
+      translatable_count: 1351079888211148
+      translated_count: 1351079888211148
