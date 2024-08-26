@@ -2,11 +2,12 @@ title: fragment/analytics/product_metrics/common
 description: |-
   The schema defines the common/base fragment of Metrics Platform core fields.
   See https://wikitech.wikimedia.org/wiki/Metrics_Platform for more detail.
-$id: /fragment/analytics/product_metrics/common/1.1.2
+$id: /fragment/analytics/product_metrics/common/1.2.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
   - $ref: /fragment/analytics/common/2.0.0#
+  - $ref: /fragment/analytics/product_metrics/experiments/1.0.0#
 required:
   - action
   - agent
@@ -85,6 +86,12 @@ properties:
     description: |-
       The position of the event in the sequence of events submitted during the
       funnel, if any.
+
+  instrument_name:
+    type: string
+    maxLength: 255
+    description: |-
+      The unique identifier to distinguish instruments for filtering.
 
   #########################################################################
   # Agent Information
