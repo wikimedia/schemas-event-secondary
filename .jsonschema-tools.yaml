@@ -69,3 +69,5 @@ skipSchemaTestCases:
       - schema-deterministic-types
     '/analytics/mediawiki/ip_reputation/score/1.1.0':
       - schema-deterministic-types
+    '/analytics/product_metrics/app/base/1.2.2':
+      - schema-version-compatibility

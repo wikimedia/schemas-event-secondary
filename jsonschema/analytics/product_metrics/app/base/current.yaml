@@ -1,9 +1,9 @@
 title: analytics/product_metrics/app/base
 description: |-
-$id: /analytics/product_metrics/app/base/1.2.1
+$id: /analytics/product_metrics/app/base/1.2.2
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/product_metrics/common/1.1.0
+  - $ref: /fragment/analytics/product_metrics/common/1.1.2
   - $ref: /fragment/analytics/product_metrics/app/1.1.1
 
