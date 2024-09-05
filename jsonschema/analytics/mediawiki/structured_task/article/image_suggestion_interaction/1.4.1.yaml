@@ -99,7 +99,7 @@ properties:
        - caption_length The number of characters in the caption (when acceptance_state is "accepted")
       For actions back, next on onboarding_step_{1/2/3/4}_dialog:
        - navigation_type is swipe or click
-      Additional data for all section-level image suggestions actions:
+      For action=impression with "machinesuggestions_mode" active_interface when the suggestion is for a section image:
        - section_title A string representing title of the section the suggestion is for
        - section_ordinal 1-based integer index representing the order of the article 
        section the suggestion is for
