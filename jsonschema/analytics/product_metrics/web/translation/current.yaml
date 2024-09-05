@@ -1,0 +1,9 @@
+title: analytics/product_metrics/web/translation
+description: Web schema for wiki tranlation workflows.
+$id: /analytics/product_metrics/web/translation/1.0.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+allOf:
+  - $ref: /fragment/analytics/product_metrics/common/1.1.0
+  - $ref: /fragment/analytics/product_metrics/web/1.1.0
+  - $ref: /fragment/analytics/product_metrics/translation/1.0.0
