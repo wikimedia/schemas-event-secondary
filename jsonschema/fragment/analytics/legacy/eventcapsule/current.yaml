@@ -2,7 +2,7 @@ title: fragment/analytics/legacy/eventcapsule
 description: >
   A wrapper around (legacy) EventLogging event schemas that encodes generic metadata.
   Legacy metawiki schema: https://meta.wikimedia.org/wiki/Schema:EventCapsule
-$id: /fragment/analytics/legacy/eventcapsule/1.2.0
+$id: /fragment/analytics/legacy/eventcapsule/1.3.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 additionalProperties: false
@@ -50,3 +50,41 @@ allOf:
           Client IP address that sent this event, usually best guess parsed
           out of from X-Client-IP header which is set by varnish from X-Forwarded-For.
           Deprecated, use http.client_ip.
+      useragent:
+        type: object
+        description: >
+          A legacy EventLogging useragent field that holds browser and device information.
+          Those fields are deprecated and should be replaced by the user_agent_map field.
+          Those fields are populated during the Refine process.
+        properties:
+          browser_family:
+            type: string
+            description: Browser family, e.g. Chrome, Firefox, Safari
+          browser_major:
+            type: string
+            description: Browser major version, e.g. 70
+          browser_minor:
+            type: string
+            description: Browser minor version, e.g. 0
+          device_family:
+            type: string
+            description: Device family, e.g. iPhone, iPad, Android
+          is_bot:
+            type: boolean
+            description: True if the user agent is a bot
+          is_mediawiki:
+            type: boolean
+            description: True if the user agent is a MediaWiki client
+          os_family:
+            type: string
+            description: OS family, e.g. Windows, iOS, Android
+          os_major:
+            type: string
+            description: OS major version, e.g. 10, 12
+          os_minor:
+            type: string
+            description: OS minor version, e.g. 0, 1
+          wmf_app_version:
+            type: string
+            description: >
+              Version of the Wikimedia app, if the user agent is a Wikimedia app
