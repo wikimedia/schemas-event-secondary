@@ -2,11 +2,11 @@ title: analytics/legacy/navigationtiming
 description: >-
   Represents a set of client-side latency measurements provided by
   NavigationTiming API
-$id: /analytics/legacy/navigationtiming/1.6.0
+$id: /analytics/legacy/navigationtiming/1.7.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.3.0
   - $ref: /fragment/http/client_ip/1.0.0#
   - required:
       - event

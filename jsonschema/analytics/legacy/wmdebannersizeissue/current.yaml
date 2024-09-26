@@ -2,11 +2,11 @@ title: analytics/legacy/wmdebannersizeissue
 description: >-
   Store viewport size for WMDE fundraising banners that weren't shown because
   they would have obscured the content too much
-$id: /analytics/legacy/wmdebannersizeissue/1.0.0
+$id: /analytics/legacy/wmdebannersizeissue/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.3.0
   - required:
       - event
     properties:

@@ -2,11 +2,11 @@ title: analytics/legacy/universallanguageselector
 description: >-
   Schema for ULS extension events. Currently this covers both various actions as
   well as events that log usage of certain fonts, input methods and languages.
-$id: /analytics/legacy/universallanguageselector/1.5.0
+$id: /analytics/legacy/universallanguageselector/1.6.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.3.0
   - required:
       - event
     properties:

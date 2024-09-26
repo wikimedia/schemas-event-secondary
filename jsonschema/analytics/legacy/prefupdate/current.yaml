@@ -3,11 +3,11 @@ description: >-
   Logs preference changes initiated by a registered user. Each event represents
   a change to a row in MediaWiki's user_properties table and logs whether the
   change is from or to a default value. See also Schema:EchoPrefUpdate.
-$id: /analytics/legacy/prefupdate/1.0.0
+$id: /analytics/legacy/prefupdate/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.3.0
   - required:
       - event
     properties:

@@ -1,10 +1,10 @@
 title: analytics/legacy/twocolconflictconflict
 description: 'Logs edit conflicts where Extension:TwoColConflict is enabled'
-$id: /analytics/legacy/twocolconflictconflict/1.0.0
+$id: /analytics/legacy/twocolconflictconflict/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.3.0
   - required:
       - event
     properties:

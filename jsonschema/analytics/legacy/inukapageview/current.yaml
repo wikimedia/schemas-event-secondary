@@ -1,10 +1,10 @@
 title: analytics/legacy/inukapageview
 description: Logs reading behavior of Inuka target users.
-$id: /analytics/legacy/inukapageview/1.0.0
+$id: /analytics/legacy/inukapageview/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.3.0
   - $ref: /fragment/http/client_ip/1.0.0
   - required:
       - event

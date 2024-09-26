@@ -2,11 +2,11 @@ title: analytics/legacy/centralnoticebannerhistory
 description: >-
   Summary of recent items in the client-side log of CentralNotice banner events,
   for CentralNotice campaigns with the banner history feature enabled
-$id: /analytics/legacy/centralnoticebannerhistory/1.0.0
+$id: /analytics/legacy/centralnoticebannerhistory/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.3.0
   - $ref: /fragment/http/client_ip/1.0.0
   - required:
       - event

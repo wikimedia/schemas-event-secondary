@@ -5,11 +5,11 @@ description: >-
   user- and session-level data; as of May 2020, some of this is duplicated into
   this schema as well. For living dictionary of current values, see
   https://www.mediawiki.org/wiki/VisualEditor/FeatureUse_data_dictionary
-$id: /analytics/legacy/visualeditorfeatureuse/1.1.0
+$id: /analytics/legacy/visualeditorfeatureuse/1.2.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/legacy/eventcapsule/1.2.0
+  - $ref: /fragment/analytics/legacy/eventcapsule/1.3.0
   - required:
       - event
     properties:
