@@ -1,0 +1,198 @@
+title: analytics/mobile_apps/android_user_contribution_screen
+description: |
+  Track user actions when using the Enhanced User Contribution Screen.
+  This schema was migrated from legacy MobileWikiAppUserContribution.
+$id: /analytics/mobile_apps/android_user_contribution_screen/3.1.0
+$schema: 'https://json-schema.org/draft-07/schema#'
+type: object
+additionalProperties: false
+required:
+  - $schema
+  - action
+  - app_install_id
+  - app_session_id
+  - dt
+  - is_anon
+  - meta
+properties:
+  $schema:
+    description: >
+      A URI identifying the JSONSchema for this event. This should match an
+      schema's $id in a schema repository. E.g. /schema/title/1.0.0
+    type: string
+  action:
+    description: |
+      Enhanced User Contribution Screen actions.
+      open_hist:
+        User opened the Enhanced User Contribution Screen.
+      filt_caption:
+        User filtered contributions shown to image caption additions.
+      filt_desc:
+        User filtered contributions shown to description additions.
+      filt_tag:
+        User filtered contributions shown to image tag additions.
+      filt_all:
+        User removed filtering to show all contributions.
+      caption_view:
+        The user viewed an image caption addition summary.
+      desc_view:
+        The user viewed a description addition summary.
+      tag_view:
+        The user viewed an image tag addition summary.
+      misc_view:
+        The user viewed a miscellaneous contribution summary.
+      caption_view2:
+        The user viewed an image caption addition detail.
+      desc_view2:
+        The user viewed a description addition detail.
+      tag_view2:
+        The user viewed an image tag addition detail.
+      misc_view2:
+        The user viewed a miscellaneous contribution detail.
+      disabled:
+        The Suggested Edits feature was disabled.
+      paused:
+        The Suggested Edits feature was paused.
+      ip_block:
+        The user's IP address was blocked.
+    type: string
+    enum:
+      - open_hist
+      - filt_caption
+      - filt_desc
+      - filt_tag
+      - filt_all
+      - caption_view
+      - desc_view
+      - tag_view
+      - misc_view
+      - caption_view2
+      - desc_view2
+      - tag_view2
+      - misc_view2
+      - disabled
+      - paused
+      - ip_block
+  app_install_id:
+    description: >
+      Identifies an install of the app and persists across all sessions. When
+      the user uninstalls the app and re-installs it, a new app install ID is
+      randomly generated.
+
+      This UUIDv4 identifier is assigned automatically by the EPC library in the
+      the Wikipedia app for Android and iOS.
+    type: string
+    maxLength: 36
+    minLength: 36
+    pattern: >-
+      ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+  app_session_id:
+    description: >
+      Identifies an app session: a cluster of actions taken by the user in the
+      app within a limited period of time. A session ID is generated the first
+      time it is requested by the instrumentation code, which will usually be
+      soon after the user launches the app. A new session ID is generated
+      anytime the app has been inactive (that is, in the background state) for
+      at least 15 minutes or has been forcibly stopped by the OS or the user.
+
+      This identifier is managed and assigned automatically by the EPC library
+      in the Wikipedia app for Android and iOS.
+    type: string
+    maxLength: 20
+    minLength: 20
+    pattern: '^[0-9a-z]{20}$'
+  dt:
+    description: >
+      ISO-8601 formatted timestamp of when the event occurred/was generated in
+      UTC). This exists separately from meta.dt in the main common schema. For
+      external client-sent instrumentation events, we want to allow meta.dt to
+      be the received time (filled in by EventGate at ingest time), as we don't
+      trust client-sent events to always set the proper date and time.
+      Client-set event generation time should be set here instead. See:
+      https://phabricator.wikimedia.org/T240460
+    type: string
+    format: date-time
+    maxLength: 128
+  http:
+    type: object
+    properties:
+      client_ip:
+        description: >-
+          The http client's IP address, usually set from the X-Client-IP header,
+          the value of which is extracted from X-Forwarded-For.
+        type: string
+      has_cookies:
+        description: True if the http request has any cookies set
+        type: boolean
+      method:
+        description: 'The HTTP request method (GET, POST, etc.)'
+        type: string
+      protocol:
+        description: The protocol used for the request (HTTP or HTTPS)
+        type: string
+      request_headers:
+        description: 'Request headers sent by the client.  E.g. user-agent, etc.'
+        type: object
+        additionalProperties:
+          type: string
+      response_headers:
+        description: Response headers sent back to the client (when known).
+        type: object
+        additionalProperties:
+          type: string
+      status_code:
+        description: The HTTP status code returned for this request (when known)
+        type: integer
+        maximum: 9007199254740991
+        minimum: -9007199254740991
+  is_anon:
+    description: >
+      Information about app user: is true if the user is not logged in the app,
+      false if the user is logged in. This is automatically saved as a boolean
+      in the app, and is sent by the app with every event.
+    type: boolean
+  is_temp:
+    description: >
+      Whether the user is using a temporary account (true) or permanent account
+      (false). Only relevant if is_anon is false.
+    type: boolean
+  meta:
+    type: object
+    required:
+      - dt
+      - stream
+    properties:
+      domain:
+        description: Domain the event or entity pertains to
+        type: string
+        minLength: 1
+      dt:
+        description: 'UTC event datetime, in ISO-8601 format'
+        type: string
+        format: date-time
+        maxLength: 128
+      id:
+        description: Unique ID of this event
+        type: string
+      request_id:
+        description: Unique ID of the request that caused the event
+        type: string
+      stream:
+        description: Name of the stream/queue/dataset that this event belongs in
+        type: string
+        minLength: 1
+      uri:
+        description: Unique URI identifying the event or entity
+        type: string
+        format: uri-reference
+        maxLength: 8192
+examples:
+  - $schema: /analytics/mobile_apps/android_user_contribution_screen/3.1.0
+    action: filt_caption
+    app_install_id: 00AB59AC-77A1-4484-B49D-A047A036C77B
+    app_session_id: dd21852b02db926a1b81
+    dt: '2020-04-02T19:11:20.942Z'
+    is_anon: true
+    meta:
+      dt: '2020-04-02T19:11:20.942Z'
+      stream: android.user_contribution_screen

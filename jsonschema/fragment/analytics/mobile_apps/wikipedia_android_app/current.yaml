@@ -2,7 +2,7 @@ title: fragment/analytics/mobile_apps/wikipedia_android_app
 description: >
   Required fields that will be part of all android app schemas, for Wikimedia product/feature analytics in mobile apps
   which use an implementation of the Event Platform Client (EPC) specification.
-$id: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0
+$id: /fragment/analytics/mobile_apps/wikipedia_android_app/1.1.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -16,3 +16,8 @@ properties:
       Information about app user: is true if the user is not logged in the app,
       false if the user is logged in. This is automatically saved as a boolean
       in the app, and is sent by the app with every event.
+  is_temp:
+    type: boolean
+    description: >
+      Whether the user is using a temporary account (true) or permanent account
+      (false). Only relevant if is_anon is false.

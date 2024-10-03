@@ -3,11 +3,11 @@ description: >
   Track user actions when using the Enhanced User Contribution Screen.
 
   This schema was migrated from legacy MobileWikiAppUserContribution.
-$id: /analytics/mobile_apps/android_user_contribution_screen/3.0.0
+$id: /analytics/mobile_apps/android_user_contribution_screen/3.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0#
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.1.0#
   - properties:
       action:
         type: string

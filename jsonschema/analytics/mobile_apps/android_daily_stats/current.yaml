@@ -3,11 +3,11 @@ description: >
   Track general user activity once a day.
 
   This schema was migrated from legacy MobileWikiAppDailyStats.
-$id: /analytics/mobile_apps/android_daily_stats/2.0.0
+$id: /analytics/mobile_apps/android_daily_stats/2.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0#
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.1.0#
 properties:
   app_install_age_in_days:
     type: integer

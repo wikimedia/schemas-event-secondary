@@ -2,11 +2,11 @@ title: analytics/mobile_apps/android_image_recommendation_event
 description: >
   Track user actions when using the new Image Recommendations feature.
 
-$id: /analytics/mobile_apps/android_image_recommendation_event/1.0.0
+$id: /analytics/mobile_apps/android_image_recommendation_event/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0#
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.1.0#
   - properties:
       active_interface:
         type: string

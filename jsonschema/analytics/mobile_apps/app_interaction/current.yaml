@@ -1,11 +1,11 @@
 title: analytics/mobile_apps/app_interaction
 description: >
   Tracks user interactions with app ui elements while using the app. Used by both android and iOS apps
-$id: /analytics/mobile_apps/app_interaction/1.0.0
+$id: /analytics/mobile_apps/app_interaction/1.1.0
 $schema: 'https://json-schema.org/draft-07/schema#'
 type: object
 allOf:
-  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.0.0#
+  - $ref: /fragment/analytics/mobile_apps/wikipedia_android_app/1.1.0#
 properties:
   active_interface:
     type: string
