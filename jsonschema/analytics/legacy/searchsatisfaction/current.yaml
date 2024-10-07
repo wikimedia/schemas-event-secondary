@@ -3,7 +3,7 @@ description: >
   Tracks the dwell time and bounce rate of a user on pages linked from
   a search engine result page.
   Legacy metawiki schema: https://meta.wikimedia.org/wiki/Schema:SearchSatisfaction
-$id: /analytics/legacy/searchsatisfaction/1.4.0
+$id: /analytics/legacy/searchsatisfaction/1.5.0
 $schema: https://json-schema.org/draft-07/schema#
 type: object
 allOf:
@@ -35,6 +35,7 @@ allOf:
               - esclick
               - hover-on
               - hover-off
+              - virtualPageView
             description: >-
               Identifies the context in which the event was created. Every time a
               new search is performed a searchEngineResultPage event is created.
@@ -45,7 +46,8 @@ allOf:
               the user clicks on a sister search result from the sidebar, that's an
               ssclick. If the user interacts with a result to explore similar
               (pages, categories, translations), there are hover-on, hover-off, and
-              esclick events.
+              esclick events. If the user performs a virtual page view via the popups
+              extension a virtualPageView is recorded.
           searchSessionId:
             type: string
             description: >-
