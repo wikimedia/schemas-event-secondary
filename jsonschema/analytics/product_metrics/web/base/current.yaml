@@ -1,8 +1,0 @@
-title: analytics/product_metrics/web/base
-description: |-
-$id: /analytics/product_metrics/web/base/1.3.0
-$schema: 'https://json-schema.org/draft-07/schema#'
-type: object
-allOf:
-  - $ref: /fragment/analytics/product_metrics/common/1.2.0
-  - $ref: /fragment/analytics/product_metrics/web/1.1.0
